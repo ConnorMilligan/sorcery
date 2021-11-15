@@ -30,6 +30,8 @@ public:
     Actor(std::string name);
     Actor(int level);
     Actor(std::string name, int level);
+
+    void levelUp();
 };
 
 #endif
