@@ -69,7 +69,7 @@ void display() {
                                 to_string(dungeon.getTile(screen.getSurroundings().front)) + " " +
                                 to_string(dungeon.getTile(screen.getSurroundings().right)));
 
-        info.write( "Location: (" + to_string(player.getLocation().x) + ',' + to_string(player.getLocation().y) + ')' + "  Facing: " + player.getDirectionString());
+        info.write( "Location: (" + to_string(player.getLocation().x) + ',' + to_string(player.getLocation().y) + ')' + "  \nFacing: " + player.getDirectionString());
 
         currScreen = (player.getLocation().x == dungeon.getEnd().x) && (player.getLocation().y == dungeon.getEnd().y) ? ENDING_SCREEN :  MAIN_SCREEN;
 

@@ -112,12 +112,13 @@ void Quad::write(std::string message) {
     int count = 0, line = 1;
 
     for (const char &letter : message) {
-        if (count*9+this->getLeftX() < (this->getRightX()) - TEXT_PADDING_X) {
+        if (count*9+this->getLeftX() < (this->getRightX()) - TEXT_PADDING_X && letter != '\n') {
             ++count;
         } 
         else {
             glRasterPos2i(this->getLeftX() + TEXT_PADDING_X, this->getTopY() + (++line*TEXT_PADDING_Y));
             count = 0;
+            continue;
         }
         glutBitmapCharacter(GLUT_BITMAP_8_BY_13, letter);
     }
