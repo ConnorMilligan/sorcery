@@ -24,7 +24,7 @@ enum Screens { STARTING_SCREEN, MAIN_SCREEN, ENDING_SCREEN };
 Screens currScreen;
 string message;
 
-Sprite mySprite(15,10,header_data2);
+Sprite mySprite(15, 10, {200,200}, header_data2);
 
 
 void init() {
