@@ -8,11 +8,16 @@
 
 #include <string>
 
-struct stats {
+struct Stats {
     int attack;
     int defense;
     int speed;
     int luck;
+};
+
+struct Health {
+    int max;
+    int current;
 };
 
 class Actor {
@@ -20,9 +25,9 @@ private:
     std::string name;
 
     int level;
-    int health;
+    Health health;
 
-    stats stats;
+    Stats stats;
 
     void initialStatRoller();
 public:
@@ -32,6 +37,11 @@ public:
     Actor(std::string name, int level);
 
     void levelUp();
+
+    std::string getName();
+    int getLevel();
+    Health getHealth();
+    Stats getStats();
 };
 
 #endif

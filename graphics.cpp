@@ -14,8 +14,8 @@ Dungeon dungeon(fungeon2, {8,6});
 Player player({1, 8} , dungeon);
 
 Viewer screen({BLACK}, {10, 10}, 440, 280, &player);
-Quad info({BLACK}, {460, 10}, 170, 280);
-Quad console({BLACK}, {10, 300}, 620, 170);
+Quad info({BLACK}, {460, 10}, 170, 460);
+Quad console({BLACK}, {10, 300}, 440, 170);
 enum Screens { STARTING_SCREEN, MAIN_SCREEN, ENDING_SCREEN };
 Screens currScreen;
 
@@ -69,7 +69,8 @@ void display() {
                                 to_string(dungeon.getTile(screen.getSurroundings().front)) + " " +
                                 to_string(dungeon.getTile(screen.getSurroundings().right)));
 
-        info.write( "Location: (" + to_string(player.getLocation().x) + ',' + to_string(player.getLocation().y) + ')' + "  \nFacing: " + player.getDirectionString());
+        //info.write( "Location: (" + to_string(player.getLocation().x) + ',' + to_string(player.getLocation().y) + ')' + "  \nFacing: " + player.getDirectionString());
+        info.write(player.playerInfo());
 
         currScreen = (player.getLocation().x == dungeon.getEnd().x) && (player.getLocation().y == dungeon.getEnd().y) ? ENDING_SCREEN :  MAIN_SCREEN;
 

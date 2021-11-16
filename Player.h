@@ -7,10 +7,11 @@
 #include <vector>
 #include <string>
 #include "Dungeon.h"
+#include "Actor.h"
 
 enum Direction { NORTH, EAST, SOUTH, WEST };
 
-class Player {
+class Player : public Actor {
 private:
     point location;
     Direction direction;
@@ -31,6 +32,8 @@ public:
     void turnLeft();
     void advance();
     void retreat();
+
+    std::string playerInfo();
 };
 
 #endif
