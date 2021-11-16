@@ -95,6 +95,10 @@ void kbd(unsigned char key, int x, int y) {
     if ((key == 115 || key == 83) && currScreen == STARTING_SCREEN) {
         currScreen = MAIN_SCREEN;
     }
+    if (key == 'k') {
+        player.levelUp();
+        message = "You level up!";
+    }
 
     glutPostRedisplay();
 }
