@@ -18,6 +18,7 @@ Quad info({BLACK}, {460, 10}, 170, 460);
 Quad console({BLACK}, {10, 300}, 440, 170);
 enum Screens { STARTING_SCREEN, MAIN_SCREEN, ENDING_SCREEN };
 Screens currScreen;
+string message;
 
 
 void init() {
@@ -65,9 +66,10 @@ void display() {
         screen.surroundingProcessor();
 
 
-        console.write("Surroundings: " + to_string(dungeon.getTile(screen.getSurroundings().left)) + " " +
-                                to_string(dungeon.getTile(screen.getSurroundings().front)) + " " +
-                                to_string(dungeon.getTile(screen.getSurroundings().right)));
+        //console.write("Surroundings: " + to_string(dungeon.getTile(screen.getSurroundings().left)) + " " +
+        //                        to_string(dungeon.getTile(screen.getSurroundings().front)) + " " +
+        //                        to_string(dungeon.getTile(screen.getSurroundings().right)));
+        console.write("* " + message);
 
         //info.write( "Location: (" + to_string(player.getLocation().x) + ',' + to_string(player.getLocation().y) + ')' + "  \nFacing: " + player.getDirectionString());
         info.write(player.playerInfo());
@@ -104,15 +106,18 @@ void kbdS(int key, int x, int y) {
         switch (key) {
             case GLUT_KEY_DOWN:
                 player.retreat();
+                message = "You retreat!";
                 break;
             case GLUT_KEY_LEFT:
                 player.turnLeft();
+                message = "You turn to the left!";
                 break;
             case GLUT_KEY_RIGHT:
                 player.turnRight();
+                message = "You turn to the right!";
                 break;
             case GLUT_KEY_UP:
-                player.advance();
+                player.advance() ? message = "You advance!" : message = "Ouch! You can't walk into a wall!";
                 break;
         }
 

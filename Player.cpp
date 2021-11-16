@@ -11,11 +11,13 @@ Player::Player(point location, Dungeon dungeon) : Actor() {
     this->dungeon = dungeon;
 }
 
-void Player::move(int x, int y) {
+bool Player::move(int x, int y) {
     if (!(this->dungeon.getTile(this->location.x+x, this->location.y+y))) {
         this->location.x += x;
         this->location.y += y;
+        return true;
     }
+    return false;
     
 }
 
@@ -87,22 +89,23 @@ void Player::turnLeft() {
     }
 }
 
-void Player::advance() {
+bool Player::advance() {
     switch (this->direction) {
         case NORTH:
-            this->move(0, -1);
+            return this->move(0, -1);
             break;
         case EAST:
-            this->move(1, 0);
+            return this->move(1, 0);
             break;
         case SOUTH:
-            this->move(0, 1);
+            return this->move(0, 1);
             break;
         case WEST:
-            this->move(-1, 0);
+            return this->move(-1, 0);
             break;
         
         default:
+        return false;
             break;
     }
 }

@@ -21,7 +21,7 @@ public:
     Player(point location, Dungeon dungeon);
 
     //This will move the player (relative position)
-    void move(int x, int y);
+    bool move(int x, int y);
     //Gets the current location of the player.
     point getLocation();
     Dungeon getDungeon();
@@ -30,7 +30,7 @@ public:
 
     void turnRight();
     void turnLeft();
-    void advance();
+    bool advance();
     void retreat();
 
     std::string playerInfo();
