@@ -6,7 +6,7 @@
 #ifndef GRAPHICS_VIEWER_H
 #define GRAPHICS_VIEWER_H
 
-#include "Quad.h"
+#include "Window.h"
 #include "graphics.h"
 #include "Player.h"
 
@@ -17,7 +17,7 @@ struct Surrounding {
     point front;
 };
 
-class Viewer : public Quad {
+class Viewer : public Window {
 private:
     Surrounding surrounding;
     Player* player;

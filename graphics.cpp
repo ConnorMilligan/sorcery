@@ -18,13 +18,13 @@ Dungeon dungeon(fungeon2, {8,6});
 Player player({1, 8} , dungeon);
 
 Viewer screen({BLACK}, {10, 10}, 440, 280, &player);
-Quad info({BLACK}, {460, 10}, 170, 460);
-Quad console({BLACK}, {10, 300}, 440, 170);
+Window info({BLACK}, {460, 10}, 170, 460);
+Window console({BLACK}, {10, 300}, 440, 170);
 enum Screens { STARTING_SCREEN, MAIN_SCREEN, ENDING_SCREEN };
 Screens currScreen;
 string message;
 
-Sprite mySprite(5,5,header_data);
+Sprite mySprite(15,10,header_data2);
 
 
 void init() {

@@ -1,12 +1,12 @@
 #include "Viewer.h"
 
-Viewer::Viewer(color fill, point center, unsigned int width, unsigned int height) : Quad(fill, center, width, height) {
+Viewer::Viewer(color fill, point center, unsigned int width, unsigned int height) : Window(fill, center, width, height) {
     this->surrounding.front = {0,0};
     this->surrounding.left = {0,0};
     this->surrounding.right = {0,0};
 }
 
-Viewer::Viewer(color fill, point center, unsigned int width, unsigned int height, Player *player) : Quad(fill, center, width, height) {
+Viewer::Viewer(color fill, point center, unsigned int width, unsigned int height, Player *player) : Window(fill, center, width, height) {
     this->surrounding.front = {0,0};
     this->surrounding.left = {0,0};
     this->surrounding.right = {0,0};
@@ -128,7 +128,7 @@ Surrounding Viewer::getSurroundings() {
 }
 
 void Viewer::draw() {
-    Quad::draw();
+    Window::draw();
 
     point left = this->surrounding.left;
     point front = this->surrounding.front;
