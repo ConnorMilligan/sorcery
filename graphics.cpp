@@ -2,9 +2,13 @@
 #include "dungeonLayouts.h"
 #include "Viewer.h"
 #include "Player.h"
+#include "Sprite.h"
 #include <iostream>
 #include <time.h>
 #include <vector>
+
+#include "testsprite.h"
+
 using namespace std;
 
 GLdouble width, height;
@@ -19,6 +23,8 @@ Quad console({BLACK}, {10, 300}, 440, 170);
 enum Screens { STARTING_SCREEN, MAIN_SCREEN, ENDING_SCREEN };
 Screens currScreen;
 string message;
+
+Sprite mySprite(5,5,header_data);
 
 
 void init() {
@@ -55,6 +61,7 @@ void display() {
 
         string label = "SORCERY";
         messageWriter(width/2 - (4 * label.length()), height/2, label);
+        mySprite.draw();
 
     } else if(currScreen == MAIN_SCREEN) {
 

@@ -1,5 +1,8 @@
-#ifndef GRAPHICS_VIEWER_H
-#define GRAPHICS_VIEWER_H
+#ifndef GRAPHICS_SPRITE_H
+#define GRAPHICS_SPRITE_H
+
+#include "Quad.h"
+#include <string.h>
 
 #define HEADER_PIXEL(data,pixel) {\
 pixel[0] = (((data[0] - 33) << 2) | ((data[1] - 33) >> 4)); \
@@ -17,10 +20,10 @@ class Sprite {
 
 private:
     Dimensions dimensions;
-    char* pixels;
+    const char *pixels;
 public:
-    Sprite(int width, int height, char* pixels);
-    
+    Sprite(int width, int height, const char *pixels);
+
     void draw();
 };
 
