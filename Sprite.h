@@ -3,7 +3,7 @@
 
 #include "Quad.h"
 
-#define PIXEL_SIZE 8
+#define PIXEL_SIZE 2
 
 #define HEADER_PIXEL(data,pixel) {\
 pixel[0] = (((data[0] - 33) << 2) | ((data[1] - 33) >> 4)); \
@@ -26,7 +26,7 @@ private:
 public:
     Sprite(int width, int height, const char *pixels);
     Sprite(int width, int height, point origin, const char *pixels);
-
+    //Sprite(point origin, spriteSheet sheet);
     void draw();
 };
 

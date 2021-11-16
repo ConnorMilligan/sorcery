@@ -19,8 +19,6 @@
 #define BLACK 0, 0, 0
 #define WHITE 1, 1, 1
 
-void spawnConfetti();
-
 // Program initialization NOT OpenGL/GLUT dependent,
 // as we haven't created a GLUT window yet
 void init();

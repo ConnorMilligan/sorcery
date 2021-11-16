@@ -3,11 +3,10 @@
 #include "Viewer.h"
 #include "Player.h"
 #include "Sprite.h"
+#include "spriteSheet.h"
 #include <iostream>
 #include <time.h>
 #include <vector>
-
-#include "testsprite.h"
 
 using namespace std;
 
@@ -24,7 +23,7 @@ enum Screens { STARTING_SCREEN, MAIN_SCREEN, ENDING_SCREEN };
 Screens currScreen;
 string message;
 
-Sprite mySprite(15, 10, {200,200}, header_data2);
+Sprite gameLogo(menuLogo.width, menuLogo.height, {50,100}, menuLogo.sprite);
 
 
 void init() {
@@ -59,9 +58,9 @@ void display() {
 
     if(currScreen == STARTING_SCREEN) {
 
-        string label = "SORCERY";
-        messageWriter(width/2 - (4 * label.length()), height/2, label);
-        mySprite.draw();
+        string label = "Press \'Enter\' to begin.";
+        messageWriter(width/2 - (4 * label.length()), height/2 + 200, label);
+        gameLogo.draw();
 
     } else if(currScreen == MAIN_SCREEN) {
 
@@ -76,7 +75,7 @@ void display() {
         //console.write("Surroundings: " + to_string(dungeon.getTile(screen.getSurroundings().left)) + " " +
         //                        to_string(dungeon.getTile(screen.getSurroundings().front)) + " " +
         //                        to_string(dungeon.getTile(screen.getSurroundings().right)));
-        console.write("* " + message);
+        message != "" ? console.write("* " + message) : console.write(message);
 
         //info.write( "Location: (" + to_string(player.getLocation().x) + ',' + to_string(player.getLocation().y) + ')' + "  \nFacing: " + player.getDirectionString());
         info.write(player.playerInfo());
@@ -99,7 +98,7 @@ void kbd(unsigned char key, int x, int y) {
         glutDestroyWindow(wd);
         exit(0);
     }
-    if ((key == 115 || key == 83) && currScreen == STARTING_SCREEN) {
+    if ((key == 13) && currScreen == STARTING_SCREEN) {
         currScreen = MAIN_SCREEN;
     }
     if (key == 'k') {

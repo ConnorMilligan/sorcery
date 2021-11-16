@@ -14,6 +14,8 @@ Sprite::Sprite(int width, int height, point origin, const char *pixels) {
     this->pixels = pixels;
 }
 
+
+
 void Sprite::draw() {
     int pixColor[3];
     char *pixel = (char*)this->pixels;

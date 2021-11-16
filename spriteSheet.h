@@ -1,12 +1,17 @@
-/*  GIMP header image file format (RGB): /home/connor/Documents/testsprite.h  */
+#ifndef GRAPHICS_SPRITESHEET_H
+#define GRAPHICS_SPRITESHEET_H
 
-/*  Call this macro repeatedly.  After each use, the pixel data can be extracted  */
+#include "Sprites/menuLogo.h"
 
-char const *header_data =
-	"`Q!!!0]!!!$``Q$`!0```Q!!!0]!!!$``Q$`!0```Q!!!0]!!!$``Q$`!0```Q!!"
-	"!0]!!!$``Q$`!0```Q!!!0]!!!$``Q$`!0``";
+struct spriteSheet {
+	int width;
+	int height;
+	char const *sprite;
+};
 
-char const *header_data2 =
+spriteSheet testSprite = {
+	15,
+	10,
 	"`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!!&E!!&E!!&E!!&E!!&E!`Q!!"
 	"`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!!&E!!&E!!&E!!&E!!&E!`Q!!`Q!!"
 	"!!$``Q!!`Q!!`Q!!`Q!!!!$``Q!!`Q!!!&E!!&E!!&E!!&E!!&E!`Q!!`Q!!`Q!!"
@@ -16,4 +21,13 @@ char const *header_data2 =
 	"!!$`!!$``Q!!`Q!!!&E!!&E!!&E!!&E!!&E!`Q!!`Q!!`Q!!!!$`!!$`!!$`!!$`"
 	"`Q!!`Q!!`Q!!!&E!!&E!!&E!!&E!!&E!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!"
 	"`Q!!`Q!!!&E!!&E!!&E!!&E!!&E!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!"
-	"`Q!!!&E!!&E!!&E!!&E!!&E!";
+	"`Q!!!&E!!&E!!&E!!&E!!&E!"
+};
+
+spriteSheet menuLogo = {
+	menuLogoWidth,
+	menuLogoHeight,
+	menuLogoSprite
+};
+
+#endif
