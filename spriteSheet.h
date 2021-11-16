@@ -1,7 +1,7 @@
 #ifndef GRAPHICS_SPRITESHEET_H
 #define GRAPHICS_SPRITESHEET_H
 
-#include "Sprites/menuLogo.h"
+#include "sprites/menuLogo.h"
 
 struct spriteSheet {
 	int width;
