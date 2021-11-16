@@ -13,7 +13,8 @@ void Sprite::draw() {
     for (int i = 0; i < this->dimensions.height; i++) {
         for (int j = 0; j < this->dimensions.width; j++) {
             HEADER_PIXEL(pixel, pixColor);
-            Quad(color{(double)(pixColor[0]/255), (double)(pixColor[1]/255), (double)(pixColor[2]/255)}, point{j*16,i*16}, 16, 16).draw();
+            printf("%lf %lf %lf\n", double(pixColor[0])/255, double(pixColor[1])/255, double(pixColor[2])/255);
+            Quad(color{(double)(pixColor[0])/255, (double)(pixColor[1])/255, (double)(pixColor[2])/255}, point{j*16,i*16}, 16, 16).draw();
         }
     }
     

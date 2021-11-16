@@ -2,7 +2,6 @@
 #define GRAPHICS_SPRITE_H
 
 #include "Quad.h"
-#include <string.h>
 
 #define HEADER_PIXEL(data,pixel) {\
 pixel[0] = (((data[0] - 33) << 2) | ((data[1] - 33) >> 4)); \
