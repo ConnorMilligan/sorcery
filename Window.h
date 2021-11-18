@@ -13,7 +13,7 @@ const double PI = 2*acos(0.0);
 class Window : public Quad {
 public:
     Window(color fill, point center, unsigned int width, unsigned int height);
-    virtual void draw();
+    virtual void draw() const;
 
 };
 

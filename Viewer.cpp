@@ -127,7 +127,7 @@ Surrounding Viewer::getSurroundings() {
     return this->surrounding;
 }
 
-void Viewer::draw() {
+void Viewer::draw() const {
     Window::draw();
 
     point left = this->surrounding.left;

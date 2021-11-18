@@ -2,7 +2,7 @@
 
 Window::Window(color fill, point center, unsigned int width, unsigned int height) : Quad(fill, center, width, height) {};
 
-void Window::draw() {
+void Window::draw() const {
     //Draw the corners
     int relativeX, relativeY;
     for (int i = 0; i < 4; i++) {

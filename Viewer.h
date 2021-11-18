@@ -1,5 +1,5 @@
 /*
-* Inherets from the quad,
+* Inherits from the quad,
 * will display the dungeon view to the player.
 */
 
@@ -7,7 +7,6 @@
 #define GRAPHICS_VIEWER_H
 
 #include "Window.h"
-#include "graphics.h"
 #include "Player.h"
 
 //THis really makes a lot more sense to store a point as opposed to an enum since the dungeon is boolean anyway
@@ -27,7 +26,7 @@ public:
 
     Surrounding getSurroundings();
     void surroundingProcessor();
-    virtual void draw();
+    virtual void draw() const;
     virtual void drawWall(bool left, int width, int height, int slices);
 };
 

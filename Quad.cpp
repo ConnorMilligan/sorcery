@@ -114,3 +114,21 @@ void Quad::write(std::string message) {
         glutBitmapCharacter(GLUT_BITMAP_8_BY_13, letter);
     }
 }
+
+void Quad::write(color color, std::string message) {
+    glColor3f(color.red, color.green, color.blue);
+    glRasterPos2i(this->getLeftX() + TEXT_PADDING_X, this->getTopY() + TEXT_PADDING_Y);
+    int count = 0, line = 1;
+
+    for (const char &letter : message) {
+        if (count*9+this->getLeftX() < (this->getRightX()) - TEXT_PADDING_X && letter != '\n') {
+            ++count;
+        } 
+        else {
+            glRasterPos2i(this->getLeftX() + TEXT_PADDING_X, this->getTopY() + (++line*TEXT_PADDING_Y));
+            count = 0;
+            continue;
+        }
+        glutBitmapCharacter(GLUT_BITMAP_8_BY_13, letter);
+    }
+}

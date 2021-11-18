@@ -1,6 +1,7 @@
 #include "graphics.h"
 #include "dungeonLayouts.h"
 #include "Viewer.h"
+#include "Console.h"
 #include "Player.h"
 #include "Sprite.h"
 #include "spriteSheet.h"
@@ -19,7 +20,7 @@ Player player({1, 8} , dungeon);
 //The various windows that will display on the screen
 Viewer screen({BLACK}, {10, 10}, 440, 280, &player);
 Window info({BLACK}, {460, 10}, 170, 460);
-Window console({BLACK}, {10, 300}, 440, 170);
+Console console({BLACK}, {10, 300}, 440, 170);
 
 Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
 
@@ -80,7 +81,11 @@ void display() {
         //console.write("Surroundings: " + to_string(dungeon.getTile(screen.getSurroundings().left)) + " " +
         //                        to_string(dungeon.getTile(screen.getSurroundings().front)) + " " +
         //                        to_string(dungeon.getTile(screen.getSurroundings().right)));
-        consoleText != "" ? console.write("* " + consoleText) : console.write(consoleText);
+        if (consoleText != "") {
+            console.addMessage("* " + consoleText);
+            consoleText = "";
+        }
+            
 
         //info.write( "Location: (" + to_string(player.getLocation().x) + ',' + to_string(player.getLocation().y) + ')' + "  \nFacing: " + player.getDirectionString());
         info.write(player.playerInfo());

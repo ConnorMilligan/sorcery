@@ -57,6 +57,7 @@ public:
 
     virtual void draw() const;
     void write(std::string message);
+    void write(color color, std::string message);
 };
 
 #endif

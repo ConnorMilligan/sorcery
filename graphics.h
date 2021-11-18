@@ -18,6 +18,9 @@
 
 #define BLACK 0, 0, 0
 #define WHITE 1, 1, 1
+#define GREY 0.5, 0.5, 0.5
+#define RED 1, 0, 0
+
 
 // Program initialization NOT OpenGL/GLUT dependent,
 // as we haven't created a GLUT window yet
