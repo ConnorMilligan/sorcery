@@ -6,12 +6,7 @@
 #define GRAPHICS_SPRITESHEET_H
 
 #include "sprites/menuLogo.h"
-
-struct spriteSheet {
-	int width;
-	int height;
-	char const *sprite;
-};
+#include "Sprite.h"
 
 spriteSheet testSprite = {
 	15,

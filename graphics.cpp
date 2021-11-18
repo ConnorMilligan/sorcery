@@ -1,10 +1,15 @@
 #include "graphics.h"
 #include "dungeonLayouts.h"
-#include "Viewer.h"
-#include "Console.h"
-#include "Player.h"
 #include "Sprite.h"
 #include "spriteSheet.h"
+
+#include "Viewer.h"
+#include "Console.h"
+#include "CombatViewer.h"
+
+#include "Player.h"
+#include "Monster.h"
+
 #include <iostream>
 #include <time.h>
 #include <vector>
@@ -25,7 +30,7 @@ Console console({BLACK}, {10, 300}, 440, 170);
 Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
 
 //Determine the current screen to be displayed
-enum Screens { STARTING_SCREEN, MAIN_SCREEN, ENDING_SCREEN };
+enum Screens { STARTING_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN };
 Screens currScreen;
 
 
@@ -124,6 +129,7 @@ void kbd(unsigned char key, int x, int y) {
         levelUpText = player.levelUp();
         consoleText = "You level up!";
     }
+    if (key == 'j')
 
     glutPostRedisplay();
 }

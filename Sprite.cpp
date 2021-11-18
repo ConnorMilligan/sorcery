@@ -1,5 +1,12 @@
 #include "Sprite.h"
 
+Sprite::Sprite() {
+    this->dimensions.width = 0;
+    this->dimensions.height = 0;
+    this->origin = {0,0};
+    this->pixels = "";
+}
+
 Sprite::Sprite(int width, int height, const char *pixels) {
     this->dimensions.width = width;
     this->dimensions.height = height;
@@ -14,7 +21,9 @@ Sprite::Sprite(int width, int height, point origin, const char *pixels) {
     this->pixels = pixels;
 }
 
-
+void Sprite::setCoords(point coords) {
+    this->origin = coords;
+}
 
 void Sprite::draw() {
     int pixColor[3];
