@@ -38,11 +38,12 @@ private:
     const char *pixels;
 public:
     Sprite();
+    Sprite(spriteSheet sprite);
     Sprite(int width, int height, const char *pixels);
+    Sprite(int width, int height, point origin, const char *pixels);
     
     void setCoords(point coords);
-
-    Sprite(int width, int height, point origin, const char *pixels);
+    
     void draw();
 };
 

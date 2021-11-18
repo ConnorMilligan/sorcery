@@ -21,7 +21,7 @@ Monster::Monster(Sprite sprite, int level) : Actor(level) {
 }
 
 void Monster::setCoordinates(point coordinates) {
-    this->coordinates = coordinates;
+    this->sprite.setCoords(coordinates);
 }
 
 Sprite Monster::getSprite() {

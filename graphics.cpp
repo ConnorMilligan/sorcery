@@ -21,11 +21,13 @@ int wd;
 
 Dungeon dungeon(fungeon2, {8,6});
 Player player({1, 8} , dungeon);
+Monster monster(Sprite(testSprite), 1);
 
 //The various windows that will display on the screen
 Viewer screen({BLACK}, {10, 10}, 440, 280, &player);
 Window info({BLACK}, {460, 10}, 170, 460);
 Console console({BLACK}, {10, 300}, 440, 170);
+CombatViewer combat({BLACK}, {10, 10}, 440, 280, &player);
 
 Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
 
@@ -42,6 +44,7 @@ Sprite gameLogo(menuLogo.width, menuLogo.height, {50,100}, menuLogo.sprite);
 void init() {
     currScreen = STARTING_SCREEN;
     screen.surroundingProcessor();
+    combat.setMonster(&monster);
     srand(time(0));
 }
 
@@ -103,6 +106,24 @@ void display() {
             levelingWindow.write(levelUpText);
         }
 
+    } else if(currScreen == COMBAT_SCREEN) {
+
+        info.draw();
+        console.draw();
+        combat.draw();
+
+        if (consoleText != "") {
+            console.addMessage("* " + consoleText);
+            consoleText = "";
+        }
+            
+        info.write(player.playerInfo());
+
+        if (levelUpText != "") {
+            levelingWindow.draw();
+            levelingWindow.write(levelUpText);
+        }
+
     } else if(currScreen == ENDING_SCREEN) {
 
         string label = "You Win!";
@@ -129,7 +150,11 @@ void kbd(unsigned char key, int x, int y) {
         levelUpText = player.levelUp();
         consoleText = "You level up!";
     }
-    if (key == 'j')
+    if (key == 'j') {
+        currScreen = COMBAT_SCREEN;
+        consoleText = "You encountered a " + monster.getName() + "!";
+    }
+        
 
     glutPostRedisplay();
 }

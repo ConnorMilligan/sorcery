@@ -7,6 +7,13 @@ Sprite::Sprite() {
     this->pixels = "";
 }
 
+Sprite::Sprite(spriteSheet sprite) {
+    this->dimensions.width = sprite.width;
+    this->dimensions.height = sprite.height;
+    this->origin = {0,0};
+    this->pixels = sprite.sprite;
+}
+
 Sprite::Sprite(int width, int height, const char *pixels) {
     this->dimensions.width = width;
     this->dimensions.height = height;

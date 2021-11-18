@@ -5,8 +5,9 @@
 #ifndef GRAPHICS_SPRITESHEET_H
 #define GRAPHICS_SPRITESHEET_H
 
-#include "sprites/menuLogo.h"
 #include "Sprite.h"
+
+#include "sprites/menuLogo.h"
 
 spriteSheet testSprite = {
 	15,

@@ -6,6 +6,7 @@ void Console::addMessage(std::string message) {
     messageBuffer.push_back(message + '\n');
 }
 
+//This currently misses the first input
 void Console::draw() {
     Window::draw();
     //Having the new line means there will be room for the grey text
