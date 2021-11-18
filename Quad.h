@@ -9,7 +9,6 @@
 #include <string>
 #include "graphics.h"
 
-#define BORDER_THICKNESS 5
 #define TEXT_PADDING_X 25
 #define TEXT_PADDING_Y 30
 
