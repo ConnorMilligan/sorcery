@@ -4,24 +4,20 @@ Window::Window(color fill, point center, unsigned int width, unsigned int height
 
 void Window::draw() {
     //Draw the corners
+    int relativeX, relativeY;
     for (int i = 0; i < 4; i++) {
         glBegin(GL_TRIANGLE_FAN);
         glColor3f(1,1,1);
 
-        glVertex2i((i == 1 || i == 2) ? origin.x + width - BORDER_THICKNESS : origin.x + BORDER_THICKNESS, 
-                    (i == 2 || i == 3) ? origin.y + BORDER_THICKNESS : origin.y + height - BORDER_THICKNESS);
+        relativeX = (i == 1 || i == 2) ? origin.x + width - BORDER_THICKNESS : origin.x + BORDER_THICKNESS;
+        relativeY = (i == 2 || i == 3) ? origin.y + BORDER_THICKNESS : origin.y + height - BORDER_THICKNESS;
 
         for (double j = 0; j < 2.0*PI+0.05; j += (2.0*PI)/360.0) {
-            glVertex2f(origin.x + BORDER_THICKNESS + (BORDER_THICKNESS * cos(j)),
-                    origin.y + BORDER_THICKNESS + (BORDER_THICKNESS * sin(j)));
+            glVertex2f(relativeX + (BORDER_THICKNESS * cos(j)),
+                    relativeY + (BORDER_THICKNESS * sin(j)));
         }
         glEnd();
-        printf("%d", i);
     }
-    
-    
-    
-    
 
     glBegin(GL_QUADS);
 
