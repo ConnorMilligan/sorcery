@@ -36,7 +36,7 @@ public:
     Actor(int level);
     Actor(std::string name, int level);
 
-    void levelUp();
+    std::string levelUp();
 
     std::string getName();
     int getLevel();

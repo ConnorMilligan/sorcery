@@ -31,15 +31,32 @@ void Actor::initialStatRoller() {
     this->stats.luck = 2;
 }
 
-void Actor::levelUp() {
+// Making this create the string every time is not particularly efficient considering it is only use by the player
+// Good thing i'm not writing this for an imbedded system.
+std::string Actor::levelUp() {
+    int newHealth = 15;
+
+    Stats newLevel;
+    newLevel.attack = rand() % 3 + 1;
+    newLevel.defense = rand() % 3 + 1;
+    newLevel.speed = rand() % 3 + 1;
+    newLevel.luck = rand() % 3 + 1;
+
+    this->health.max += newHealth;
+    this->health.current = newHealth;
+    this->stats.attack += newLevel.attack;
+    this->stats.defense += newLevel.defense;
+    this->stats.speed += newLevel.speed;
+    this->stats.luck += newLevel.luck;
+
     this->level++;
 
-    this->health.max += 15;
-    this->health.current = this->health.max;
-    this->stats.attack += rand() % 3 + 1;
-    this->stats.defense += rand() % 3 + 1;
-    this->stats.speed += rand() % 3 + 1;
-    this->stats.luck += rand() % 3 + 1;
+    return "        ~~ Level Up! ~~\nYour level increased to " + std::to_string(this->level) + "!\n" +
+            "Your max health increased by " +  std::to_string(newHealth) + '\n' +
+            "Your attack increased by " +  std::to_string(newLevel.attack) + '\n' +
+            "Your defense increased by " +  std::to_string(newLevel.defense) + '\n' +
+            "Your speed increased by " +  std::to_string(newLevel.speed) + '\n' +
+            "Your luck increased by " +  std::to_string(newLevel.luck);
 }
 
 std::string Actor::getName() {

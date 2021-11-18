@@ -28,11 +28,13 @@ public:
     Direction getDirection();
     std::string getDirectionString();
 
+    //Movement
     void turnRight();
     void turnLeft();
     bool advance();
     void retreat();
 
+    //Info as an actior
     std::string playerInfo();
 };
 
