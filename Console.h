@@ -14,6 +14,7 @@ private:
 public:
     Console(color fill, point center, unsigned int width, unsigned int height);
 
+    //Adds a message to the buffer
     void addMessage(std::string message);
     virtual void draw();
 };

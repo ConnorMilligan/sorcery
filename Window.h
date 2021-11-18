@@ -1,3 +1,8 @@
+/*
+* Inherits from the quad,
+* This functions identically to the quad, but will draw a border of a determined thickness around it.
+*/
+
 #ifndef GRAPHICS_WINDOW_H
 #define GRAPHICS_WINDOW_H
 

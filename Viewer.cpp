@@ -13,6 +13,10 @@ Viewer::Viewer(color fill, point center, unsigned int width, unsigned int height
     this->player = player;
 }
 
+Surrounding Viewer::getSurroundings() {
+    return this->surrounding;
+}
+
 void Viewer::surroundingProcessor() {
     this->surrounding.left = this->player->getLocation();
     this->surrounding.right = this->player->getLocation();
@@ -123,9 +127,7 @@ void Viewer::drawWall(bool left, int width, int height, int slices) {
 }
 
 
-Surrounding Viewer::getSurroundings() {
-    return this->surrounding;
-}
+
 
 void Viewer::draw() const {
     Window::draw();

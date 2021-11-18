@@ -29,6 +29,7 @@ private:
 
     Stats stats;
 
+    //This creates the beginner stats for an actor
     void initialStatRoller();
 public:
     Actor();
@@ -36,6 +37,7 @@ public:
     Actor(int level);
     Actor(std::string name, int level);
 
+    //Will handle levels, returns a formatted string for the level up screen
     std::string levelUp();
 
     std::string getName();

@@ -1,3 +1,7 @@
+/*
+* This is where all the sprites are stored in the game
+*/
+
 #ifndef GRAPHICS_SPRITESHEET_H
 #define GRAPHICS_SPRITESHEET_H
 
@@ -24,6 +28,8 @@ spriteSheet testSprite = {
 	"`Q!!!&E!!&E!!&E!!&E!!&E!"
 };
 
+
+//The main logo of the game displayed in the menu
 spriteSheet menuLogo = {
 	menuLogoWidth,
 	menuLogoHeight,
