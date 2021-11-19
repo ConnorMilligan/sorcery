@@ -6,6 +6,7 @@
 #include "Viewer.h"
 #include "Console.h"
 #include "CombatViewer.h"
+#include "Menu.h"
 
 #include "Player.h"
 #include "Monster.h"
@@ -28,6 +29,7 @@ Viewer screen({BLACK}, {10, 10}, 440, 280, &player);
 Window info({BLACK}, {460, 10}, 170, 460);
 Console console({BLACK}, {10, 300}, 440, 170);
 CombatViewer combat({BLACK}, {10, 10}, 440, 280, &player);
+Menu combatMenu({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230, {"Attack", "Defend", "Run"});
 
 Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
 
@@ -111,6 +113,7 @@ void display() {
         info.draw();
         console.draw();
         combat.draw();
+        combatMenu.draw();
 
         if (consoleText != "") {
             console.addMessage("* " + consoleText);
@@ -178,6 +181,17 @@ void kbdS(int key, int x, int y) {
                 break;
             case GLUT_KEY_UP:
                 player.advance() ? consoleText = "You advance!" : consoleText = "Ouch! You can't walk into a wall!";
+                break;
+        }
+
+    }
+    else if(currScreen == COMBAT_SCREEN) {
+        switch (key) {
+            case GLUT_KEY_DOWN:
+                combatMenu.choiceDown();
+                break;
+            case GLUT_KEY_UP:
+                combatMenu.choiceUp();
                 break;
         }
 

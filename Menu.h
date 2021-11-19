@@ -14,7 +14,12 @@ private:
     int selection;
 public:
     Menu(color fill, point center, unsigned int width, unsigned int height);
+    Menu(color fill, point center, unsigned int width, unsigned int height, std::vector<std::string> choices);
 
+    void choiceUp();
+    void choiceDown();
+
+    void draw();
 };
 
 
