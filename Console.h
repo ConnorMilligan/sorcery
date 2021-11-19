@@ -11,6 +11,7 @@
 class Console : public Window {
 private:
     std::vector<std::string> messageBuffer;
+    int newLineCount(std::string message);
 public:
     Console(color fill, point center, unsigned int width, unsigned int height);
 

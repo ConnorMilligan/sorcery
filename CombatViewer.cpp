@@ -18,7 +18,7 @@ std::string CombatViewer::attack() {
 
 std::string CombatViewer::monsterTurn() {
     this->player->changeHealth(-this->monster->getStats().attack);
-    return "The " + this->monster->getName() + " dealt " + std::to_string(this->player->getStats().attack) + " to you!";
+    return "* The " + this->monster->getName() + " dealt " + std::to_string(this->player->getStats().attack) + " to you!";
 }
 
 void CombatViewer::draw() const {
