@@ -11,11 +11,11 @@ Menu::Menu(color fill, point center, unsigned int width, unsigned int height, st
 }
 
 void Menu::choiceUp() {
-    this->selection--;
+    this->selection-1 < 0 ? this->selection = this->choices.size()-1 : this->selection--;
 }
 
 void Menu::choiceDown() {
-    this->selection++;
+    this->selection+1 < this->choices.size() ? this->selection++ : this->selection = 0;
 }
 
 void Menu::draw() {
