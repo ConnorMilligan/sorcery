@@ -20,6 +20,10 @@ public:
 
     void setMonster(Monster *monster);
 
+    std::string attack();
+
+    std::string monsterTurn();
+
     void draw() const;
 };
 

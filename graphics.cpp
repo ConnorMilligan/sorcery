@@ -29,7 +29,7 @@ Viewer screen({BLACK}, {10, 10}, 440, 280, &player);
 Window info({BLACK}, {460, 10}, 170, 460);
 Console console({BLACK}, {10, 300}, 440, 170);
 CombatViewer combat({BLACK}, {10, 10}, 440, 280, &player);
-Menu combatMenu({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230, {"Attack", "Defend", "Run"});
+Menu combatMenu({BLACK}, {460, 300}, 170, 170, {"Attack", "Defend", "Run"});
 
 Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
 
@@ -113,7 +113,6 @@ void display() {
         info.draw();
         console.draw();
         combat.draw();
-        combatMenu.draw();
 
         if (consoleText != "") {
             console.addMessage("* " + consoleText);
@@ -121,6 +120,8 @@ void display() {
         }
             
         info.write(player.playerInfo());
+        //Draw the combat menu over the infobox
+        combatMenu.draw();
 
         if (levelUpText != "") {
             levelingWindow.draw();
@@ -157,6 +158,8 @@ void kbd(unsigned char key, int x, int y) {
         currScreen = COMBAT_SCREEN;
         consoleText = "You encountered a " + monster.getName() + "!";
     }
+    if ((key == 13) && currScreen == COMBAT_SCREEN) 
+        consoleText = combat.attack();
         
 
     glutPostRedisplay();

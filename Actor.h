@@ -39,6 +39,7 @@ public:
 
     //Will handle levels, returns a formatted string for the level up screen
     std::string levelUp();
+    void changeHealth(int health);
 
     std::string getName();
     int getLevel();

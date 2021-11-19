@@ -59,6 +59,10 @@ std::string Actor::levelUp() {
             "Your luck increased by " +  std::to_string(newLevel.luck);
 }
 
+void Actor::changeHealth(int health) {
+    this->health.current += health;
+}
+
 std::string Actor::getName() {
     return this->name;
 }
