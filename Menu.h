@@ -10,6 +10,7 @@
 
 class Menu : public Window {
 private:
+    //May add it so that the menu holds pointers to the function for each choice
     std::vector<std::string> choices;
     int selection;
 public:
