@@ -42,6 +42,7 @@ public:
     void changeHealth(int health);
 
     std::string getName();
+    void setName(std::string newName);
     int getLevel();
     Health getHealth();
     Stats getStats();

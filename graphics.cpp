@@ -14,14 +14,17 @@
 #include <iostream>
 #include <time.h>
 #include <vector>
+#define MAX_NAME_LEN 10
 
 using namespace std;
 
 GLdouble width = 640, height = 480;
 int wd;
 
+string playerName = "Actor";
+
 Dungeon dungeon(fungeon2, {8,6});
-Player player({1, 8} , dungeon);
+Player player({1, 8} , dungeon, playerName);
 Monster monster(Sprite(testSprite), 1);
 
 //The various windows that will display on the screen
@@ -34,7 +37,7 @@ Menu combatMenu({BLACK}, {460, 300}, 170, 170, {"Attack", "Defend", "Run"});
 Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
 
 //Determine the current screen to be displayed
-enum Screens { STARTING_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN };
+enum Screens { STARTING_SCREEN, SETUP_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN };
 Screens currScreen;
 
 
@@ -77,6 +80,18 @@ void display() {
         string label = "Press \'Enter\' to begin.";
         messageWriter(width/2 - (4 * label.length()), height/2 + 200, label);
         gameLogo.draw();
+
+    } else if(currScreen == SETUP_SCREEN) {
+
+        string label = "What is your name?";
+        string next = "Press \'Enter\' to begin.";
+
+        messageWriter(width/2 - (4 * label.length()), height/2, label);
+
+        messageWriter(width/2 - (4 * playerName.length()+1), height/2 + 50, playerName+"_");
+
+        messageWriter(width/2 - (4 * next.length()), height/2 + 200, next);
+
 
     } else if(currScreen == MAIN_SCREEN) {
 
@@ -144,8 +159,21 @@ void kbd(unsigned char key, int x, int y) {
         glutDestroyWindow(wd);
         exit(0);
     }
-    if ((key == 13) && currScreen == STARTING_SCREEN) 
+    if((key == 13) && currScreen == SETUP_SCREEN) {
+        player.setName(playerName);
         currScreen = MAIN_SCREEN;
+    }
+    if((currScreen == SETUP_SCREEN) && key != 13) {
+        if(playerName.length() <= MAX_NAME_LEN && key != 8) {
+            playerName += key;
+        }
+        if(key == 8 && !playerName.empty()) {
+            playerName = playerName.substr(0,playerName.length()-1);
+        }
+    }
+    if ((key == 13) && currScreen == STARTING_SCREEN)
+        currScreen = SETUP_SCREEN;
+        //currScreen = MAIN_SCREEN; // Uncomment to bypass setup screen
 
     if ((key == 13) && levelUpText != "")
         levelUpText = "";

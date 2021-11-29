@@ -19,6 +19,7 @@ private:
 public:
     Player();
     Player(point location, Dungeon dungeon);
+    Player(point location, Dungeon dungeon, std::string name);
 
     //This will move the player (relative position)
     bool move(int x, int y);

@@ -1,5 +1,6 @@
 #include "Player.h"
 
+
 Player::Player() : Actor() {
     this->location = {0,0};
     this->direction = NORTH;
@@ -9,6 +10,12 @@ Player::Player() : Actor() {
 Player::Player(point location, Dungeon dungeon) : Actor() {
     this->location = location;
     this->dungeon = dungeon;
+}
+Player::Player(point location, Dungeon dungeon, std::string name) : Actor() {
+    this->location = location;
+    this->dungeon = dungeon;
+    this->setName(name);
+
 }
 
 bool Player::move(int x, int y) {

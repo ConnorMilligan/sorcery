@@ -66,7 +66,9 @@ void Actor::changeHealth(int health) {
 std::string Actor::getName() {
     return this->name;
 }
-
+void Actor::setName(std::string newName) {
+    this->name = newName;
+}
 int Actor::getLevel() {
     return this->level;
 }
