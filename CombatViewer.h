@@ -24,6 +24,8 @@ public:
 
     std::string monsterTurn();
 
+    bool isActive();
+
     void draw() const;
 };
 

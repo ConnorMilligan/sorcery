@@ -125,6 +125,8 @@ void display() {
 
     } else if(currScreen == COMBAT_SCREEN) {
 
+        if(combat.isActive()) {
+
         info.draw();
         console.draw();
         combat.draw();
@@ -143,9 +145,14 @@ void display() {
             levelingWindow.write(levelUpText);
         }
 
+
+        } else {
+            currScreen = MAIN_SCREEN;
+        }
+
     } else if(currScreen == ENDING_SCREEN) {
 
-        string label = "You Win!";
+        string label = player.getHealth().current > 0 ? "You Win!" : "Game Over :(";
         messageWriter(width/2 - (4 * label.length()), height/2, label);
 
     }
@@ -186,8 +193,13 @@ void kbd(unsigned char key, int x, int y) {
         currScreen = COMBAT_SCREEN;
         consoleText = "You encountered a " + monster.getName() + "!";
     }
-    if ((key == 13) && currScreen == COMBAT_SCREEN) 
+    if ((key == 13) && currScreen == COMBAT_SCREEN) {
+
         consoleText = combat.attack();
+
+    }
+
+
         
 
     glutPostRedisplay();

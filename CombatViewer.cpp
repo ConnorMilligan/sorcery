@@ -26,3 +26,6 @@ void CombatViewer::draw() const {
     this->monster->setCoordinates(this->getCenter());
     monster->draw();
 }
+bool CombatViewer::isActive() {
+    return this->player->getHealth().current > 0 && this->monster->getHealth().current > 0;
+}
