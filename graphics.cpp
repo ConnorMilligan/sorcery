@@ -25,6 +25,7 @@ int wd;
 string playerName = "Actor";
 vector<string> combatOptions = {"Attack", "Defend", "Run"};
 
+
 Dungeon dungeon(fungeon2, {8,6});
 Player player({1, 8} , dungeon, playerName);
 Monster monster(Sprite(testSprite), 1);
@@ -53,6 +54,7 @@ void init() {
     screen.surroundingProcessor();
     combat.setMonster(&monster);
     srand(time(0));
+
 }
 
 /* Initialize OpenGL Graphics */
@@ -148,8 +150,8 @@ void display() {
             levelingWindow.write(levelUpText);
         }
 
-
         } else {
+            if(player.getHealth().current > 0 && monster.getHealth().current <= 0) levelUpText = "LEVEL UP";
             currScreen = player.getHealth().current > 0 ? MAIN_SCREEN : ENDING_SCREEN;
         }
 
@@ -194,7 +196,7 @@ void kbd(unsigned char key, int x, int y) {
     }
     if (key == 'j') {
         currScreen = COMBAT_SCREEN;
-        consoleText = "You encountered a " + monster.getName() + "!";
+        consoleText = "You encountered " + monster.getName() + "!";
     }
     if ((key == 13) && currScreen == COMBAT_SCREEN) {
 

@@ -8,9 +8,8 @@ CombatViewer::CombatViewer(color fill, point center, unsigned int width, unsigne
     this->active = true;
 }
 
-void CombatViewer::setMonster(Monster *monster) {
-    this->monster = monster;
-    this->active = true;
+void CombatViewer::setMonster(Monster *newMonster) {
+    this->monster = newMonster;
 }
 
 std::string CombatViewer::attack() {
@@ -21,13 +20,17 @@ std::string CombatViewer::playerTurn(std::string action) {
 
     std::string result = "";
 
+
     if(action == "Attack") {
         this->monster->changeHealth(this->player->getStats().attack);
         result = "You dealt " + std::to_string(this->player->getStats().attack) + " damage to the " + this->monster->getName() + "!\n" + this->monsterTurn();
     } else if(action == "Defend") {
-
+        this->player->getStats();
+        result = "You defend, taking 0 points of damage";
     } else {
-
+        result = "You abscond, taking 1 point of damage";
+        this->player->changeHealth(-1);
+        active = false;
     }
 
     // Ensure combat is active by both players having health
@@ -46,6 +49,5 @@ void CombatViewer::draw() const {
     monster->draw();
 }
 bool CombatViewer::isActive() {
-    //return this->player->getHealth().current > 0 && this->monster->getHealth().current > 0;
     return active;
 }

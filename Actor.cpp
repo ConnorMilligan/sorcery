@@ -1,7 +1,13 @@
 #include "Actor.h"
 
+#include <vector>
+#include <cmath>
+
+
+
 Actor::Actor() {
-    this->name = "Actor";
+
+    this->name = "The Actor";
     this->level = 1;
     this->initialStatRoller();
 }
@@ -32,7 +38,7 @@ void Actor::initialStatRoller() {
 }
 
 // Making this create the string every time is not particularly efficient considering it is only use by the player
-// Good thing i'm not writing this for an imbedded system.
+// Good thing i'm not writing this for an embedded system.
 std::string Actor::levelUp() {
     int newHealth = 15;
 
@@ -59,8 +65,8 @@ std::string Actor::levelUp() {
             "Your luck increased by " +  std::to_string(newLevel.luck);
 }
 
-void Actor::changeHealth(int health) {
-    this->health.current += health;
+void Actor::changeHealth(int newHealth) {
+    this->health.current += newHealth;
 }
 
 std::string Actor::getName() {

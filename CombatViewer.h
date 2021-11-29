@@ -21,6 +21,7 @@ public:
 
     void setMonster(Monster *monster);
 
+
     std::string attack();
     std::string playerTurn(std::string action);
 
