@@ -19,6 +19,7 @@ public:
 
     void choiceUp();
     void choiceDown();
+    std::string getChoice();
 
     void draw();
 };

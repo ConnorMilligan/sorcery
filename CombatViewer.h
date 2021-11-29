@@ -14,6 +14,7 @@ class CombatViewer : public Window {
 private:
     Player* player;
     Monster* monster;
+    bool active;
 public:
     CombatViewer(color fill, point center, unsigned int width, unsigned int height);
     CombatViewer(color fill, point center, unsigned int width, unsigned int height, Player *player);
@@ -21,6 +22,7 @@ public:
     void setMonster(Monster *monster);
 
     std::string attack();
+    std::string playerTurn(std::string action);
 
     std::string monsterTurn();
 

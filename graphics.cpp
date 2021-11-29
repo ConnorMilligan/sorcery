@@ -21,7 +21,9 @@ using namespace std;
 GLdouble width = 640, height = 480;
 int wd;
 
+// Default player name before change
 string playerName = "Actor";
+vector<string> combatOptions = {"Attack", "Defend", "Run"};
 
 Dungeon dungeon(fungeon2, {8,6});
 Player player({1, 8} , dungeon, playerName);
@@ -32,7 +34,7 @@ Viewer screen({BLACK}, {10, 10}, 440, 280, &player);
 Window info({BLACK}, {460, 10}, 170, 460);
 Console console({BLACK}, {10, 300}, 440, 170);
 CombatViewer combat({BLACK}, {10, 10}, 440, 280, &player);
-Menu combatMenu({BLACK}, {460, 300}, 170, 170, {"Attack", "Defend", "Run"});
+Menu combatMenu({BLACK}, {460, 300}, 170, 170, combatOptions);
 
 Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
 
@@ -137,6 +139,7 @@ void display() {
         }
             
         info.write(player.playerInfo());
+
         //Draw the combat menu over the infobox
         combatMenu.draw();
 
@@ -147,7 +150,7 @@ void display() {
 
 
         } else {
-            currScreen = MAIN_SCREEN;
+            currScreen = player.getHealth().current > 0 ? MAIN_SCREEN : ENDING_SCREEN;
         }
 
     } else if(currScreen == ENDING_SCREEN) {
@@ -195,7 +198,8 @@ void kbd(unsigned char key, int x, int y) {
     }
     if ((key == 13) && currScreen == COMBAT_SCREEN) {
 
-        consoleText = combat.attack();
+        //consoleText = combat.attack();
+        consoleText = combat.playerTurn(combatMenu.getChoice());
 
     }
 
