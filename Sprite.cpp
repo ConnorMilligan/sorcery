@@ -14,6 +14,13 @@ Sprite::Sprite(spriteSheet sprite) {
     this->pixels = sprite.sprite;
 }
 
+Sprite::Sprite(spriteSheet sprite, point origin) {
+    this->dimensions.width = sprite.width;
+    this->dimensions.height = sprite.height;
+    this->origin = origin;
+    this->pixels = sprite.sprite;
+}
+
 Sprite::Sprite(int width, int height, const char *pixels) {
     this->dimensions.width = width;
     this->dimensions.height = height;

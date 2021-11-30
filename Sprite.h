@@ -19,9 +19,6 @@ pixel[2] = ((((data[2] - 33) & 0x3) << 6) | ((data[3] - 33))); \
 data += 4; \
 }
 
-
-
-
 struct Dimensions {
     int width;
     int height;
@@ -36,6 +33,7 @@ private:
 public:
     Sprite();
     Sprite(spriteSheet sprite);
+    Sprite(spriteSheet sprite, point origin);
     Sprite(int width, int height, const char *pixels);
     Sprite(int width, int height, point origin, const char *pixels);
     
