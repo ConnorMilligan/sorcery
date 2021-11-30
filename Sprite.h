@@ -6,6 +6,7 @@
 #define GRAPHICS_SPRITE_H
 
 #include "Quad.h"
+#include "spriteSheet.h"
 
 //How large the quad representing a pixel will be drawn
 #define PIXEL_SIZE 2
@@ -18,12 +19,7 @@ pixel[2] = ((((data[2] - 33) & 0x3) << 6) | ((data[3] - 33))); \
 data += 4; \
 }
 
-struct spriteSheet {
-    std::string name;
-	int width;
-	int height;
-	char const *sprite;
-};
+
 
 
 struct Dimensions {

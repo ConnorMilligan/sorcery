@@ -42,7 +42,7 @@ Screens currScreen;
 
 string consoleText, levelUpText;
 
-Sprite gameLogo(menuLogo.width, menuLogo.height, {50,100}, menuLogo.sprite);
+Sprite gameLogo(menuLogo);
 
 
 void init() {
@@ -50,7 +50,7 @@ void init() {
     screen.surroundingProcessor();
     combat.setMonster(&monster);
     srand(time(0));
-
+    gameLogo.setCoords({50,100});
 }
 
 /* Initialize OpenGL Graphics */
