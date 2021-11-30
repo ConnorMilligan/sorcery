@@ -19,6 +19,7 @@ data += 4; \
 }
 
 struct spriteSheet {
+    std::string name;
 	int width;
 	int height;
 	char const *sprite;

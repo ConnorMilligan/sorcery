@@ -1,15 +1,11 @@
 #include "graphics.h"
 #include "dungeonLayouts.h"
-#include "Sprite.h"
 #include "spriteSheet.h"
 
 #include "Viewer.h"
 #include "Console.h"
 #include "CombatViewer.h"
 #include "Menu.h"
-
-#include "Player.h"
-#include "Monster.h"
 
 #include <iostream>
 #include <time.h>
@@ -28,7 +24,7 @@ vector<string> combatOptions = {"Attack", "Defend", "Run"};
 
 Dungeon dungeon(fungeon2, {8,6});
 Player player({1, 8} , dungeon, playerName);
-Monster monster(Sprite(testSprite), 1);
+Monster monster(1);
 
 //The various windows that will display on the screen
 Viewer screen({BLACK}, {10, 10}, 440, 280, &player);

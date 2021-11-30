@@ -1,4 +1,4 @@
-/*  GIMP header image file format (RGB): /home/connor/Documents/Untitled.h  */
+char const *menuLogoName = "Menu logo";
 
 int menuLogoWidth = 265;
 int menuLogoHeight = 65;

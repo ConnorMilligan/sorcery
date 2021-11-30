@@ -20,6 +20,8 @@ class Monster : public Actor {
 private:
     monstSprites sprites;
     point coordinates;
+
+    void determineMonster();
 public:
     Monster();
     Monster(int level);
