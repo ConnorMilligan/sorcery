@@ -20,17 +20,20 @@ std::string CombatViewer::playerTurn(std::string action) {
 
     std::string result = "";
 
-
     if(action == "Attack") {
         this->monster->changeHealth(this->player->getStats().attack);
         result = "You dealt " + std::to_string(this->player->getStats().attack) + " damage to the " + this->monster->getName() + "!\n" + this->monsterTurn();
     } else if(action == "Defend") {
-        this->player->getStats();
+
+        unsigned int defense = this->player->getStats().defense;
+        this->player->changeHealth(this->monster->getStats().attack-defense);
         result = "You defend, taking 0 points of damage";
+
     } else {
         result = "You abscond, taking 1 point of damage";
         this->player->changeHealth(-1);
         active = false;
+        return result;
     }
 
     // Ensure combat is active by both players having health
