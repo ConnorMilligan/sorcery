@@ -23,10 +23,12 @@ public:
 
 
     std::string attack();
+    //Handles the choice of the player
     std::string playerTurn(std::string action);
 
     std::string monsterTurn();
 
+    //Returns if combat is currently active
     bool isActive();
 
     void draw() const;

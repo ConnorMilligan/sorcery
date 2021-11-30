@@ -10,19 +10,23 @@
 #include "Sprite.h"
 
 //I want to make this so that it will eventually use 2 sprites, one for the head and another for the body.
+
+struct monstSprites {
+    Sprite head;
+    Sprite body;
+};
+
 class Monster : public Actor {
 private:
-    Sprite sprite;
+    monstSprites sprites;
     point coordinates;
 public:
     Monster();
     Monster(int level);
-    Monster(Sprite sprite);
-    Monster(Sprite sprite, int level);
 
     void setCoordinates(point coordinates);
 
-    Sprite getSprite();
+    monstSprites getSprites();
     void draw();
 };
 

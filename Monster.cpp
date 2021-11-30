@@ -10,7 +10,7 @@ std::vector<std::string> randNames = {"The Fool","The Magician","The High Priest
 Monster::Monster() : Actor() {
 
     srand(time(0));
-    this->sprite = Sprite();
+    this->sprites.body = Sprite();
     this->coordinates = {0,0};
 
     int rn = rand() % randNames.size();
@@ -19,28 +19,19 @@ Monster::Monster() : Actor() {
 }
 
 Monster::Monster(int level) : Actor(level) {
-    this->sprite = Sprite();
-    this->coordinates = {0,0};
-}
-
-Monster::Monster(Sprite sprite) {
-    this->sprite = Sprite();
-    this->coordinates = {0,0};
-}
-
-Monster::Monster(Sprite sprite, int level) : Actor(level) {
-    this->sprite = sprite;
+    this->sprites.body = Sprite();
     this->coordinates = {0,0};
 }
 
 void Monster::setCoordinates(point coords) {
-    this->sprite.setCoords(coords);
+    this->sprites.body.setCoords(coords);
 }
 
-Sprite Monster::getSprite() {
-    return this->sprite;
+monstSprites Monster::getSprites() {
+    return this->sprites;
 }
 
 void Monster::draw() {
-    sprite.draw();
+    sprites.head.draw();
+    sprites.body.draw();
 }
