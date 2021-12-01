@@ -56,7 +56,7 @@ void Viewer::surroundingProcessor() {
 // int height - desired height of the wall
 //
 //
-void Viewer::drawWall(bool left, int width, int height) {
+void Viewer::drawWall(bool left, int width, int height, int a) {
 
     bool diag = true; // Should diagonal start at top or bottom?
 
@@ -126,7 +126,7 @@ void Viewer::drawWall(bool left, int width, int height) {
 
 }
 // Returns a point where the wall is finished drawing
-point Viewer::drawWall(std::string direction, bool inf) {
+point Viewer::drawWall(std::string direction, bool inf, bool open) {
 
     bool diag = true; // Should diagonal start at top or bottom?
     float tWidth = width/2;
@@ -151,6 +151,7 @@ point Viewer::drawWall(std::string direction, bool inf) {
     float yBEnd; // The bottom of y's lower corner
 
     bool condition = true;
+    bool openCondition = open;
 
         // If we want a long hallway, we check for height and width of our new piece to be small enough
         // Otherwise, we check for each to reach 1/3 of the screen, for a 1/3 gap
@@ -164,23 +165,30 @@ point Viewer::drawWall(std::string direction, bool inf) {
         yTEnd = Quad::getTopY() + newHt + offsetY;
         yBEnd = Quad::getBottomY() - newHt - offsetY;
 
-        // Vertical lines to split walls
-        glVertex2i(xStart, yTStart);
-        glVertex2i(xEnd, yTEnd);
-
-        glVertex2i(xEnd, yTEnd);
-        glVertex2i(xEnd, yBEnd);
-
-        // Horizontal lines adjoining ceiling
-        glVertex2i(xStart, yBStart);
-        glVertex2i(xEnd, yBEnd);
-
-        if(diag) {
             glVertex2i(xStart, yTStart);
-            glVertex2i(xEnd,yBEnd);
-        } else {
             glVertex2i(xStart, yBStart);
+
+        if(openCondition) {
+
+            // Vertical lines to split walls
+            glVertex2i(xStart, yTStart);
             glVertex2i(xEnd, yTEnd);
+
+            glVertex2i(xEnd, yTEnd);
+            glVertex2i(xEnd, yBEnd);
+
+            // Horizontal lines adjoining ceiling
+            glVertex2i(xStart, yBStart);
+            glVertex2i(xEnd, yBEnd);
+
+            if (diag) {
+                glVertex2i(xStart, yTStart);
+                glVertex2i(xEnd, yBEnd);
+            } else {
+                glVertex2i(xStart, yBStart);
+                glVertex2i(xEnd, yTEnd);
+            }
+
         }
 
         offsetX += tWidth;
@@ -195,7 +203,8 @@ point Viewer::drawWall(std::string direction, bool inf) {
 
         diag = !diag;
         condition = inf ? tHeight > 1 && tWidth > 15 : (left && xStart < end) || (!left && xStart > ((float)width-end));
-
+        openCondition = (left && !(xStart > width/5 && xEnd < ((2*width)/5))) ||
+                        (!left && !(xStart < (4*width)/5 && xEnd > (3*width)/5));
     }
 
     return {(int)xStart, (int)yTEnd};
@@ -221,8 +230,8 @@ void Viewer::draw() {
     glColor3f(WHITE);
 
 
-    point rEnd = r ? drawWall("R", true) : drawWall("R", false);
-    point lEnd = l ? drawWall("L", true) : drawWall("L", false);
+    point rEnd = r ? drawWall("R", true, false) : drawWall("R", false, true);
+    point lEnd = l ? drawWall("L", true, false) : drawWall("L", false, true);
     int bottom = Quad::getBottomY();
 
     if(f) {
