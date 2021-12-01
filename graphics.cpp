@@ -1,6 +1,6 @@
 #include "graphics.h"
 #include "dungeonLayouts.h"
-#include "spriteSheet.h"
+#include "SpriteSheet.h"
 
 #include "Viewer.h"
 #include "Console.h"
@@ -39,10 +39,9 @@ Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
 enum Screens { STARTING_SCREEN, SETUP_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN };
 Screens currScreen;
 
+SpriteSheet sprites;
 
 string consoleText, levelUpText;
-
-Sprite gameLogo;
 
 
 void init() {
@@ -50,7 +49,6 @@ void init() {
     screen.surroundingProcessor();
     combat.setMonster(&monster);
     srand(time(0));
-    gameLogo = Sprite(menuLogo, {50,100});
 }
 
 /* Initialize OpenGL Graphics */
@@ -79,7 +77,7 @@ void display() {
 
         string label = "Press \'Enter\' to begin.";
         messageWriter(width/2 - (4 * label.length()), height/2 + 200, label);
-        gameLogo.draw();
+        sprites.getGameLogo().draw();
 
     } else if(currScreen == SETUP_SCREEN) {
 

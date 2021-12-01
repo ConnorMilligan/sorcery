@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 #include "Actor.h"
-#include "Sprite.h"
+#include "SpriteSheet.h"
 
 //I want to make this so that it will eventually use 2 sprites, one for the head and another for the body.
 
