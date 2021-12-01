@@ -32,7 +32,8 @@ public:
 
     //Ideally the plan with this is to use recursion to look further ahead of the player.
     //This means that a model will have to be designed to shrink the standard wall drawing and move it into the distance.
-    virtual void drawWall(bool left, int width, int height, int a);
+    virtual void drawWall(bool l, bool r, bool f);
+    virtual void wallHelper(float xStart, float xEnd, float yTStart, float yTEnd, float yBStart, float yBEnd, bool diag);
     virtual point drawWall(std::string direction, bool inf, bool open);
 };
 
