@@ -136,8 +136,8 @@ void Viewer::drawWall(bool l, bool r, bool f) {
             glVertex2i(xLEnd, yTEnd);
             glVertex2i(xLStart, yTEnd);
 
-            glVertex2i(xREnd, yBEnd);
-            glVertex2i(xRStart, yBEnd);
+            glVertex2i(xLEnd, yBEnd);
+            glVertex2i(xLStart, yBEnd);
         }
         if(!(curr == 1 && !r)) { // Regular wall forward
             wallHelper(xRStart, xREnd, yTStart, yTEnd, yBStart, yBEnd, diag);
@@ -179,7 +179,13 @@ void Viewer::drawWall(bool l, bool r, bool f) {
 
 
     }
-
+//    if(!f) {
+//        glVertex2i(xLStart, yTEnd+(offsetY/6));
+//        glVertex2i(xRStart, yTEnd+(offsetY/6));
+//
+//        glVertex2i(xLStart, yBEnd-(offsetY/6));
+//        glVertex2i(xRStart, yBEnd-(offsetY/6));
+//    }
 
 
 }
