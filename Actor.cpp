@@ -49,7 +49,7 @@ std::string Actor::levelUp() {
     newLevel.luck = rand() % 3 + 1;
 
     this->health.max += newHealth;
-    this->health.current = newHealth;
+    this->health.current += newHealth;
     this->stats.attack += newLevel.attack;
     this->stats.defense += newLevel.defense;
     this->stats.speed += newLevel.speed;

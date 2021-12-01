@@ -31,6 +31,8 @@ public:
     //Returns if combat is currently active
     bool isActive();
 
+    void toggleState();
+
     void draw() const;
 };
 

@@ -5,7 +5,7 @@ CombatViewer::CombatViewer(color fill, point center, unsigned int width, unsigne
 
 CombatViewer::CombatViewer(color fill, point center, unsigned int width, unsigned int height, Player *player) : Window(fill, center, width, height) {
     this->player = player;
-    this->active = true;
+    this->active = false;
 }
 
 void CombatViewer::setMonster(Monster *newMonster) {
@@ -22,7 +22,7 @@ std::string CombatViewer::playerTurn(std::string action) {
     std::string result = "";
 
     if(action == "Attack") {
-        this->monster->changeHealth(this->player->getStats().attack);
+        this->monster->changeHealth(-this->player->getStats().attack);
         result = "You dealt " + std::to_string(this->player->getStats().attack) + " damage to the " + this->monster->getName() + "!\n" + this->monsterTurn();
     } else if(action == "Defend") {
 
@@ -48,11 +48,16 @@ std::string CombatViewer::monsterTurn() {
     return "* The " + this->monster->getName() + " dealt " + std::to_string(this->player->getStats().attack) + " to you!";
 }
 
+bool CombatViewer::isActive() {
+    return active;
+}
+
+void CombatViewer::toggleState() {
+    this->active = !active;
+}
+
 void CombatViewer::draw() const {
     Window::draw();
     this->monster->setCoordinates({this->getCenter().x-32, this->getCenter().y-80});
     monster->draw();
-}
-bool CombatViewer::isActive() {
-    return active;
 }

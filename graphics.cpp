@@ -123,8 +123,6 @@ void display() {
 
     } else if(currScreen == COMBAT_SCREEN) {
 
-        if(combat.isActive()) {
-
         info.draw();
         console.draw();
         combat.draw();
@@ -139,15 +137,9 @@ void display() {
         //Draw the combat menu over the infobox
         combatMenu.draw();
 
-        if (levelUpText != "") {
-            levelingWindow.draw();
-            levelingWindow.write(levelUpText);
-        }
-
-        } else {
-            if(player.getHealth().current > 0 && monster.getHealth().current <= 0) levelUpText = "LEVEL UP";
+        if(player.getHealth().current <= 0 || monster.getHealth().current <= 0)
             currScreen = player.getHealth().current > 0 ? MAIN_SCREEN : ENDING_SCREEN;
-        }
+        
 
     } else if(currScreen == ENDING_SCREEN) {
 
