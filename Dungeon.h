@@ -21,6 +21,7 @@ public:
     //Returns the value of the tile at a given point.
     bool getTile(int x, int y);
     bool getTile(point point);
+    std::string getMapText(int width, point pos);
     point getEnd();
 };
 

@@ -13,6 +13,7 @@ enum Direction { NORTH, EAST, SOUTH, WEST };
 
 class Player : public Actor {
 private:
+    int score;
     point location;
     Direction direction;
     Dungeon dungeon;
@@ -28,6 +29,7 @@ public:
     Dungeon getDungeon();
     Direction getDirection();
     std::string getDirectionString();
+    int getScore();
 
     //Movement
     void turnRight();

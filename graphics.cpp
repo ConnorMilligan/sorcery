@@ -34,6 +34,7 @@ CombatViewer combat({BLACK}, {10, 10}, 440, 280, &player);
 Menu combatMenu({BLACK}, {460, 300}, 170, 170, combatOptions);
 
 Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
+Window miniMap({BLACK}, {int(width)/2-150, 0}, 300, (int)(height));
 
 //Determine the current screen to be displayed
 enum Screens { STARTING_SCREEN, SETUP_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN };
@@ -41,7 +42,7 @@ Screens currScreen;
 
 SpriteSheet sprites;
 
-string consoleText, levelUpText;
+string consoleText, levelUpText, mapText;
 
 
 void init() {
@@ -103,7 +104,8 @@ void display() {
             console.addMessage("* " + consoleText);
             consoleText = "";
         }
-            
+
+
 
         //info.write( "Location: (" + to_string(player.getLocation().x) + ',' + to_string(player.getLocation().y) + ')' + "  \nFacing: " + player.getDirectionString());
         info.write(player.playerInfo());
@@ -114,6 +116,11 @@ void display() {
         if (levelUpText != "") {
             levelingWindow.draw();
             levelingWindow.write(levelUpText);
+        }
+        // You can only check your minimap in the main dungeon
+        if(mapText != "") {
+            miniMap.draw();
+            miniMap.write(mapText);
         }
 
     } else if(currScreen == COMBAT_SCREEN) {
@@ -135,6 +142,7 @@ void display() {
         if(!combat.isActive()) {
             if(monster.getHealth().current <= 0) {
                 consoleText = "You felled the " + monster.getName() + "!";
+                levelUpText = player.levelUp();
             }
             currScreen = player.getHealth().current > 0 ? MAIN_SCREEN : ENDING_SCREEN;
         }
@@ -179,6 +187,11 @@ void kbd(unsigned char key, int x, int y) {
         levelUpText = player.levelUp();
         consoleText = "You level up!";
     }
+    if (key == 'm') {
+        mapText = mapText.empty() ? dungeon.getMapText(miniMap.getWidth(),player.getLocation()) : "";
+    } else { // Put map away on any other keystroke
+        mapText = "";
+    }
     if (key == 'j') {
         currScreen = COMBAT_SCREEN;
         consoleText = "You encountered the " + monster.getName() + "!";
@@ -197,6 +210,7 @@ void kbd(unsigned char key, int x, int y) {
 
 void kbdS(int key, int x, int y) {
     if(currScreen == MAIN_SCREEN) {
+        mapText = ""; // Put map away on any movement
         screen.surroundingProcessor();
 
         switch (key) {

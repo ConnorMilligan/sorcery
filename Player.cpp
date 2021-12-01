@@ -2,16 +2,19 @@
 
 
 Player::Player() : Actor() {
+    this->score = 0;
     this->location = {0,0};
     this->direction = NORTH;
     this->dungeon = Dungeon();
 }
 
 Player::Player(point location, Dungeon dungeon) : Actor() {
+    this->score = 0;
     this->location = location;
     this->dungeon = dungeon;
 }
 Player::Player(point location, Dungeon dungeon, std::string name) : Actor() {
+    this->score = 0;
     this->location = location;
     this->dungeon = dungeon;
     this->setName(name);
@@ -38,6 +41,9 @@ Dungeon Player::getDungeon() {
 
 Direction Player::getDirection() {
     return this->direction;
+}
+int Player::getScore() {
+    return this->score;
 }
 
 std::string Player::getDirectionString() {
@@ -138,7 +144,7 @@ void Player::retreat() {
 }
 
 std::string Player::playerInfo() {
-    return "Name: " + this->getName() + "\nLevel: " + std::to_string(this->getLevel()) + "\nHealth: " + std::to_string(this->getHealth().current) + '/' + std::to_string(this->getHealth().max) +
+    return "Name: " + this->getName() + "\nLevel: " + std::to_string(this->getLevel()) + "\nScore: " + std::to_string(this->getScore()) + "\nHealth: " + std::to_string(this->getHealth().current) + '/' + std::to_string(this->getHealth().max) +
     "\n\n - Stats - \nAttack: " + std::to_string(this->getStats().attack) + "\nDefense: " + std::to_string(this->getStats().defense) + "\nSpeed: " + std::to_string(this->getStats().speed) + "\nLuck: " + std::to_string(this->getStats().luck)
     + "\n\n - Location -\nCords: (" + std::to_string(this->getLocation().x) + ',' + std::to_string(this->getLocation().y) + ')' + "  \nFacing: " + this->getDirectionString();
 }
