@@ -35,7 +35,7 @@ void Console::draw() {
 
         //Will push the new text if the message given is multi-line
         for (int j = 1; j < newLineCount(messageBuffer[i]); j++)
-            buffer.append("\n");
+            buffer.append("\n\n");
     }
     this->write({GREY}, buffer);
 }

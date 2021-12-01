@@ -22,8 +22,24 @@ std::string CombatViewer::playerTurn(std::string action) {
     std::string result = "";
 
     if(action == "Attack") {
-        this->monster->changeHealth(-this->player->getStats().attack);
-        result = "You dealt " + std::to_string(this->player->getStats().attack) + " damage to the " + this->monster->getName() + "!\n" + this->monsterTurn();
+
+        float range = this->player->getStats().attack;
+
+        // As luck increases, so do the odds of a # [0,10] falling between [0,luck];
+        int modifier = (rand() % 10) <= this->player->getStats().luck ? 2 : 1;
+
+
+        result = modifier > 1 ? "Critical hit! " : "";
+
+        // Damage range is [attack/2, (3/2)*attack] * modifier
+        int damage = (ceil(rand() % (int)ceil(range))+range/2)*modifier;
+
+        //damage -= this->monster->getStats().defense;
+
+        this->monster->changeHealth(-damage);
+
+        result += "You dealt " + std::to_string(damage) + " damage to the " + this->monster->getName() + "!\n" + this->monsterTurn();
+
     } else if(action == "Defend") {
 
         unsigned int defense = this->player->getStats().defense;
@@ -44,8 +60,10 @@ std::string CombatViewer::playerTurn(std::string action) {
 }
 
 std::string CombatViewer::monsterTurn() {
-    this->player->changeHealth(-this->monster->getStats().attack);
-    return "* The " + this->monster->getName() + " dealt " + std::to_string(this->player->getStats().attack) + " to you!";
+    int damage = this->monster->getStats().attack-(this->player->getStats().defense/2);
+    if(damage < 0) damage = 0;
+    this->player->changeHealth(-damage);
+    return "* The " + this->monster->getName() + " dealt " + std::to_string(damage) + " to you!";
 }
 
 bool CombatViewer::isActive() {
