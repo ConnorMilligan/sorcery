@@ -99,14 +99,6 @@ void display() {
         screen.surroundingProcessor();
 
 
-        //console.write("Surroundings: " + to_string(dungeon.getTile(screen.getSurroundings().left)) + " " +
-        //                        to_string(dungeon.getTile(screen.getSurroundings().front)) + " " +
-        //                        to_string(dungeon.getTile(screen.getSurroundings().right)));
-        if (combat.isActive()) {
-            consoleText = "You felled the " + monster.getName() + "!";
-            combat.toggleState();
-        }
-
         if (consoleText != "") {
             console.addMessage("* " + consoleText);
             consoleText = "";
@@ -140,9 +132,13 @@ void display() {
         //Draw the combat menu over the infobox
         combatMenu.draw();
 
-        if(player.getHealth().current <= 0 || monster.getHealth().current <= 0)
+        if(!combat.isActive()) {
+            if(monster.getHealth().current <= 0) {
+                consoleText = "You felled the " + monster.getName() + "!";
+            }
             currScreen = player.getHealth().current > 0 ? MAIN_SCREEN : ENDING_SCREEN;
-        
+        }
+
 
     } else if(currScreen == ENDING_SCREEN) {
 
@@ -189,7 +185,6 @@ void kbd(unsigned char key, int x, int y) {
     }
     if ((key == 13) && currScreen == COMBAT_SCREEN) {
 
-        //consoleText = combat.attack();
         consoleText = combat.playerTurn(combatMenu.getChoice());
 
     }

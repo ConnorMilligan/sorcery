@@ -12,11 +12,6 @@ void CombatViewer::setMonster(Monster *newMonster) {
     this->monster = newMonster;
 }
 
-std::string CombatViewer::attack() {
-    this->monster->changeHealth(-this->player->getStats().attack);
-    return "You dealt " + std::to_string(this->player->getStats().attack) + " damage to the " + this->monster->getName() + "!\n" + this->monsterTurn();
-}
-
 std::string CombatViewer::playerTurn(std::string action) {
 
     std::string result = "";
@@ -49,7 +44,7 @@ std::string CombatViewer::playerTurn(std::string action) {
     } else {
         result = "You abscond, taking 1 point of damage";
         this->player->changeHealth(-1);
-        active = false;
+        this->toggleState();
         return result;
     }
 
