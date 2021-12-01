@@ -50,7 +50,7 @@ std::string CombatViewer::monsterTurn() {
 
 void CombatViewer::draw() const {
     Window::draw();
-    this->monster->setCoordinates(this->getCenter());
+    this->monster->setCoordinates({this->getCenter().x-32, this->getCenter().y-80});
     monster->draw();
 }
 bool CombatViewer::isActive() {

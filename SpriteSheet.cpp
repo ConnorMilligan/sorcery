@@ -2,8 +2,11 @@
 
 #include "sprites/menuLogo.h"
 
+//Monster head sprites
+#include "sprites/mHead_hawk.h"
+
 //Monster body sprites
-#include "sprites/mBody_man.h"
+#include "sprites/mBody_weightLifter.h"
 
 SpriteSheet::SpriteSheet() {
 	this->gameLogo = Sprite({
@@ -13,27 +16,20 @@ SpriteSheet::SpriteSheet() {
 		menuLogoSprite
 	}, {50,100});
 
+	//Adding in the monster heads
 	this->monsterHeads.push_back({
-		"test sprite",
-		15,
-		10,
-		"`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!!&E!!&E!!&E!!&E!!&E!`Q!!"
-		"`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!!&E!!&E!!&E!!&E!!&E!`Q!!`Q!!"
-		"!!$``Q!!`Q!!`Q!!`Q!!!!$``Q!!`Q!!!&E!!&E!!&E!!&E!!&E!`Q!!`Q!!`Q!!"
-		"`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!!&E!!&E!!&E!!&E!!&E!`Q!!`Q!!`Q!!`Q!!"
-		"`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!!&E!!&E!!&E!!&E!!&E!`Q!!!!$``Q!!`Q!!`Q!!"
-		"`Q!!`Q!!`Q!!!!$``Q!!!&E!!&E!!&E!!&E!!&E!`Q!!`Q!!!!$`!!$`!!$`!!$`"
-		"!!$`!!$``Q!!`Q!!!&E!!&E!!&E!!&E!!&E!`Q!!`Q!!`Q!!!!$`!!$`!!$`!!$`"
-		"`Q!!`Q!!`Q!!!&E!!&E!!&E!!&E!!&E!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!"
-		"`Q!!`Q!!!&E!!&E!!&E!!&E!!&E!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!`Q!!"
-		"`Q!!!&E!!&E!!&E!!&E!!&E!"
+		mHead_hawkName,
+		mHead_hawkWidth,
+		mHead_hawkHeight,
+		mHead_hawkSprite
 	});
 
+	//Adding in the monsterBodies
 	this->monsterBodies.push_back({
-		mBody_manName,
-		mBody_manWidth,
-		mBody_manHeight,
-		mBody_manSprite
+		mBody_weightLifterName,
+		mBody_weightLifterWidth,
+		mBody_weightLifterHeight,
+		mBody_weightLifterSprite
 	});
 }
 

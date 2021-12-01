@@ -11,8 +11,9 @@
 void Monster::determineMonster() {
     SpriteSheet loadSprites;
 
-    spriteSheet head = loadSprites.getMonsterHeads()[0];
-    spriteSheet body = loadSprites.getMonsterBodies()[0];
+    srand(time(0));
+    spriteSheet head = loadSprites.getMonsterHeads()[rand() % loadSprites.getMonsterHeads().size()];
+    spriteSheet body = loadSprites.getMonsterBodies()[rand() % loadSprites.getMonsterBodies().size()];
 
     this->sprites.head = Sprite(head);
     this->sprites.body = Sprite(body);
@@ -21,10 +22,10 @@ void Monster::determineMonster() {
 }
 
 Monster::Monster() : Actor() {
-
-    srand(time(0));
     determineMonster();
     this->coordinates = {0,0};
+    this->sprites.head.setCoords({coordinates.x, coordinates.y});
+    this->sprites.body.setCoords({coordinates.x, coordinates.y+16});
 
     //int rn = rand() % randNames.size();
     //this->setName(randNames[rn]);
@@ -34,10 +35,13 @@ Monster::Monster() : Actor() {
 Monster::Monster(int level) : Actor(level) {
     determineMonster();
     this->coordinates = {0,0};
+    this->sprites.head.setCoords(coordinates);
+    this->sprites.body.setCoords({coordinates.x, coordinates.y+32});
 }
 
 void Monster::setCoordinates(point coords) {
-    this->sprites.body.setCoords(coords);
+    this->sprites.head.setCoords(coords);
+    this->sprites.body.setCoords({coords.x, coords.y+32});
 }
 
 monstSprites Monster::getSprites() {
@@ -45,6 +49,6 @@ monstSprites Monster::getSprites() {
 }
 
 void Monster::draw() {
-    sprites.head.draw();
     sprites.body.draw();
+    sprites.head.draw();
 }
