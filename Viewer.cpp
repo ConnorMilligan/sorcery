@@ -203,7 +203,7 @@ point Viewer::drawWall(std::string direction, bool inf, bool open) {
 
         diag = !diag;
         condition = inf ? tHeight > 1 && tWidth > 15 : (left && xStart < end) || (!left && xStart > ((float)width-end));
-        openCondition = !open && ((left && !(xStart > width/5 && xEnd < ((2*width)/5))) ||
+        wallCondition = !open && ((left && !(xStart > width/5 && xEnd < ((2*width)/5))) ||
                         (!left && !(xStart < (4*width)/5 && xEnd > (3*width)/5)));
     }
 
