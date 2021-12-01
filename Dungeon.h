@@ -7,6 +7,9 @@
 #include <vector>
 #include "Quad.h"
 
+//The encounter rate in the dungeon out of 100 (percentage per movement)
+#define ENCOUNTER_RATE 25
+
 class Dungeon {
 private:
     std::vector<std::vector<bool>> layout;

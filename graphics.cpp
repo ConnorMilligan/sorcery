@@ -93,8 +93,6 @@ void display() {
 
     } else if(currScreen == MAIN_SCREEN) {
 
-
-
         screen.draw();
         info.draw();
         console.draw();
@@ -104,6 +102,11 @@ void display() {
         //console.write("Surroundings: " + to_string(dungeon.getTile(screen.getSurroundings().left)) + " " +
         //                        to_string(dungeon.getTile(screen.getSurroundings().front)) + " " +
         //                        to_string(dungeon.getTile(screen.getSurroundings().right)));
+        if (combat.isActive()) {
+            consoleText = "You felled the " + monster.getName() + "!";
+            combat.toggleState();
+        }
+
         if (consoleText != "") {
             console.addMessage("* " + consoleText);
             consoleText = "";
@@ -182,7 +185,7 @@ void kbd(unsigned char key, int x, int y) {
     }
     if (key == 'j') {
         currScreen = COMBAT_SCREEN;
-        consoleText = "You encountered " + monster.getName() + "!";
+        consoleText = "You encountered the " + monster.getName() + "!";
     }
     if ((key == 13) && currScreen == COMBAT_SCREEN) {
 
@@ -216,6 +219,12 @@ void kbdS(int key, int x, int y) {
                 break;
             case GLUT_KEY_UP:
                 player.advance() ? consoleText = "You advance!" : consoleText = "Ouch! You can't walk into a wall!";
+                if (ENCOUNTER_RATE > rand() % 100) {
+                    currScreen = COMBAT_SCREEN;
+                    monster = Monster(player.getLevel());
+                    consoleText = "You encountered the " + monster.getName() + "!";
+                    combat.toggleState();
+                }
                 break;
         }
 
