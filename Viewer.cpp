@@ -54,82 +54,159 @@ void Viewer::surroundingProcessor() {
 // left - boolean denoting if this is the left, or inferrable right wall
 // int width - desired width of the wall
 // int height - desired height of the wall
-// int slices - amount of wall panels to generate along the width
-//
-// known bugs: the algorithm is a little janky, and does not currently generate a wall of desired width
-// it currently generates a wall with a width of:
-// summation of n/slices * width
-// So for width = 500 and slices = 3, it generates 500+250+125 = 875px
 //
 //
-void Viewer::drawWall(bool left, int width, int height, int slices) {
-
-
+void Viewer::drawWall(bool left, int width, int height) {
 
     bool diag = true; // Should diagonal start at top or bottom?
 
 
+    width -= width/2;
+    height /= 2;
+
+    float offsetX = 0;
+    float offsetY = 0;
+
+    float xStart = left ? Quad::getLeftX() + offsetX : Quad::getRightX() - offsetX;
+    float xEnd = left ? Quad::getLeftX() + width + offsetX : Quad::getRightX() - width - offsetX;
+
+    while(width > 1 && height > 1) {
 
 
-    int offsetX = 0;
-    int offsetY = 0;
 
-    for(int i=slices-1;i>=0;i--) {
+        float newHt = height / 2;
 
-//        width -= ((i/slices)*width);
-//        height -= ((i/slices)*height);
-
-//        width *= i/slices;
-//        height *= i/slices;
-
-        int xStart = left ? Quad::getLeftX() + width + offsetX : Quad::getRightX() - width - offsetX;
-        int xEnd = left ? Quad::getLeftX() + offsetX : Quad::getRightX() - offsetX;
 
 //        int yStart = Quad::getTopY() + height + offsetY;
 //        int yEnd = Quad::getBottomY() - height - offsetY;
-        int yStart = Quad::getTopY() + height + offsetY;
-        int yEnd = Quad::getBottomY() - height - offsetY;
-
+        float yTStart = Quad::getTopY() + offsetY;
+        float yBStart = Quad::getBottomY() - offsetY;
+        float yTEnd = Quad::getTopY() + newHt + offsetY;
+        float yBEnd = Quad::getBottomY() - newHt - offsetY;
 
         // Vertical lines to split walls
-        glVertex2i(xStart, yEnd);
-        glVertex2i(xStart, yStart);
+        glVertex2i(xStart, yTStart);
+        glVertex2i(xEnd, yTEnd);
+
+        glVertex2i(xEnd, yTEnd);
+        glVertex2i(xEnd, yBEnd);
 
         // Horizontal lines adjoining ceiling
-        glVertex2i(xStart, yStart);
-        glVertex2i(xEnd,Quad::getTopY()+offsetY);
+        glVertex2i(xStart, yBStart);
+        glVertex2i(xEnd, yBEnd);
 
         if(diag) {
-            glVertex2i(xStart, yStart);
-            glVertex2i(xEnd,getBottomY()-offsetY);
+            glVertex2i(xStart, yTStart);
+            glVertex2i(xEnd,yBEnd);
         } else {
-            glVertex2i(xEnd, getTopY()+offsetY);
-            glVertex2i(xStart,yEnd);
+            glVertex2i(xStart, yBStart);
+            glVertex2i(xEnd, yTEnd);
         }
+//
+//        glVertex2i(xStart, yEnd);
+//        glVertex2i(xEnd,Quad::getBottomY()-offsetY);
 
-        glVertex2i(xStart, yEnd);
-        glVertex2i(xEnd,Quad::getBottomY()-offsetY);
-
+        //float ht = Quad::getBottomY() - Quad::getTopY();
         offsetX += width;
-        offsetY += height;
+        offsetY = Quad::getBottomY()-yBEnd;
+
+        width -= width/2;
+        height = newHt;
 
 
-        width /= 2;
-        height /= 2;
+
+
+        xStart = left ? (Quad::getLeftX() + offsetX) : (Quad::getRightX() - offsetX);
+        xEnd = left ? (Quad::getLeftX() + width + offsetX) : (Quad::getRightX() - width - offsetX);
 
 
         diag = !diag;
 
     }
 
+}
+// Returns a point where the wall is finished drawing
+point Viewer::drawWall(std::string direction, bool inf) {
 
+    bool diag = true; // Should diagonal start at top or bottom?
+    float tWidth = width/2;
+    float tHeight = height/2;
+
+    float end = (float)width/5;
+
+    bool left = direction == "L";
+
+    tWidth -= tWidth/2;
+    tHeight /= 2;
+
+    float offsetX = 0;
+    float offsetY = 0;
+
+    float xStart = left ? Quad::getLeftX() + offsetX : Quad::getRightX() - offsetX;
+    float xEnd = left ? Quad::getLeftX() + tWidth + offsetX : Quad::getRightX() - tWidth - offsetX;
+
+    float yTStart; // The top of y's upper corner
+    float yBStart; // The bottom of y's upper corner
+    float yTEnd; // The top of y's upper corner
+    float yBEnd; // The bottom of y's lower corner
+
+    bool condition = true;
+
+        // If we want a long hallway, we check for height and width of our new piece to be small enough
+        // Otherwise, we check for each to reach 1/3 of the screen, for a 1/3 gap
+        while(condition) {
+
+        // Next generation's height for pre-emptive end point
+        float newHt = tHeight / 2;
+
+        yTStart = Quad::getTopY() + offsetY;
+        yBStart = Quad::getBottomY() - offsetY;
+        yTEnd = Quad::getTopY() + newHt + offsetY;
+        yBEnd = Quad::getBottomY() - newHt - offsetY;
+
+        // Vertical lines to split walls
+        glVertex2i(xStart, yTStart);
+        glVertex2i(xEnd, yTEnd);
+
+        glVertex2i(xEnd, yTEnd);
+        glVertex2i(xEnd, yBEnd);
+
+        // Horizontal lines adjoining ceiling
+        glVertex2i(xStart, yBStart);
+        glVertex2i(xEnd, yBEnd);
+
+        if(diag) {
+            glVertex2i(xStart, yTStart);
+            glVertex2i(xEnd,yBEnd);
+        } else {
+            glVertex2i(xStart, yBStart);
+            glVertex2i(xEnd, yTEnd);
+        }
+
+        offsetX += tWidth;
+        offsetY = Quad::getBottomY()-yBEnd;
+
+        tWidth -= tWidth/2;
+        tHeight = newHt;
+
+        xStart = left ? (Quad::getLeftX() + offsetX) : (Quad::getRightX() - offsetX);
+        xEnd = left ? (Quad::getLeftX() + tWidth + offsetX) : (Quad::getRightX() - tWidth - offsetX);
+
+
+        diag = !diag;
+        condition = inf ? tHeight > 1 && tWidth > 15 : (left && xStart < end) || (!left && xStart > ((float)width-end));
+
+    }
+
+    return {(int)xStart, (int)yTEnd};
 
 }
 
 
 
 
-void Viewer::draw() const {
+
+void Viewer::draw() {
     Window::draw();
 
     point left = this->surrounding.left;
@@ -143,42 +220,68 @@ void Viewer::draw() const {
     glBegin(GL_LINES);
     glColor3f(WHITE);
 
-    glVertex2i(Quad::getLeftX() + 140, Quad::getTopY() + 50);
-    glVertex2i(Quad::getLeftX() + 140, Quad::getBottomY());
 
-    glVertex2i(Quad::getRightX() - 140, Quad::getTopY() + 50);
-    glVertex2i(Quad::getRightX() - 140, Quad::getBottomY());
+    point rEnd = r ? drawWall("R", true) : drawWall("R", false);
+    point lEnd = l ? drawWall("L", true) : drawWall("L", false);
+    int bottom = Quad::getBottomY();
+
+    if(f) {
+        glVertex2i(rEnd.x, rEnd.y);
+        glVertex2i(lEnd.x, lEnd.y);
+
+        glVertex2i(rEnd.x, bottom-rEnd.y);
+        glVertex2i(lEnd.x, bottom-rEnd.y);
+    }
+
+//    if(!f) {
+//        point lEnd = drawWall("L", true);
+//        point rEnd = drawWall("R", true);
+//    }
+//    point lEnd = drawWall("L", true);
+//    point rEnd = drawWall("R", false);
+//
+//    glVertex2i(rEnd.x, rEnd.y);
+//    glVertex2i(lEnd.x, rEnd.y);
+//
+//    glVertex2i(rEnd.x, Quad::getBottomY()-rEnd.y+6);
+//    glVertex2i(lEnd.x, Quad::getBottomY()-rEnd.y+6);
+
+//    glVertex2i(Quad::getLeftX() + 140, Quad::getTopY() + 50);
+//    glVertex2i(Quad::getLeftX() + 140, Quad::getBottomY());
+//
+//    glVertex2i(Quad::getRightX() - 140, Quad::getTopY() + 50);
+//    glVertex2i(Quad::getRightX() - 140, Quad::getBottomY());
 
     // Standard wall width open and closed
     int wwc = 90;
     int wwo = 50;
 
-    if (l) {
-        glVertex2i(Quad::getLeftX() + 40, Quad::getTopY());
-        glVertex2i(Quad::getLeftX() + 40, Quad::getBottomY());
-
-        glVertex2i(Quad::getLeftX() + 140, Quad::getTopY() + 50);
-        glVertex2i(Quad::getLeftX() + 40, Quad::getTopY());
-    } else {
-        glVertex2i(Quad::getLeftX() + 140, Quad::getTopY() + 50);
-        glVertex2i(Quad::getLeftX(), Quad::getTopY() + 50);
-    }
-
-    if (r) {
-        glVertex2i(Quad::getRightX() - 40, Quad::getTopY());
-        glVertex2i(Quad::getRightX() - 40, Quad::getBottomY());
-
-        glVertex2i(Quad::getRightX() - 140, Quad::getTopY() + 50);
-        glVertex2i(Quad::getRightX() - 40, Quad::getTopY());
-    } else {
-        glVertex2i(Quad::getRightX() - 140, Quad::getTopY() + 50);
-        glVertex2i(Quad::getRightX(), Quad::getTopY() + 50);
-    }
-
-    if (f) { 
-        glVertex2i(Quad::getRightX() - 140, Quad::getTopY() + 50);
-        glVertex2i(Quad::getLeftX() + 140, Quad::getTopY() + 50);
-    }
+//    if (l) {
+//        glVertex2i(Quad::getLeftX() + 40, Quad::getTopY());
+//        glVertex2i(Quad::getLeftX() + 40, Quad::getBottomY());
+//
+//        glVertex2i(Quad::getLeftX() + 140, Quad::getTopY() + 50);
+//        glVertex2i(Quad::getLeftX() + 40, Quad::getTopY());
+//    } else {
+//        glVertex2i(Quad::getLeftX() + 140, Quad::getTopY() + 50);
+//        glVertex2i(Quad::getLeftX(), Quad::getTopY() + 50);
+//    }
+//
+//    if (r) {
+//        glVertex2i(Quad::getRightX() - 40, Quad::getTopY());
+//        glVertex2i(Quad::getRightX() - 40, Quad::getBottomY());
+//
+//        glVertex2i(Quad::getRightX() - 140, Quad::getTopY() + 50);
+//        glVertex2i(Quad::getRightX() - 40, Quad::getTopY());
+//    } else {
+//        glVertex2i(Quad::getRightX() - 140, Quad::getTopY() + 50);
+//        glVertex2i(Quad::getRightX(), Quad::getTopY() + 50);
+//    }
+//
+//    if (f) {
+//        glVertex2i(Quad::getRightX() - 140, Quad::getTopY() + 50);
+//        glVertex2i(Quad::getLeftX() + 140, Quad::getTopY() + 50);
+//    }
 
 
     // Front wall generation

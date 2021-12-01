@@ -28,11 +28,12 @@ public:
 
     //This will return point at the left, right and front of the player.
     void surroundingProcessor();
-    virtual void draw() const;
+    virtual void draw();
 
     //Ideally the plan with this is to use recursion to look further ahead of the player.
     //This means that a model will have to be designed to shrink the standard wall drawing and move it into the distance.
-    virtual void drawWall(bool left, int width, int height, int slices);
+    virtual void drawWall(bool left, int width, int height);
+    virtual point drawWall(std::string direction, bool inf);
 };
 
 
