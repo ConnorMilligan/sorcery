@@ -236,7 +236,7 @@ void kbdS(int key, int x, int y) {
                 }
                 break;
         }
-
+    dungeon.setVisited(player.getLocation());
     }
     else if(currScreen == COMBAT_SCREEN) {
         switch (key) {

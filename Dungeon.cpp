@@ -8,8 +8,18 @@ Dungeon::Dungeon() {
 Dungeon::Dungeon(std::vector<std::vector<bool>> layout, point end) {
     this->layout = layout;
     this->end = end;
-}
+    this->visited = layout;
 
+    for(int y=0;y<layout.size();y++) {
+        for(int x=0;x<layout[0].size();x++) {
+            visited[y][x] = true; // Because walls are read in as true, so will unexplored areas be
+        }
+
+    }
+}
+void Dungeon::setVisited(point p) {
+    visited[p.y][p.x] = false; // haha this seems backwards right?
+}
 bool Dungeon::getTile(int x, int y) {
     return this->layout[y][x];
 }
@@ -23,13 +33,17 @@ point Dungeon::getEnd() {
 }
 std::string Dungeon::getMapText(int width, point pos) {
 
-    std::string map = "-- DUNGEON MAP --\n";
-    for(int y=0;y<layout.size();y++) {
-        for(int x=0;x<layout[0].size();x++) {
+    // Each character width
+    float padding = width/10;
+
+    std::string map = "        -- DUNGEON MAP --\n       ";
+    for(int y=0;y<visited.size();y++) {
+        for(int x=0;x<visited[0].size();x++) {
             if(y == pos.y && x == pos.x) map += "O ";
-            else map += layout[y][x] ? "_ " : "X ";
+            else map += visited[y][x] ? "_ " : "X ";
         }
-        map += "\n";
+        map += "\n       ";
     }
+    map += "\nO - PLAYER\nX - EXPLORED\n_ - UNEXPLORED";
     return map;
 }

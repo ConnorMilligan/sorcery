@@ -13,6 +13,7 @@
 class Dungeon {
 private:
     std::vector<std::vector<bool>> layout;
+    std::vector<std::vector<bool>> visited;
     point end;
 public:
     Dungeon();
@@ -23,6 +24,7 @@ public:
     bool getTile(point point);
     std::string getMapText(int width, point pos);
     point getEnd();
+    void setVisited(point p);
 };
 
 #endif
