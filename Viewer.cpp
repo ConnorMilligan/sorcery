@@ -151,7 +151,7 @@ point Viewer::drawWall(std::string direction, bool inf, bool open) {
     float yBEnd; // The bottom of y's lower corner
 
     bool condition = true;
-    bool openCondition = open;
+    bool wallCondition = !open; // Is a wall drawn here
 
         // If we want a long hallway, we check for height and width of our new piece to be small enough
         // Otherwise, we check for each to reach 1/3 of the screen, for a 1/3 gap
@@ -168,7 +168,7 @@ point Viewer::drawWall(std::string direction, bool inf, bool open) {
             glVertex2i(xStart, yTStart);
             glVertex2i(xStart, yBStart);
 
-        if(openCondition) {
+        if(wallCondition) {
 
             // Vertical lines to split walls
             glVertex2i(xStart, yTStart);
@@ -203,8 +203,8 @@ point Viewer::drawWall(std::string direction, bool inf, bool open) {
 
         diag = !diag;
         condition = inf ? tHeight > 1 && tWidth > 15 : (left && xStart < end) || (!left && xStart > ((float)width-end));
-        openCondition = (left && !(xStart > width/5 && xEnd < ((2*width)/5))) ||
-                        (!left && !(xStart < (4*width)/5 && xEnd > (3*width)/5));
+        openCondition = !open && ((left && !(xStart > width/5 && xEnd < ((2*width)/5))) ||
+                        (!left && !(xStart < (4*width)/5 && xEnd > (3*width)/5)));
     }
 
     return {(int)xStart, (int)yTEnd};
