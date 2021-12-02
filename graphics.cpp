@@ -212,7 +212,7 @@ void display() {
             if(monster.getHealth().current <= 0) {
                 consoleText = "You felled the " + monster.getName() + "!";
                 player.changeScore(2);
-                levelUpText = player.levelUp();
+                consoleText = player.addXp(monster.getLevel()*1.5);
             }
             currScreen = player.getHealth().current > 0 ? MAIN_SCREEN : ENDING_SCREEN;
         }

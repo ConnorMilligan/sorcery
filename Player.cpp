@@ -107,11 +107,11 @@ std::string Player::addXp(int xp) {
 }
 
 int Player::getXp() {
-    return (this->nextLvlXp() - this->xp > 0) ? (this->nextLvlXp() - this->xp) : 0;
+    return this->xp;
 }
 
 std::string Player::levelUp() {
-    this->xp = this->xp;
+    this->xp = (this->nextLvlXp() - this->xp > 0) ? (this->nextLvlXp() - this->xp) : 0;
     return Actor::levelUp();
 }
 
