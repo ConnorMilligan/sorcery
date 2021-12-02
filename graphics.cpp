@@ -153,6 +153,7 @@ void display() {
     } else if(currScreen == ENDING_SCREEN) {
 
         string label = player.getHealth().current > 0 ? "You Win!" : "Game Over :(";
+        label += " Score: " + to_string(player.getScore());
         messageWriter(width/2 - (4 * label.length()), height/2, label);
 
     }
