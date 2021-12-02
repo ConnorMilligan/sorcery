@@ -31,6 +31,9 @@ bool Dungeon::getTile(point point) {
 point Dungeon::getEnd() {
     return this->end;
 }
+bool Dungeon::isVisited(point p) {
+    return !visited[p.y][p.x];
+}
 std::string Dungeon::getMapText(int width, point pos) {
 
     // Each character width

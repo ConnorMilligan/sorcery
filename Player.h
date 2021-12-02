@@ -32,6 +32,7 @@ public:
     Direction getDirection();
     std::string getDirectionString();
     int getScore();
+    void changeScore(int dc);
 
     //Movement
     void turnRight();

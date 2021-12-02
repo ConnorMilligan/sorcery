@@ -24,6 +24,7 @@ public:
     bool getTile(point point);
     std::string getMapText(int width, point pos);
     point getEnd();
+    bool isVisited(point p);
     void setVisited(point p);
 };
 
