@@ -53,8 +53,9 @@ public:
     bool advance();
     void retreat();
 
-    //Info as an actior
+    //Info as an actor
     std::string playerInfo();
+    std::string playerInfoDetailed();
 };
 
 #endif

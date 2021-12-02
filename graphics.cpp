@@ -48,12 +48,11 @@ Menu quitSelector({BLACK}, {int(width)/2 - 50, int(height)/2 - 50}, 100, 100, {"
 //Some misc windows present in the game
 Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
 Window miniMap({BLACK}, {int(width)/2-150, 0}, 300, int(height));
-
-
+Window statsWindow({BLACK}, {int(width)/2-150, 0}, 300, int(height));
 
 
 //Determine the current screen to be displayed
-enum Screens { STARTING_SCREEN, SETUP_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN, QUIT_SCREEN, MINIMAP, INVENTORY, INVENTORY_SELECT };
+enum Screens { STARTING_SCREEN, SETUP_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN, QUIT_SCREEN, MINIMAP, INVENTORY, INVENTORY_SELECT, STATS };
 Screens currScreen, previousScreen, floatingWindow;
 
 //The object containing all sprites
@@ -156,7 +155,7 @@ void display() {
 
         currScreen = (player.getLocation().x == dungeon.getEnd().x) && (player.getLocation().y == dungeon.getEnd().y) ? ENDING_SCREEN :  MAIN_SCREEN;
 
-
+        //Will display the level up text if the string has been created
         if (levelUpText != "") {
             levelingWindow.draw();
             levelingWindow.write(levelUpText);
@@ -165,6 +164,12 @@ void display() {
         if(floatingWindow == MINIMAP) {
             miniMap.draw(); 
             miniMap.write(dungeon.getMapText(miniMap.getWidth(),player.getLocation()));
+        }
+
+        // Displays detailed player information
+        if(floatingWindow == STATS) {
+            statsWindow.draw(); 
+            statsWindow.write(player.playerInfoDetailed());
         }
 
         //Draws inventory if flag is up
@@ -314,8 +319,14 @@ void kbd(unsigned char key, int x, int y) {
         //i key brings up a inventory
         if (key == 'i') {
             floatingWindow = INVENTORY;
-        } 
-        if (key == 27 && floatingWindow == INVENTORY) { //removes with ESC
+        } else if (key == 27 && floatingWindow == INVENTORY) { //removes with ESC
+            floatingWindow = MAIN_SCREEN;
+        }
+
+        //p key brings up a detailed stats window
+        if (key == 'p') {
+            floatingWindow = STATS;
+        } else if (key == 27 && floatingWindow == STATS) { //removes with ESC
             floatingWindow = MAIN_SCREEN;
         }
         
