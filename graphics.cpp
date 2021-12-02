@@ -315,8 +315,8 @@ void kbd(unsigned char key, int x, int y) {
     
         //m key brings up a minimap
         if (key == 'm') {
-            floatingWindow = MINIMAP;
-        } else if (floatingWindow == MINIMAP){ // Put map away on any other keystroke
+            floatingWindow = floatingWindow == MINIMAP ? MAIN_SCREEN : MINIMAP;
+        } else {
             floatingWindow = MAIN_SCREEN;
         }
 

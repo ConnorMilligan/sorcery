@@ -38,9 +38,9 @@ std::string Dungeon::getMapText(point start, point pos) {
 
     // Each character width
     // 34 characters will fit on this screen
-    float padding = (31-visited.size())/2 - visited.size()/2;
+    float padding = (33-visited.size())/2 - visited.size()/2;
     std::string empty = "";
-    std::string title = "~~ DUNGEON MAP ~~";
+    std::string title = " ~~ DUNGEON MAP ~~";
     for(int i=0;i<padding;i++) empty += " ";
 
     std::string map = empty + title;
