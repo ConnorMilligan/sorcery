@@ -227,3 +227,6 @@ std::string Player::playerInfoDetailed() {
     return "xp (" + std::to_string(this->xp) + ", " + std::to_string(this->nextLvlXp()) + ")\n"
             "xp to next level: " + std::to_string(this->nextLvlXp() - this->xp);
 }
+std::string Player::helpString() {
+
+}

@@ -68,6 +68,7 @@ public:
     //Info as an actor
     std::string playerInfo();
     std::string playerInfoDetailed();
+    std::string helpString();
 };
 
 #endif

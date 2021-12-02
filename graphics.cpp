@@ -49,10 +49,10 @@ Menu quitSelector({BLACK}, {int(width)/2 - 50, int(height)/2 - 50}, 100, 100, {"
 Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
 Window miniMap({BLACK}, {int(width)/2-150, 0}, 300, int(height));
 Window statsWindow({BLACK}, {int(width)/2-150, 0}, 300, int(height));
-
+Window helpWindow({BLACK}, {int(width)/2-150, 0}, 300, int(height));
 
 //Determine the current screen to be displayed
-enum Screens { STARTING_SCREEN, SETUP_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN, QUIT_SCREEN, MINIMAP, INVENTORY, INVENTORY_SELECT, STATS };
+enum Screens { STARTING_SCREEN, SETUP_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN, QUIT_SCREEN, MINIMAP, INVENTORY, INVENTORY_SELECT, STATS, HELP };
 Screens currScreen, previousScreen, floatingWindow;
 
 //The object containing all sprites
@@ -168,6 +168,11 @@ void display() {
         if(floatingWindow == MINIMAP) {
             miniMap.draw(); 
             miniMap.write(dungeon.getMapText(player.getStartLocation(),player.getLocation()));
+        }
+
+        if(floatingWindow == HELP) {
+            helpWindow.draw();
+            helpWindow.write("abcdef");
         }
 
         // Displays detailed player information
@@ -312,11 +317,18 @@ void kbd(unsigned char key, int x, int y) {
     * ~Main Screen~
     */
     if (currScreen == MAIN_SCREEN) {
-    
+
+        //h key brings up help menu
+        if (key == 'h') {
+            floatingWindow = floatingWindow == HELP ? MAIN_SCREEN : HELP;
+        } else {
+            floatingWindow = MAIN_SCREEN;
+        }
+
         //m key brings up a minimap
         if (key == 'm') {
             floatingWindow = floatingWindow == MINIMAP ? MAIN_SCREEN : MINIMAP;
-        } else {
+        } else if (key == 27 && floatingWindow == MINIMAP) { //removes with ESC
             floatingWindow = MAIN_SCREEN;
         }
 
