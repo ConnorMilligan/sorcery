@@ -5,10 +5,12 @@
 //Monster head sprites
 #include "sprites/mHead_hawk.h"
 #include "sprites/mHead_cat.h"
+#include "sprites/mHead_froggy.h"
 
 //Monster body sprites
 #include "sprites/mBody_weightLifter.h"
 #include "sprites/mBody_octopus.h"
+#include "sprites/mBody_clown.h"
 
 SpriteSheet::SpriteSheet() {
 	this->gameLogo = Sprite({
@@ -33,6 +35,13 @@ SpriteSheet::SpriteSheet() {
 		mHead_catSprite
 	});
 
+	this->monsterHeads.push_back({
+		mHead_froggyName,
+		mHead_froggyWidth,
+		mHead_froggyHeight,
+		mHead_froggySprite
+	});
+
 	//Adding in the monsterBodies
 	this->monsterBodies.push_back({
 		mBody_weightLifterName,
@@ -46,6 +55,13 @@ SpriteSheet::SpriteSheet() {
 		mBody_octopusWidth,
 		mBody_octopusHeight,
 		mBody_octopusSprite
+	});
+
+	this->monsterBodies.push_back({
+		mBody_clownName,
+		mBody_clownWidth,
+		mBody_clownHeight,
+		mBody_clownSprite
 	});
 }
 
