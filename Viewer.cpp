@@ -134,24 +134,28 @@ void Viewer::drawWall(bool l, bool r, bool f) {
         if(!((curr == 2 || curr == 1) && !l)) { // Regular wall forward
             wallHelper(xLStart, xLEnd, yTStart, yTEnd, yBStart, yBEnd, diag);
         } else { // Break in wall
-            if(curr == 1) {
+//            if(curr == 1) {
+//
+////                int tYTEnd = Quad::getTopY() + (newHt/2) + offsetY;
+////                int tYBEnd = Quad::getBottomY() - (newHt/2)- offsetY;
+//                glVertex2i(xLEnd, yTEnd);
+//                glVertex2i(xLStart, yTEnd);
+//
+//                glVertex2i(xLEnd, yBEnd);
+//                glVertex2i(xLStart, yBEnd);
+//            } else {
+//                glVertex2i(xLEnd, yTEnd);
+//                glVertex2i(xLStart, yTEnd);
+//
+//                glVertex2i(xLEnd, yBEnd);
+//                glVertex2i(xLStart, yBEnd);
+//            }
 
-//                int tYTEnd = Quad::getTopY() + (newHt/2) + offsetY;
-//                int tYBEnd = Quad::getBottomY() - (newHt/2)- offsetY;
-                glVertex2i(xLEnd, yTEnd);
-                glVertex2i(xLStart, yTEnd);
+            glVertex2i(xLEnd, yTEnd);
+            glVertex2i(xLStart, yTEnd);
 
-                glVertex2i(xLEnd, yBEnd);
-                glVertex2i(xLStart, yBEnd);
-            } else {
-                glVertex2i(xLEnd, yTEnd);
-                glVertex2i(xLStart, yTEnd);
-
-                glVertex2i(xLEnd, yBEnd);
-                glVertex2i(xLStart, yBEnd);
-            }
-
-
+            glVertex2i(xLEnd, yBEnd);
+            glVertex2i(xLStart, yBEnd);
 
 //            glVertex2i(xLEnd, yTEnd);
 //            glVertex2i(Quad::getLeftX(), yTEnd);

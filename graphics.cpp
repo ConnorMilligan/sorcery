@@ -143,6 +143,7 @@ void display() {
         if(!combat.isActive()) {
             if(monster.getHealth().current <= 0) {
                 consoleText = "You felled the " + monster.getName() + "!";
+                player.changeScore(2);
                 levelUpText = player.levelUp();
             }
             currScreen = player.getHealth().current > 0 ? MAIN_SCREEN : ENDING_SCREEN;
@@ -237,7 +238,11 @@ void kbdS(int key, int x, int y) {
                 }
                 break;
         }
-    dungeon.setVisited(player.getLocation());
+        if(!dungeon.isVisited(player.getLocation())) {
+            dungeon.setVisited(player.getLocation());
+            player.changeScore(1);
+        }
+
     }
     else if(currScreen == COMBAT_SCREEN) {
         switch (key) {
