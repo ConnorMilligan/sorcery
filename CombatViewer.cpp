@@ -42,8 +42,12 @@ std::string CombatViewer::playerTurn(std::string action) {
         result = "You defend, taking 0 points of damage";
 
     } else {
-        result = "You abscond, taking 1 point of damage";
-        this->player->changeHealth(-1);
+        result = "You abscond, taking ";
+        result += std::to_string(this->player->getLevel());
+        result += this->player->getLevel() > 1 ? " points " : " point ";
+        result += "of damage";
+
+        this->player->changeHealth(this->player->getLevel());
         this->toggleState();
         return result;
     }

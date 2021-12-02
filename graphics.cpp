@@ -278,6 +278,7 @@ void kbd(unsigned char key, int x, int y) {
     if (key == 'j') {
         currScreen = COMBAT_SCREEN;
         consoleText = "You encountered the " + monster.getName() + "!";
+        combat.toggleState();
     }
 
     //a adds a potion to the player (testing)
