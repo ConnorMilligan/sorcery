@@ -228,5 +228,23 @@ std::string Player::playerInfoDetailed() {
             "xp to next level: " + std::to_string(this->nextLvlXp() - this->xp);
 }
 std::string Player::helpString() {
+    std::string help = "";
+    help += "xp (" + std::to_string(this->xp) + ", " + std::to_string(this->nextLvlXp()) + ")\n"
+    + "xp to next level: " + std::to_string(this->nextLvlXp() - this->xp);
 
+    help += "\n\n~~ Controls ~~";
+    help += "\n(h) Display Help Menu";
+    help += "\n(m) Show Minimap";
+    help += "\n(i) Show Inventory";
+    help += "\n(p) Show Player Stats";
+    help += "\n\n~~ Testing Functions ~~";
+    help += "\n(For Cheating!!)";
+    help += "\n(k) Level Up";
+    help += "\n(j) Initiate Combat";
+    help += "\n(a) Add Potion to Inventory";
+
+
+
+
+    return help;
 }

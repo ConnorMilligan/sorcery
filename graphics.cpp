@@ -172,7 +172,7 @@ void display() {
 
         if(floatingWindow == HELP) {
             helpWindow.draw();
-            helpWindow.write("abcdef");
+            helpWindow.write(player.helpString());
         }
 
         // Displays detailed player information
