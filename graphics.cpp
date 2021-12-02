@@ -21,8 +21,6 @@ int wd;
 
 // Default player name before change
 string playerName = "Actor";
-vector<string> combatOptions = {"Attack", "Defend", "Run"};
-
 
 Dungeon dungeon(fungeon2, {8,6});
 Player player({1, 8} , dungeon, playerName);
@@ -33,14 +31,15 @@ Viewer screen({BLACK}, {10, 10}, 440, 280, &player);
 Window info({BLACK}, {460, 10}, 170, 460);
 Console console({BLACK}, {10, 300}, 440, 170);
 CombatViewer combat({BLACK}, {10, 10}, 440, 280, &player);
-Menu combatMenu({BLACK}, {460, 300}, 170, 170, combatOptions);
+Menu combatMenu({BLACK}, {460, 300}, 170, 170, {"Attack", "Defend", "Run"});
 Menu inventoryMenu({BLACK}, {int(width)/2-150, 0}, 300, (int)(height));
+Menu inventorySelector({BLACK}, {int(width)/2+160, 0}, 100, 100, {"Use", "Drop"});
 
 Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
 Window miniMap({BLACK}, {int(width)/2-150, 0}, 300, (int)(height));
 
 //Determine the current screen to be displayed
-enum Screens { STARTING_SCREEN, SETUP_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN, MINIMAP, INVENTORY };
+enum Screens { STARTING_SCREEN, SETUP_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN, MINIMAP, INVENTORY, INVENTORY_SELECT };
 Screens currScreen, floatingWindow;
 
 //The object containing all sprites
@@ -132,9 +131,11 @@ void display() {
         }
 
         //Draws inventory if flag is up
-        if(floatingWindow == INVENTORY) {
+        if(floatingWindow == INVENTORY || floatingWindow == INVENTORY_SELECT) {
             inventoryMenu.setChoices(player.getInventoryString());
             inventoryMenu.draw();
+            if (floatingWindow == INVENTORY_SELECT)
+                inventorySelector.draw();
         }
 
     } else if(currScreen == COMBAT_SCREEN) {
@@ -176,7 +177,7 @@ void display() {
 
 void kbd(unsigned char key, int x, int y) {
     // escape
-    if (key == 27) {
+    if (key == 27 && floatingWindow != INVENTORY && floatingWindow != INVENTORY_SELECT) {
         glutDestroyWindow(wd);
         exit(0);
     }
@@ -208,14 +209,15 @@ void kbd(unsigned char key, int x, int y) {
     //m key brings up a minimap
     if (key == 'm') {
         floatingWindow = MINIMAP;
-    } else { // Put map away on any other keystroke
+    } else if (floatingWindow == MINIMAP){ // Put map away on any other keystroke
         floatingWindow = MAIN_SCREEN;
     }
 
     //i key brings up a inventory
     if (key == 'i') {
         floatingWindow = INVENTORY;
-    } else if (key == 'q') { // Put map away on any other keystroke
+    } 
+    if (key == 27 && floatingWindow == INVENTORY) { //removes with ESC
         floatingWindow = MAIN_SCREEN;
     }
 
@@ -231,12 +233,21 @@ void kbd(unsigned char key, int x, int y) {
         consoleText = player.addItem(testPotion);
     }
     
+    //Open the submenu in the inventory
+    if ((key == 13) && floatingWindow == INVENTORY) {
+        floatingWindow = INVENTORY_SELECT;
+    } else if ((key == 27) && floatingWindow == INVENTORY_SELECT) {
+        floatingWindow = INVENTORY;
+    } else if ((key == 13) && floatingWindow == INVENTORY_SELECT) {
+        if (inventorySelector.getChoice() == "Drop") {
+            consoleText = player.removeItem(inventoryMenu.getSelection()) + " has been discarded!";
+        }
+        floatingWindow = INVENTORY;
+    }
 
     //When in combat make selection on combat menu
     if ((key == 13) && currScreen == COMBAT_SCREEN) {
-
         consoleText = combat.playerTurn(combatMenu.getChoice());
-
     }
 
 
@@ -246,7 +257,7 @@ void kbd(unsigned char key, int x, int y) {
 }
 
 void kbdS(int key, int x, int y) {
-    if(currScreen == MAIN_SCREEN) {
+    if(currScreen == MAIN_SCREEN && floatingWindow != INVENTORY && floatingWindow != INVENTORY_SELECT) {
         screen.surroundingProcessor();
 
         switch (key) {
@@ -278,7 +289,7 @@ void kbdS(int key, int x, int y) {
         }
 
     }
-    else if(currScreen == COMBAT_SCREEN) {
+    else if(currScreen == COMBAT_SCREEN && floatingWindow != INVENTORY) {
         switch (key) {
             case GLUT_KEY_DOWN:
                 combatMenu.choiceDown();
@@ -288,6 +299,28 @@ void kbdS(int key, int x, int y) {
                 break;
         }
 
+    }
+
+    else if(floatingWindow == INVENTORY) {
+        switch (key) {
+            case GLUT_KEY_DOWN:
+                inventoryMenu.choiceDown();
+                break;
+            case GLUT_KEY_UP:
+                inventoryMenu.choiceUp();
+                break;
+        }
+    }
+
+    else if(floatingWindow == INVENTORY_SELECT) {
+        switch (key) {
+            case GLUT_KEY_DOWN:
+                inventorySelector.choiceDown();
+                break;
+            case GLUT_KEY_UP:
+                inventorySelector.choiceUp();
+                break;
+        }
     }
 
     glutPostRedisplay();

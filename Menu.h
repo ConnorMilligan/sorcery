@@ -22,6 +22,7 @@ public:
     std::string getChoice();
 
     void setChoices(std::vector<std::string> choices);
+    int getSelection();
 
     void draw();
 };

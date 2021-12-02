@@ -26,6 +26,11 @@ void Menu::setChoices(std::vector<std::string> choices) {
     this->choices = choices;
 }
 
+int Menu::getSelection() {
+    return this->selection;
+}
+
+
 void Menu::draw() {
     Window::draw();
     std::string options, cursor;

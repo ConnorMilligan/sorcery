@@ -69,8 +69,22 @@ std::string Player::addItem(Item item) {
     return "You didn't have enough space to pick up the item!";
 }
 
+//There is almost certainly a better way of doing this
 std::string Player::removeItem(int index) {
-    return "";
+    std::vector<Item> newInventory;
+    std::string itemName;
+
+    for (int i = 0; i < this->inventory.size(); i++) {
+        if (i != index) {
+            newInventory.push_back(inventory[i]);
+        }
+        else {
+            itemName = inventory[i].getName();
+        }
+    }
+
+    this->inventory = newInventory;
+    return itemName;
 }
 
 std::string Player::getDirectionString() {
