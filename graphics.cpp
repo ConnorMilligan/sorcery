@@ -238,8 +238,11 @@ void kbd(unsigned char key, int x, int y) {
         floatingWindow = INVENTORY_SELECT;
     } else if ((key == 27) && floatingWindow == INVENTORY_SELECT) {
         floatingWindow = INVENTORY;
-    } else if ((key == 13) && floatingWindow == INVENTORY_SELECT) {
-        if (inventorySelector.getChoice() == "Drop") {
+    } else if ((key == 13) && floatingWindow == INVENTORY_SELECT) { //Handles the choice of the player
+        if (inventorySelector.getChoice() == "Use") {
+            consoleText = player.use(inventoryMenu.getSelection());
+        }
+        else if (inventorySelector.getChoice() == "Drop") {
             consoleText = player.removeItem(inventoryMenu.getSelection()) + " has been discarded!";
         }
         floatingWindow = INVENTORY;

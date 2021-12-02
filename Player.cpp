@@ -87,6 +87,16 @@ std::string Player::removeItem(int index) {
     return itemName;
 }
 
+std::string Player::use(int index) {
+    Item item = this->inventory[index];
+    if (typeid(item).name() != "Potion") {
+        this->changeHealth(15);
+        this->removeItem(index);
+        return "You quaff the " + item.getName() + ", healing you for 15 health!";
+    }
+    return "You interact with the " + item.getName() + "!";
+}
+
 std::string Player::getDirectionString() {
     switch (this->direction) {
         case NORTH:

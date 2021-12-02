@@ -6,9 +6,10 @@
 
 #include <vector>
 #include <string>
+#include <typeinfo>
 #include "Dungeon.h"
 #include "Actor.h"
-#include "Item.h"
+#include "Potion.h"
 
 #define MAX_ITEMS 9
 
@@ -42,6 +43,9 @@ public:
 
     std::string addItem(Item item);
     std::string removeItem(int index);
+
+    //to Drink a potion
+    std::string use(int index);
 
     //Movement
     void turnRight();

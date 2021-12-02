@@ -66,7 +66,7 @@ std::string Actor::levelUp() {
 }
 
 void Actor::changeHealth(int newHealth) {
-    this->health.current += newHealth;
+    this->health.current = this->health.current + newHealth < this->health.max ? (this->health.current + newHealth) : this->health.max;
 }
 
 std::string Actor::getName() {
