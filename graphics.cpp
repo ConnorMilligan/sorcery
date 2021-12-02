@@ -41,12 +41,13 @@ CombatViewer combat({BLACK}, {10, 10}, 440, 280, &player);
 
 //The menus used in the game
 Menu combatMenu({BLACK}, {460, 300}, 170, 170, {"Attack", "Defend", "Run"});
-Menu inventoryMenu({BLACK}, {int(width)/2-150, 0}, 300, (int)(height));
+Menu inventoryMenu({BLACK}, {int(width)/2-150, 0}, 300, int(height));
 Menu inventorySelector({BLACK}, {int(width)/2+160, 0}, 100, 100, {"Use", "Drop"});
+Menu quitSelector({BLACK}, {int(width)/2 - 50, int(height)/2 - 50}, 100, 100, {"Yes", "No"});
 
 //Some misc windows present in the game
 Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
-Window miniMap({BLACK}, {int(width)/2-150, 0}, 300, (int)(height));
+Window miniMap({BLACK}, {int(width)/2-150, 0}, 300, int(height));
 
 
 
@@ -217,6 +218,7 @@ void display() {
     else if(currScreen == QUIT_SCREEN) {
         string label = "Are you sure you want to quit SORCERY?";
         messageWriter(width/2 - (4 * label.length()), height/2 - 200, label);
+        quitSelector.draw();
 
     } 
     
@@ -239,51 +241,28 @@ void display() {
 }
 
 void kbd(unsigned char key, int x, int y) {
-    // escape
-    if (key == 27 && floatingWindow != INVENTORY && floatingWindow != INVENTORY_SELECT) {
+    /*
+    * ~Gobal~
+    */
+    // Will prompt the user if they wish to escape
+    if (key == 27 && currScreen != ENDING_SCREEN) {
+        currScreen = QUIT_SCREEN;
+    } else if (key == 27 && currScreen == ENDING_SCREEN) {
         glutDestroyWindow(wd);
         exit(0);
     }
-    if((key == 13) && currScreen == SETUP_SCREEN) {
-        player.setName(playerName);
-        currScreen = MAIN_SCREEN;
-    }
-    if((currScreen == SETUP_SCREEN) && key != 13) {
-        if(playerName.length() <= MAX_NAME_LEN && key != 8) {
-            playerName += key;
-        }
-        if(key == 8 && !playerName.empty()) {
-            playerName = playerName.substr(0,playerName.length()-1);
-        }
-    }
-    if ((key == 13) && currScreen == STARTING_SCREEN)
-        currScreen = SETUP_SCREEN;
-        //currScreen = MAIN_SCREEN; // Uncomment to bypass setup screen
-
+    //Dismisses level up notification
     if ((key == 13) && levelUpText != "")
         levelUpText = "";
 
+    /*
+    * ~Testing inputs~
+    */
     //k key levels up player (testing)
     if (key == 'k') {
         levelUpText = player.levelUp();
         consoleText = "You level up!";
     }
-
-    //m key brings up a minimap
-    if (key == 'm') {
-        floatingWindow = MINIMAP;
-    } else if (floatingWindow == MINIMAP){ // Put map away on any other keystroke
-        floatingWindow = MAIN_SCREEN;
-    }
-
-    //i key brings up a inventory
-    if (key == 'i') {
-        floatingWindow = INVENTORY;
-    } 
-    if (key == 27 && floatingWindow == INVENTORY) { //removes with ESC
-        floatingWindow = MAIN_SCREEN;
-    }
-
 
     //j key initiates combat (testing)
     if (key == 'j') {
@@ -295,23 +274,78 @@ void kbd(unsigned char key, int x, int y) {
     if (key == 'a') {
         consoleText = player.addItem(testPotion);
     }
-    
-    //Open the submenu in the inventory
-    if ((key == 13) && floatingWindow == INVENTORY) {
-        floatingWindow = INVENTORY_SELECT;
-    } else if ((key == 27) && floatingWindow == INVENTORY_SELECT) {
-        floatingWindow = INVENTORY;
-    } else if ((key == 13) && floatingWindow == INVENTORY_SELECT) { //Handles the choice of the player
-        if (inventorySelector.getChoice() == "Use") {
-            consoleText = player.use(inventoryMenu.getSelection());
+
+
+    /*
+    * ~Starting Screen~
+    */
+    //When ENTER is pressed the game will progress to the setup screen
+    if ((key == 13) && currScreen == STARTING_SCREEN)
+        currScreen = SETUP_SCREEN;
+        //currScreen = MAIN_SCREEN; // Uncomment to bypass setup screen
+
+    /*
+    * ~Setup Screen~
+    */
+    if (currScreen == SETUP_SCREEN) {
+
+        //Will progress from the title screen to the setup screen when the player presses ENTER
+        if((key == 13) && currScreen == SETUP_SCREEN) {
+            player.setName(playerName);
+            currScreen = MAIN_SCREEN;
         }
-        else if (inventorySelector.getChoice() == "Drop") {
-            consoleText = player.removeItem(inventoryMenu.getSelection()) + " has been discarded!";
+
+        //Checks for entered keys for entering the player name
+        else if(key != 13 && currScreen == SETUP_SCREEN) {
+            if(playerName.length() <= MAX_NAME_LEN && key != 8) {
+                playerName += key;
+            }
+            if(key == 8 && !playerName.empty()) {
+                playerName = playerName.substr(0,playerName.length()-1);
+            }
         }
-        floatingWindow = INVENTORY;
     }
 
-    //When in combat make selection on combat menu
+    /*
+    * ~Main Screen~
+    */
+    if (currScreen == MAIN_SCREEN) {
+    
+        //m key brings up a minimap
+        if (key == 'm') {
+            floatingWindow = MINIMAP;
+        } else if (floatingWindow == MINIMAP){ // Put map away on any other keystroke
+            floatingWindow = MAIN_SCREEN;
+        }
+
+        //i key brings up a inventory
+        if (key == 'i') {
+            floatingWindow = INVENTORY;
+        } 
+        if (key == 27 && floatingWindow == INVENTORY) { //removes with ESC
+            floatingWindow = MAIN_SCREEN;
+        }
+        
+        //Open the submenu in the inventory
+        if ((key == 13) && floatingWindow == INVENTORY) {
+            floatingWindow = INVENTORY_SELECT;
+        } else if ((key == 27) && floatingWindow == INVENTORY_SELECT) {
+            floatingWindow = INVENTORY;
+        } else if ((key == 13) && floatingWindow == INVENTORY_SELECT) { //Handles the choice of the player
+            if (inventorySelector.getChoice() == "Use") {
+                consoleText = player.use(inventoryMenu.getSelection());
+            }
+            else if (inventorySelector.getChoice() == "Drop") {
+                consoleText = player.removeItem(inventoryMenu.getSelection()) + " has been discarded!";
+            }
+            floatingWindow = INVENTORY;
+        }
+    }
+
+    /*
+    * ~Combat Screen~
+    */
+    //initiates player turn based on selected option
     if ((key == 13) && currScreen == COMBAT_SCREEN) {
         consoleText = combat.playerTurn(combatMenu.getChoice());
     }
@@ -323,9 +357,13 @@ void kbd(unsigned char key, int x, int y) {
 }
 
 void kbdS(int key, int x, int y) {
+    /*
+    * ~Main Screen~
+    */
     if(currScreen == MAIN_SCREEN && floatingWindow != INVENTORY && floatingWindow != INVENTORY_SELECT) {
         screen.surroundingProcessor();
 
+        //movement
         switch (key) {
             case GLUT_KEY_DOWN:
                 player.retreat();
@@ -355,6 +393,10 @@ void kbdS(int key, int x, int y) {
         }
 
     }
+
+    /*
+    * ~Combat Screen~
+    */
     else if(currScreen == COMBAT_SCREEN && floatingWindow != INVENTORY) {
         switch (key) {
             case GLUT_KEY_DOWN:
@@ -367,6 +409,9 @@ void kbdS(int key, int x, int y) {
 
     }
 
+    /*
+    * ~Inventory Menu~
+    */
     else if(floatingWindow == INVENTORY) {
         switch (key) {
             case GLUT_KEY_DOWN:
@@ -378,6 +423,9 @@ void kbdS(int key, int x, int y) {
         }
     }
 
+    /*
+    * ~Inventory Selection Menu~
+    */
     else if(floatingWindow == INVENTORY_SELECT) {
         switch (key) {
             case GLUT_KEY_DOWN:
