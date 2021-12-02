@@ -11,10 +11,10 @@
 
 class InventoryMenu : public Menu {
 private:
-    std::vector<Item> choices;
+    std::vector<Item> *itemChoices;
 public:
     InventoryMenu(color fill, point center, unsigned int width, unsigned int height);
-    InventoryMenu(color fill, point center, unsigned int width, unsigned int height, std::vector<Item> choices);
+    InventoryMenu(color fill, point center, unsigned int width, unsigned int height, std::vector<Item> *itemChoices);
 };
 
 
