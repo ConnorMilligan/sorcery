@@ -142,13 +142,17 @@ void display() {
         console.draw();
         screen.surroundingProcessor();
 
-
+        //Will write to the console if there is something to write
         if (consoleText != "") {
             console.addMessage("* " + consoleText);
             consoleText = "";
         }
 
-
+        //If the player levels up
+        if (player.getXp() >= player.nextLvlXp()) {
+            levelUpText = player.levelUp();
+            consoleText = "You level up!";
+        }
 
         //info.write( "Location: (" + to_string(player.getLocation().x) + ',' + to_string(player.getLocation().y) + ')' + "  \nFacing: " + player.getDirectionString());
         info.write(player.playerInfo());
@@ -267,8 +271,7 @@ void kbd(unsigned char key, int x, int y) {
     */
     //k key levels up player (testing)
     if (key == 'k') {
-        levelUpText = player.levelUp();
-        consoleText = "You level up!";
+        consoleText = player.addXp(1);;
     }
 
     //j key initiates combat (testing)

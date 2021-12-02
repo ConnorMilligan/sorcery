@@ -97,6 +97,24 @@ std::string Player::use(int index) {
     return "You interact with the " + item.getName() + "!";
 }
 
+int Player::nextLvlXp() {
+    return (XP_FACTOR * this->getLevel()) + 1;
+}
+
+std::string Player::addXp(int xp) {
+    this->xp += xp;
+    return "You gained " + std::to_string(xp) + " xp!";
+}
+
+int Player::getXp() {
+    return (this->nextLvlXp() - this->xp > 0) ? (this->nextLvlXp() - this->xp) : 0;
+}
+
+std::string Player::levelUp() {
+    this->xp = this->xp;
+    return Actor::levelUp();
+}
+
 std::string Player::getDirectionString() {
     switch (this->direction) {
         case NORTH:
@@ -201,7 +219,6 @@ std::string Player::playerInfo() {
 }
 
 std::string Player::playerInfoDetailed() {
-    return "Name: " + this->getName() + "\nLevel: " + std::to_string(this->getLevel()) + "\nScore: " + std::to_string(this->getScore()) + "\nHealth: " + std::to_string(this->getHealth().current) + '/' + std::to_string(this->getHealth().max) +
-    "\n\n - Stats - \nAttack: " + std::to_string(this->getStats().attack) + "\nDefense: " + std::to_string(this->getStats().defense) + "\nSpeed: " + std::to_string(this->getStats().speed) + "\nLuck: " + std::to_string(this->getStats().luck)
-    + "\n\n - Location -\nCords: (" + std::to_string(this->getLocation().x) + ',' + std::to_string(this->getLocation().y) + ')' + "  \nFacing: " + this->getDirectionString() + "\n(m) for Map";
+    return "xp (" + std::to_string(this->xp) + ", " + std::to_string(this->nextLvlXp()) + ")\n"
+            "xp to next level: " + std::to_string(this->nextLvlXp() - this->xp);
 }

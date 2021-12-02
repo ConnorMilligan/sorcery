@@ -12,11 +12,13 @@
 #include "Potion.h"
 
 #define MAX_ITEMS 9
+#define XP_FACTOR 2
 
 enum Direction { NORTH, EAST, SOUTH, WEST };
 
 class Player : public Actor {
 private:
+    int xp;
     int score;
     point location;
     Direction direction;
@@ -46,6 +48,14 @@ public:
 
     //to Drink a potion
     std::string use(int index);
+
+    //Checks the XP needed for the next level
+    int nextLvlXp();
+
+    std::string addXp(int xp);
+    int getXp();
+
+    std::string levelUp();
 
     //Movement
     void turnRight();
