@@ -26,20 +26,33 @@ Dungeon dungeon(fungeon2, {8,6});
 Player player({1, 8} , dungeon, playerName);
 Monster monster(1);
 
-//The various windows that will display on the screen
+/***
+ *     __      ___         _               
+ *     \ \    / (_)_ _  __| |_____ __ _____
+ *      \ \/\/ /| | ' \/ _` / _ \ V  V (_-<
+ *       \_/\_/ |_|_||_\__,_\___/\_/\_//__/
+ *                                         
+ * The various windows that will display on the screen
+ */
 Viewer screen({BLACK}, {10, 10}, 440, 280, &player);
 Window info({BLACK}, {460, 10}, 170, 460);
 Console console({BLACK}, {10, 300}, 440, 170);
 CombatViewer combat({BLACK}, {10, 10}, 440, 280, &player);
+
+//The menus used in the game
 Menu combatMenu({BLACK}, {460, 300}, 170, 170, {"Attack", "Defend", "Run"});
 Menu inventoryMenu({BLACK}, {int(width)/2-150, 0}, 300, (int)(height));
 Menu inventorySelector({BLACK}, {int(width)/2+160, 0}, 100, 100, {"Use", "Drop"});
 
+//Some misc windows present in the game
 Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
 Window miniMap({BLACK}, {int(width)/2-150, 0}, 300, (int)(height));
 
+
+
+
 //Determine the current screen to be displayed
-enum Screens { STARTING_SCREEN, SETUP_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN, MINIMAP, INVENTORY, INVENTORY_SELECT };
+enum Screens { STARTING_SCREEN, SETUP_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN, QUIT_SCREEN, MINIMAP, INVENTORY, INVENTORY_SELECT };
 Screens currScreen, floatingWindow;
 
 //The object containing all sprites
@@ -81,13 +94,28 @@ void display() {
     
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+    /***
+     *      ___ _            _     ___                      
+     *     / __| |_ __ _ _ _| |_  / __| __ _ _ ___ ___ _ _  
+     *     \__ \  _/ _` | '_|  _| \__ \/ _| '_/ -_) -_) ' \ 
+     *     |___/\__\__,_|_|  \__| |___/\__|_| \___\___|_||_|
+     *                                                      
+     */
     if(currScreen == STARTING_SCREEN) {
 
         string label = "Press \'Enter\' to begin.";
         messageWriter(width/2 - (4 * label.length()), height/2 + 200, label);
         sprites.getGameLogo().draw();
+    }
 
-    } else if(currScreen == SETUP_SCREEN) {
+    /***
+     *      ___      _               ___                      
+     *     / __| ___| |_ _  _ _ __  / __| __ _ _ ___ ___ _ _  
+     *     \__ \/ -_)  _| || | '_ \ \__ \/ _| '_/ -_) -_) ' \ 
+     *     |___/\___|\__|\_,_| .__/ |___/\__|_| \___\___|_||_|
+     *                       |_|                              
+     */
+    else if(currScreen == SETUP_SCREEN) {
 
         string label = "What is your name?";
         string next = "Press \'Enter\' to begin.";
@@ -97,9 +125,16 @@ void display() {
         messageWriter(width/2 - (4 * playerName.length()+1), height/2 + 50, playerName+"_");
 
         messageWriter(width/2 - (4 * next.length()), height/2 + 200, next);
-
-
-    } else if(currScreen == MAIN_SCREEN) {
+    } 
+    
+    /***
+     *      __  __      _        ___                      
+     *     |  \/  |__ _(_)_ _   / __| __ _ _ ___ ___ _ _  
+     *     | |\/| / _` | | ' \  \__ \/ _| '_/ -_) -_) ' \ 
+     *     |_|  |_\__,_|_|_||_| |___/\__|_| \___\___|_||_|
+     *                                                    
+     */
+    else if(currScreen == MAIN_SCREEN) {
 
         screen.draw();
         info.draw();
@@ -137,8 +172,16 @@ void display() {
             if (floatingWindow == INVENTORY_SELECT)
                 inventorySelector.draw();
         }
-
-    } else if(currScreen == COMBAT_SCREEN) {
+    } 
+    
+    /***
+     *       ___           _          _     ___                      
+     *      / __|___ _ __ | |__  __ _| |_  / __| __ _ _ ___ ___ _ _  
+     *     | (__/ _ \ '  \| '_ \/ _` |  _| \__ \/ _| '_/ -_) -_) ' \ 
+     *      \___\___/_|_|_|_.__/\__,_|\__| |___/\__|_| \___\___|_||_|
+     *                                                               
+     */
+    else if(currScreen == COMBAT_SCREEN) {
 
         info.draw();
         console.draw();
@@ -162,9 +205,29 @@ void display() {
             }
             currScreen = player.getHealth().current > 0 ? MAIN_SCREEN : ENDING_SCREEN;
         }
+    } 
+    
+    /***
+     *       ___       _ _     ___                      
+     *      / _ \ _  _(_) |_  / __| __ _ _ ___ ___ _ _  
+     *     | (_) | || | |  _| \__ \/ _| '_/ -_) -_) ' \ 
+     *      \__\_\\_,_|_|\__| |___/\__|_| \___\___|_||_|
+     *                                                  
+     */
+    else if(currScreen == QUIT_SCREEN) {
+        string label = "Are you sure you want to quit SORCERY?";
+        messageWriter(width/2 - (4 * label.length()), height/2 - 200, label);
 
-
-    } else if(currScreen == ENDING_SCREEN) {
+    } 
+    
+    /***
+     *      ___         _   ___                      
+     *     | __|_ _  __| | / __| __ _ _ ___ ___ _ _  
+     *     | _|| ' \/ _` | \__ \/ _| '_/ -_) -_) ' \ 
+     *     |___|_||_\__,_| |___/\__|_| \___\___|_||_|
+     *                                               
+     */
+    else if(currScreen == ENDING_SCREEN) {
 
         string label = player.getHealth().current > 0 ? "You Win!" : "Game Over :(";
         label += " Score: " + to_string(player.getScore());
