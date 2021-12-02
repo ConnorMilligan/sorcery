@@ -49,6 +49,7 @@ void init() {
     currScreen = STARTING_SCREEN;
     screen.surroundingProcessor();
     combat.setMonster(&monster);
+    dungeon.setVisited(player.getLocation());
     srand(time(0));
 }
 
