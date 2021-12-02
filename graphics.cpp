@@ -54,7 +54,7 @@ Window miniMap({BLACK}, {int(width)/2-150, 0}, 300, int(height));
 
 //Determine the current screen to be displayed
 enum Screens { STARTING_SCREEN, SETUP_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN, QUIT_SCREEN, MINIMAP, INVENTORY, INVENTORY_SELECT };
-Screens currScreen, floatingWindow;
+Screens currScreen, previousScreen, floatingWindow;
 
 //The object containing all sprites
 SpriteSheet sprites;
@@ -66,6 +66,7 @@ Potion testPotion(HEALING);
 
 void init() {
     currScreen = STARTING_SCREEN;
+    previousScreen = STARTING_SCREEN;
     floatingWindow = MAIN_SCREEN;
     screen.surroundingProcessor();
     combat.setMonster(&monster);
@@ -245,7 +246,8 @@ void kbd(unsigned char key, int x, int y) {
     * ~Gobal~
     */
     // Will prompt the user if they wish to escape
-    if (key == 27 && currScreen != ENDING_SCREEN) {
+    if (key == 27 && currScreen != ENDING_SCREEN && floatingWindow == MAIN_SCREEN) {
+        previousScreen = currScreen;
         currScreen = QUIT_SCREEN;
     } else if (key == 27 && currScreen == ENDING_SCREEN) {
         glutDestroyWindow(wd);
@@ -274,15 +276,6 @@ void kbd(unsigned char key, int x, int y) {
     if (key == 'a') {
         consoleText = player.addItem(testPotion);
     }
-
-
-    /*
-    * ~Starting Screen~
-    */
-    //When ENTER is pressed the game will progress to the setup screen
-    if ((key == 13) && currScreen == STARTING_SCREEN)
-        currScreen = SETUP_SCREEN;
-        //currScreen = MAIN_SCREEN; // Uncomment to bypass setup screen
 
     /*
     * ~Setup Screen~
@@ -350,7 +343,26 @@ void kbd(unsigned char key, int x, int y) {
         consoleText = combat.playerTurn(combatMenu.getChoice());
     }
 
+    /*
+    * ~Starting Screen~
+    */
+    //When ENTER is pressed the game will progress to the setup screen
+    if ((key == 13) && currScreen == STARTING_SCREEN)
+        currScreen = SETUP_SCREEN;
+        //currScreen = MAIN_SCREEN; // Uncomment to bypass setup screen
 
+    /*
+    * ~Quit Screen~
+    */
+    //If the player would like to quit the game or not
+    if ((key == 13) && currScreen == QUIT_SCREEN) {
+        if (quitSelector.getChoice() == "Yes") {
+            glutDestroyWindow(wd);
+            exit(0);
+        } else if (quitSelector.getChoice() == "No") {
+            currScreen = previousScreen;
+        }
+    }
         
 
     glutPostRedisplay();
@@ -395,7 +407,7 @@ void kbdS(int key, int x, int y) {
     }
 
     /*
-    * ~Combat Screen~
+    * ~Combat Menu~
     */
     else if(currScreen == COMBAT_SCREEN && floatingWindow != INVENTORY) {
         switch (key) {
@@ -406,7 +418,6 @@ void kbdS(int key, int x, int y) {
                 combatMenu.choiceUp();
                 break;
         }
-
     }
 
     /*
@@ -433,6 +444,20 @@ void kbdS(int key, int x, int y) {
                 break;
             case GLUT_KEY_UP:
                 inventorySelector.choiceUp();
+                break;
+        }
+    }
+
+    /*
+    * ~Quit Menu~
+    */
+    else if(currScreen == QUIT_SCREEN) {
+        switch (key) {
+            case GLUT_KEY_DOWN:
+                quitSelector.choiceDown();
+                break;
+            case GLUT_KEY_UP:
+                quitSelector.choiceUp();
                 break;
         }
     }
