@@ -131,7 +131,7 @@ void Viewer::drawWall(bool l, bool r, bool f) {
         yBEnd = Quad::getBottomY() - newHt - offsetY;
 
 //        if(!((curr == 0 || curr == 2 || curr == 1) && !l)) { // Regular wall forward
-        if(!((curr == 2 || curr == 1) && !l)) { // Regular wall forward
+        if(!((curr == 1) && !l)) { // Regular wall forward
             wallHelper(xLStart, xLEnd, yTStart, yTEnd, yBStart, yBEnd, diag);
         } else { // Break in wall
 //            if(curr == 1) {
@@ -164,7 +164,7 @@ void Viewer::drawWall(bool l, bool r, bool f) {
 //            glVertex2i(Quad::getLeftX(), yBEnd);
 
         }
-        if(!((curr == 2 || curr == 1) && !r)) { // Regular wall forward
+        if(!((curr == 1) && !r)) { // Regular wall forward
             wallHelper(xRStart, xREnd, yTStart, yTEnd, yBStart, yBEnd, diag);
         } else { // Break in wall
             glVertex2i(xREnd, yTEnd);
