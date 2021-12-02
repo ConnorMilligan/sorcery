@@ -34,7 +34,7 @@ point Dungeon::getEnd() {
 bool Dungeon::isVisited(point p) {
     return !visited[p.y][p.x];
 }
-std::string Dungeon::getMapText(int width, point pos) {
+std::string Dungeon::getMapText(point start, point pos) {
 
     // Each character width
     // 34 characters will fit on this screen
@@ -43,14 +43,16 @@ std::string Dungeon::getMapText(int width, point pos) {
     std::string title = "~~ DUNGEON MAP ~~";
     for(int i=0;i<padding;i++) empty += " ";
 
-    std::string map = empty + title + "\n" + empty;
+    std::string map = empty + title;
     for(int y=0;y<visited.size();y++) {
+        map += "\n" + empty;
         for(int x=0;x<visited[0].size();x++) {
-            if(y == pos.y && x == pos.x) map += "O ";
+            if(y == start.y && x == start.x) map += "S ";
+            else if(y == pos.y && x == pos.x) map += "O ";
             else map += visited[y][x] ? "_ " : "X ";
         }
-        map += "\n" + empty;
+
     }
-    map += "\nO - PLAYER\nX - EXPLORED\n_ - UNEXPLORED";
+    map += "\nO - PLAYER\nX - EXPLORED\n_ - UNEXPLORED\nS - START";
     return map;
 }

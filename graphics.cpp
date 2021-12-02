@@ -167,7 +167,7 @@ void display() {
         // You can only check your minimap in the main dungeon
         if(floatingWindow == MINIMAP) {
             miniMap.draw(); 
-            miniMap.write(dungeon.getMapText(miniMap.getWidth(),player.getLocation()));
+            miniMap.write(dungeon.getMapText(player.getStartLocation(),player.getLocation()));
         }
 
         // Displays detailed player information

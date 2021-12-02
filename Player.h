@@ -21,6 +21,7 @@ private:
     int xp;
     int score;
     point location;
+    point startLocation;
     Direction direction;
     Dungeon dungeon;
     std::vector<Item> inventory;
@@ -33,6 +34,7 @@ public:
     bool move(int x, int y);
     //Gets the current location of the player.
     point getLocation();
+    point getStartLocation();
     Dungeon getDungeon();
     Direction getDirection();
     std::string getDirectionString();
