@@ -21,6 +21,8 @@ public:
     void choiceDown();
     std::string getChoice();
 
+    void setChoices(std::vector<std::string> choices);
+
     void draw();
 };
 

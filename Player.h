@@ -10,6 +10,8 @@
 #include "Actor.h"
 #include "Item.h"
 
+#define MAX_ITEMS 9
+
 enum Direction { NORTH, EAST, SOUTH, WEST };
 
 class Player : public Actor {
@@ -31,8 +33,15 @@ public:
     Dungeon getDungeon();
     Direction getDirection();
     std::string getDirectionString();
+
     int getScore();
     void changeScore(int dc);
+
+    //This returns a vector of the names of all the items in the inventory
+    std::vector<std::string> getInventoryString();
+
+    std::string addItem(Item item);
+    std::string removeItem(int index);
 
     //Movement
     void turnRight();

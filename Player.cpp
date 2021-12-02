@@ -48,6 +48,31 @@ int Player::getScore() {
     return this->score;
 }
 
+void Player::changeScore(int dc) {
+    this->score += dc;
+}
+
+std::vector<std::string> Player::getInventoryString() {
+    std::vector<std::string> itemString;
+    for (Item item : this->inventory) {
+        itemString.push_back(item.getName());
+    }
+    return itemString;
+}
+
+std::string Player::addItem(Item item) {
+    if (this->inventory.size()+1 < MAX_ITEMS ) {
+        this->inventory.push_back(item);
+        return item.getName() + " was added to your inventory!";
+    }
+    
+    return "You didn't have enough space to pick up the item!";
+}
+
+std::string Player::removeItem(int index) {
+    return "";
+}
+
 std::string Player::getDirectionString() {
     switch (this->direction) {
         case NORTH:
@@ -144,9 +169,7 @@ void Player::retreat() {
             break;
     }
 }
-void Player::changeScore(int dc) {
-    this->score += dc;
-}
+
 std::string Player::playerInfo() {
     return "Name: " + this->getName() + "\nLevel: " + std::to_string(this->getLevel()) + "\nScore: " + std::to_string(this->getScore()) + "\nHealth: " + std::to_string(this->getHealth().current) + '/' + std::to_string(this->getHealth().max) +
     "\n\n - Stats - \nAttack: " + std::to_string(this->getStats().attack) + "\nDefense: " + std::to_string(this->getStats().defense) + "\nSpeed: " + std::to_string(this->getStats().speed) + "\nLuck: " + std::to_string(this->getStats().luck)

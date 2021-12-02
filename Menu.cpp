@@ -17,9 +17,15 @@ void Menu::choiceUp() {
 void Menu::choiceDown() {
     this->selection+1 < this->choices.size() ? this->selection++ : this->selection = 0;
 }
+
 std::string Menu::getChoice() {
     return this->choices[selection];
 }
+
+void Menu::setChoices(std::vector<std::string> choices) {
+    this->choices = choices;
+}
+
 void Menu::draw() {
     Window::draw();
     std::string options, cursor;

@@ -7,3 +7,7 @@ Item::Item() {
 Item::Item(std::string name) {
     this->name = name;
 }
+
+std::string Item::getName() {
+    return this->name;
+}

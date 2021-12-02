@@ -12,6 +12,8 @@ private:
 public:
     Item();
     Item(std::string name);
+
+    std::string getName();
 };
 
 #endif

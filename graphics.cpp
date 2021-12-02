@@ -7,6 +7,8 @@
 #include "CombatViewer.h"
 #include "Menu.h"
 
+#include "Potion.h"
+
 #include <iostream>
 #include <time.h>
 #include <vector>
@@ -32,21 +34,26 @@ Window info({BLACK}, {460, 10}, 170, 460);
 Console console({BLACK}, {10, 300}, 440, 170);
 CombatViewer combat({BLACK}, {10, 10}, 440, 280, &player);
 Menu combatMenu({BLACK}, {460, 300}, 170, 170, combatOptions);
+Menu inventoryMenu({BLACK}, {int(width)/2-150, 0}, 300, (int)(height));
 
 Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
 Window miniMap({BLACK}, {int(width)/2-150, 0}, 300, (int)(height));
 
 //Determine the current screen to be displayed
-enum Screens { STARTING_SCREEN, SETUP_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN };
-Screens currScreen;
+enum Screens { STARTING_SCREEN, SETUP_SCREEN, MAIN_SCREEN, ENDING_SCREEN, COMBAT_SCREEN, MINIMAP, INVENTORY };
+Screens currScreen, floatingWindow;
 
+//The object containing all sprites
 SpriteSheet sprites;
 
-string consoleText, levelUpText, mapText;
+string consoleText, levelUpText;
 
+
+Potion testPotion(HEALING);
 
 void init() {
     currScreen = STARTING_SCREEN;
+    floatingWindow = MAIN_SCREEN;
     screen.surroundingProcessor();
     combat.setMonster(&monster);
     dungeon.setVisited(player.getLocation());
@@ -119,9 +126,15 @@ void display() {
             levelingWindow.write(levelUpText);
         }
         // You can only check your minimap in the main dungeon
-        if(mapText != "") {
-            miniMap.draw();
-            miniMap.write(mapText);
+        if(floatingWindow == MINIMAP) {
+            miniMap.draw(); 
+            miniMap.write(dungeon.getMapText(miniMap.getWidth(),player.getLocation()));
+        }
+
+        //Draws inventory if flag is up
+        if(floatingWindow == INVENTORY) {
+            inventoryMenu.setChoices(player.getInventoryString());
+            inventoryMenu.draw();
         }
 
     } else if(currScreen == COMBAT_SCREEN) {
@@ -186,19 +199,40 @@ void kbd(unsigned char key, int x, int y) {
     if ((key == 13) && levelUpText != "")
         levelUpText = "";
 
+    //k key levels up player (testing)
     if (key == 'k') {
         levelUpText = player.levelUp();
         consoleText = "You level up!";
     }
+
+    //m key brings up a minimap
     if (key == 'm') {
-        mapText = mapText.empty() ? dungeon.getMapText(miniMap.getWidth(),player.getLocation()) : "";
+        floatingWindow = MINIMAP;
     } else { // Put map away on any other keystroke
-        mapText = "";
+        floatingWindow = MAIN_SCREEN;
     }
+
+    //i key brings up a inventory
+    if (key == 'i') {
+        floatingWindow = INVENTORY;
+    } else if (key == 'q') { // Put map away on any other keystroke
+        floatingWindow = MAIN_SCREEN;
+    }
+
+
+    //j key initiates combat (testing)
     if (key == 'j') {
         currScreen = COMBAT_SCREEN;
         consoleText = "You encountered the " + monster.getName() + "!";
     }
+
+    //a adds a potion to the player (testing)
+    if (key == 'a') {
+        consoleText = player.addItem(testPotion);
+    }
+    
+
+    //When in combat make selection on combat menu
     if ((key == 13) && currScreen == COMBAT_SCREEN) {
 
         consoleText = combat.playerTurn(combatMenu.getChoice());
@@ -213,7 +247,6 @@ void kbd(unsigned char key, int x, int y) {
 
 void kbdS(int key, int x, int y) {
     if(currScreen == MAIN_SCREEN) {
-        mapText = ""; // Put map away on any movement
         screen.surroundingProcessor();
 
         switch (key) {
