@@ -6,19 +6,21 @@ Player::Player() : Actor() {
     this->location = {0,0};
     this->direction = NORTH;
     this->dungeon = Dungeon();
+    this->inventory = {};
 }
 
 Player::Player(point location, Dungeon dungeon) : Actor() {
     this->score = 0;
     this->location = location;
     this->dungeon = dungeon;
+    this->inventory = {};
 }
 Player::Player(point location, Dungeon dungeon, std::string name) : Actor() {
     this->score = 0;
     this->location = location;
     this->dungeon = dungeon;
     this->setName(name);
-
+    this->inventory = {};
 }
 
 bool Player::move(int x, int y) {

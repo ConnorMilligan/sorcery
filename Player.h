@@ -8,6 +8,7 @@
 #include <string>
 #include "Dungeon.h"
 #include "Actor.h"
+#include "Item.h"
 
 enum Direction { NORTH, EAST, SOUTH, WEST };
 
@@ -17,6 +18,7 @@ private:
     point location;
     Direction direction;
     Dungeon dungeon;
+    std::vector<Item> inventory;
 public:
     Player();
     Player(point location, Dungeon dungeon);
