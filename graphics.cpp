@@ -210,9 +210,8 @@ void display() {
 
         if(!combat.isActive()) {
             if(monster.getHealth().current <= 0) {
-                consoleText = "You felled the " + monster.getName() + "!";
+                consoleText = "You felled the " + monster.getName() + "!\n" + player.addXp(monster.getLevel()*1.5);
                 player.changeScore(2);
-                consoleText = player.addXp(monster.getLevel()*1.5);
             }
             currScreen = player.getHealth().current > 0 ? MAIN_SCREEN : ENDING_SCREEN;
         }
@@ -276,8 +275,9 @@ void kbd(unsigned char key, int x, int y) {
 
     //j key initiates combat (testing)
     if (key == 'j') {
-        currScreen = COMBAT_SCREEN;
         consoleText = "You encountered the " + monster.getName() + "!";
+        currScreen = COMBAT_SCREEN;
+
         combat.toggleState();
     }
 
