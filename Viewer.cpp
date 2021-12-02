@@ -130,26 +130,25 @@ void Viewer::drawWall(bool l, bool r, bool f) {
         yTEnd = Quad::getTopY() + newHt + offsetY;
         yBEnd = Quad::getBottomY() - newHt - offsetY;
 
-//        if(!((curr == 0 || curr == 2 || curr == 1) && !l)) { // Regular wall forward
+//        if(curr == 1 && !r) {
+//            glVertex2i(Quad::getLeftX(), yTEnd);
+//            glVertex2i(xLStart, yTEnd);
+//
+//            glVertex2i(Quad::getLeftX(), yBEnd);
+//            glVertex2i(xLStart, yBEnd);
+//
+//            glVertex2i(xREnd, yBEnd);
+//            glVertex2i(Quad::getRightX(), yBEnd);
+//
+//            glVertex2i(xREnd, yTEnd);
+//            glVertex2i(Quad::getRightX(), yTEnd);
+//        }
+
+
+
         if(!((curr == 1) && !l)) { // Regular wall forward
             wallHelper(xLStart, xLEnd, yTStart, yTEnd, yBStart, yBEnd, diag);
         } else { // Break in wall
-//            if(curr == 1) {
-//
-////                int tYTEnd = Quad::getTopY() + (newHt/2) + offsetY;
-////                int tYBEnd = Quad::getBottomY() - (newHt/2)- offsetY;
-//                glVertex2i(xLEnd, yTEnd);
-//                glVertex2i(xLStart, yTEnd);
-//
-//                glVertex2i(xLEnd, yBEnd);
-//                glVertex2i(xLStart, yBEnd);
-//            } else {
-//                glVertex2i(xLEnd, yTEnd);
-//                glVertex2i(xLStart, yTEnd);
-//
-//                glVertex2i(xLEnd, yBEnd);
-//                glVertex2i(xLStart, yBEnd);
-//            }
 
             glVertex2i(xLEnd, yTEnd);
             glVertex2i(xLStart, yTEnd);
@@ -157,11 +156,6 @@ void Viewer::drawWall(bool l, bool r, bool f) {
             glVertex2i(xLEnd, yBEnd);
             glVertex2i(xLStart, yBEnd);
 
-//            glVertex2i(xLEnd, yTEnd);
-//            glVertex2i(Quad::getLeftX(), yTEnd);
-//
-//            glVertex2i(xLEnd, yBEnd);
-//            glVertex2i(Quad::getLeftX(), yBEnd);
 
         }
         if(!((curr == 1) && !r)) { // Regular wall forward
@@ -172,14 +166,10 @@ void Viewer::drawWall(bool l, bool r, bool f) {
 
             glVertex2i(xREnd, yBEnd);
             glVertex2i(xRStart, yBEnd);
-//            glVertex2i(xREnd, yTEnd);
-//            glVertex2i(Quad::getRightX(), yTEnd);
-//
-//            glVertex2i(xREnd, yBEnd);
-//            glVertex2i(Quad::getRightX(), yBEnd);
+
         }
 
-        if(curr == 2 && f) {
+        if(curr == 1 && f) {
             glVertex2i(xLEnd, yTEnd);
             glVertex2i(xREnd, yTEnd);
 
@@ -187,6 +177,7 @@ void Viewer::drawWall(bool l, bool r, bool f) {
             glVertex2i(xREnd, yBEnd);
             break;
         }
+
 
         offsetX += tWidth;
         offsetY = Quad::getBottomY()-yBEnd;
@@ -205,13 +196,7 @@ void Viewer::drawWall(bool l, bool r, bool f) {
 
 
     }
-//    if(!f) {
-//        glVertex2i(xLStart, yTEnd+(offsetY/6));
-//        glVertex2i(xRStart, yTEnd+(offsetY/6));
-//
-//        glVertex2i(xLStart, yBEnd-(offsetY/6));
-//        glVertex2i(xRStart, yBEnd-(offsetY/6));
-//    }
+
 
 
 }
