@@ -81,7 +81,7 @@ std::string Player::removeItem(int index) {
 
     itemName = inventory[index].getName();
 
-    inventory.erase(inventory.begin()+index);
+    inventory.erase(inventory.begin()+index, inventory.begin()+index+1);
 
 //    for (int i = 0; i < this->inventory.size(); i++) {
 //        if (i != index) {
@@ -92,13 +92,17 @@ std::string Player::removeItem(int index) {
 //        }
 //    }
 
-    this->inventory = newInventory;
+    //this->inventory = newInventory;
     return itemName;
 }
 
 std::string Player::use(int index) {
 
     Item item = this->inventory[index];
+
+    this->removeItem(index);
+
+    
 
     if(item.getName() == "Fire Potion") {
         return "You Hurl the Fire Potion! Ouch!";
@@ -132,7 +136,6 @@ std::string Player::use(int index) {
         return "You quaff the " + item.getName() + ", healing you for 15 health!";
     }
 
-    this->removeItem(index);
 
     return "You interact with the " + item.getName() + "!";
 //    if (typeid(item).name() != "Potion") {
