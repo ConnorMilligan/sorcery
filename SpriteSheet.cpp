@@ -6,6 +6,13 @@
 #include "sprites/mHead_hawk.h"
 #include "sprites/mHead_cat.h"
 #include "sprites/mHead_froggy.h"
+#include "sprites/mHead_brain.h"
+#include "sprites/mHead_cyclops.h"
+#include "sprites/mHead_fish.h"
+#include "sprites/mHead_house.h"
+#include "sprites/mHead_man.h"
+#include "sprites/mHead_squid.h"
+#include "sprites/mHead_toucan.h"
 
 //Monster body sprites
 #include "sprites/mBody_weightLifter.h"
@@ -40,6 +47,55 @@ SpriteSheet::SpriteSheet() {
 		mHead_froggyWidth,
 		mHead_froggyHeight,
 		mHead_froggySprite
+	});
+
+	this->monsterHeads.push_back({
+		mHead_brainName,
+		mHead_brainWidth,
+		mHead_brainHeight,
+		mHead_brainSprite
+	});
+
+	this->monsterHeads.push_back({
+		mHead_cyclopsName,
+		mHead_cyclopsWidth,
+		mHead_cyclopsHeight,
+		mHead_cyclopsSprite
+	});
+
+	this->monsterHeads.push_back({
+		mHead_fishName,
+		mHead_fishWidth,
+		mHead_fishHeight,
+		mHead_fishSprite
+	});
+
+	this->monsterHeads.push_back({
+		mHead_houseName,
+		mHead_houseWidth,
+		mHead_houseHeight,
+		mHead_houseSprite
+	});
+
+	this->monsterHeads.push_back({
+		mHead_manName,
+		mHead_manWidth,
+		mHead_manHeight,
+		mHead_manSprite
+	});
+
+	this->monsterHeads.push_back({
+		mHead_squidName,
+		mHead_squidWidth,
+		mHead_squidHeight,
+		mHead_squidSprite
+	});
+
+	this->monsterHeads.push_back({
+		mHead_toucanName,
+		mHead_toucanWidth,
+		mHead_toucanHeight,
+		mHead_toucanSprite
 	});
 
 	//Adding in the monsterBodies
