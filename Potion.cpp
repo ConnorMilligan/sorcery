@@ -15,7 +15,9 @@ Potion::Potion(potionType type) {
         case HEALING:
             this->setName("Healing Potion");
             break;
-
+        case TELEPORTATION:
+            this->setName("Teleportation Potion");
+            break;
     default:
         this->type = HEALING;
         this->setName("Healing Potion");
@@ -25,3 +27,11 @@ Potion::Potion(potionType type) {
     this->type = type;
 }
 
+int Potion::potionCount() {
+    int count = 0;
+
+    for(int i=0;i<END;i++) {
+        count++;
+    }
+    return count;
+}

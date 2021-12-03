@@ -11,7 +11,7 @@
 #define ENCOUNTER_RATE 25
 
 // The rate of finding an item in game
-#define LOOT_RATE 10
+#define LOOT_RATE 90
 
 class Dungeon {
 private:
@@ -26,6 +26,7 @@ public:
     bool getTile(int x, int y);
     bool getTile(point point);
     std::string getMapText(point start, point pos);
+    point getDims();
     point getEnd();
     bool isVisited(point p);
     void setVisited(point p);

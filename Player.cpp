@@ -93,13 +93,47 @@ std::string Player::removeItem(int index) {
 }
 
 std::string Player::use(int index) {
+
     Item item = this->inventory[index];
-    if (typeid(item).name() != "Potion") {
+
+    if(item.getName() == "Fire Potion") {
+        return "You Hurl the Fire Potion! Ouch!";
+    }
+    if(item.getName() == "XP Potion") {
+        int exp = rand() % this->getLevel()*2;
+        this->addXp(exp);
+        return "You gain " + std::to_string(exp) + " XP!";
+    }
+    if(item.getName() == "Resistance Potion") {
+        return "You feel yourself getting stronger!";
+    }
+    if(item.getName() == "Teleportation Potion") {
+        point dims = dungeon.getDims();
+        int randX = rand() % dims.x;
+        int randY = rand() % dims.y;
+        bool tile = dungeon.getTile(randX, randY);
+        while(tile) {
+            randX = rand() % dims.x;
+            randY = rand() % dims.y;
+            tile = dungeon.getTile(randX, randY);
+        }
+        this->location.x = randX;
+        this->location.y = randY;
+        return "Woah! Where are you now?";
+    }
+    if(item.getName() == "Healing Potion") {
         this->changeHealth(15);
         this->removeItem(index);
         return "You quaff the " + item.getName() + ", healing you for 15 health!";
     }
     return "You interact with the " + item.getName() + "!";
+//    if (typeid(item).name() != "Potion") {
+//        this->changeHealth(15);
+//        this->removeItem(index);
+//        return "You quaff the " + item.getName() + ", healing you for 15 health!";
+//    }
+
+
 }
 
 int Player::nextLvlXp() {

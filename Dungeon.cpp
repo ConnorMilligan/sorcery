@@ -20,6 +20,9 @@ Dungeon::Dungeon(std::vector<std::vector<bool>> layout, point end) {
 void Dungeon::setVisited(point p) {
     visited[p.y][p.x] = false; // haha this seems backwards right?
 }
+point Dungeon::getDims() {
+    return {(int)layout.size(), (int)layout[0].size() };
+}
 bool Dungeon::getTile(int x, int y) {
     return this->layout[y][x];
 }

@@ -430,11 +430,14 @@ void kbdS(int key, int x, int y) {
                     combat.toggleState();
                 }
                 if (!dungeon.isVisited(player.getLocation()) && LOOT_RATE > rand() % 100) {
+
                     Potion loot;
-                    int odds = rand() % 100;
-                    if(odds < 33) loot = Potion(HEALING);
-                    else if(odds >= 33 && odds < 66) loot = Potion(FIRE);
-                    else loot = Potion(RESISTANCE);
+                    int pCount = loot.potionCount();
+                    int odds = rand() % pCount;
+//                    if(odds < 33) loot = Potion(HEALING);
+//                    else if(odds >= 33 && odds < 66) loot = Potion(FIRE);
+//                    else loot = Potion(RESISTANCE);
+                    //loot = Potion(potionType[odds]);
 
                     consoleText = "You found a " + loot.getName() + "!";
                     player.addItem(loot);
