@@ -109,7 +109,7 @@ void Quad::write(std::string message) {
         else {
             glRasterPos2i(this->getLeftX() + TEXT_PADDING_X, this->getTopY() + (++line*TEXT_PADDING_Y));
             count = 0;
-            continue;
+            if(letter == '\n') continue;
         }
         glutBitmapCharacter(GLUT_BITMAP_8_BY_13, letter);
     }

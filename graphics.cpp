@@ -255,6 +255,7 @@ void display() {
 }
 
 void kbd(unsigned char key, int x, int y) {
+
     /*
     * ~Gobal~
     */
@@ -321,7 +322,7 @@ void kbd(unsigned char key, int x, int y) {
         //h key brings up help menu
         if (key == 'h') {
             floatingWindow = floatingWindow == HELP ? MAIN_SCREEN : HELP;
-        } else {
+        } else if (key == 27 && floatingWindow == HELP) { //removes with ESC
             floatingWindow = MAIN_SCREEN;
         }
 
@@ -332,7 +333,7 @@ void kbd(unsigned char key, int x, int y) {
             floatingWindow = MAIN_SCREEN;
         }
 
-        //i key brings up a inventory
+        //i key brings up an inventory
         if (key == 'i') {
             floatingWindow = INVENTORY;
         } else if (key == 27 && floatingWindow == INVENTORY) { //removes with ESC
@@ -345,13 +346,15 @@ void kbd(unsigned char key, int x, int y) {
         } else if (key == 27 && floatingWindow == STATS) { //removes with ESC
             floatingWindow = MAIN_SCREEN;
         }
-        
+
         //Open the submenu in the inventory
         if ((key == 13) && floatingWindow == INVENTORY) {
             floatingWindow = INVENTORY_SELECT;
         } else if ((key == 27) && floatingWindow == INVENTORY_SELECT) {
             floatingWindow = INVENTORY;
+
         } else if ((key == 13) && floatingWindow == INVENTORY_SELECT) { //Handles the choice of the player
+
             if (inventorySelector.getChoice() == "Use") {
                 consoleText = player.use(inventoryMenu.getSelection());
             }
@@ -390,7 +393,7 @@ void kbd(unsigned char key, int x, int y) {
             currScreen = previousScreen;
         }
     }
-        
+
 
     glutPostRedisplay();
 }

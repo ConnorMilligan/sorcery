@@ -220,7 +220,7 @@ void Player::retreat() {
 std::string Player::playerInfo() {
     return "Name: " + this->getName() + "\nLevel: " + std::to_string(this->getLevel()) + "\nScore: " + std::to_string(this->getScore()) + "\nHealth: " + std::to_string(this->getHealth().current) + '/' + std::to_string(this->getHealth().max) +
     "\n\n - Stats - \nAttack: " + std::to_string(this->getStats().attack) + "\nDefense: " + std::to_string(this->getStats().defense) + "\nSpeed: " + std::to_string(this->getStats().speed) + "\nLuck: " + std::to_string(this->getStats().luck)
-    + "\n\n - Location -\nCords: (" + std::to_string(this->getLocation().x) + ',' + std::to_string(this->getLocation().y) + ')' + "  \nFacing: " + this->getDirectionString() + "\n(m) for Map";
+    + "\n\n - Location -\nCords: (" + std::to_string(this->getLocation().x) + ',' + std::to_string(this->getLocation().y) + ')' + "  \nFacing: " + this->getDirectionString() + "\n(h) for Help";
 }
 
 std::string Player::playerInfoDetailed() {
@@ -229,10 +229,12 @@ std::string Player::playerInfoDetailed() {
 }
 std::string Player::helpString() {
     std::string help = "";
-    help += "xp (" + std::to_string(this->xp) + ", " + std::to_string(this->nextLvlXp()) + ")\n"
-    + "xp to next level: " + std::to_string(this->nextLvlXp() - this->xp);
 
-    help += "\n\n~~ Controls ~~";
+    help += "~~ Controls ~~";
+    help += "\n(Up/Down Arrow) Advance/Retreat";
+    help += "\n(Left/Right Arrow) Turn Left/Right";
+
+    help += "\n(esc) Exit Game";
     help += "\n(h) Display Help Menu";
     help += "\n(m) Show Minimap";
     help += "\n(i) Show Inventory";
@@ -242,9 +244,6 @@ std::string Player::helpString() {
     help += "\n(k) Level Up";
     help += "\n(j) Initiate Combat";
     help += "\n(a) Add Potion to Inventory";
-
-
-
 
     return help;
 }

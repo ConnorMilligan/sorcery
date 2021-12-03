@@ -23,13 +23,10 @@ std::string CombatViewer::playerTurn(std::string action) {
         // As luck increases, so do the odds of a # [0,10] falling between [0,luck];
         int modifier = (rand() % 10) <= this->player->getStats().luck ? 2 : 1;
 
-
         result = modifier > 1 ? "Critical hit! " : "";
 
         // Damage range is [attack/2, (3/2)*attack] * modifier
         int damage = (ceil(rand() % (int)ceil(range))+range/2)*modifier;
-
-        //damage -= this->monster->getStats().defense;
 
         this->monster->changeHealth(-damage);
 
