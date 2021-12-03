@@ -11,7 +11,7 @@
 #define ENCOUNTER_RATE 25
 
 // The rate of finding an item in game
-#define LOOT_RATE 90
+#define LOOT_RATE 10
 
 class Dungeon {
 private:
