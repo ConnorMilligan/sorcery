@@ -79,14 +79,18 @@ std::string Player::removeItem(int index) {
     std::vector<Item> newInventory;
     std::string itemName;
 
-    for (int i = 0; i < this->inventory.size(); i++) {
-        if (i != index) {
-            newInventory.push_back(inventory[i]);
-        }
-        else {
-            itemName = inventory[i].getName();
-        }
-    }
+    itemName = inventory[index].getName();
+
+    inventory.erase(inventory.begin()+index);
+
+//    for (int i = 0; i < this->inventory.size(); i++) {
+//        if (i != index) {
+//            newInventory.push_back(inventory[i]);
+//        }
+//        else {
+//            itemName = inventory[i].getName();
+//        }
+//    }
 
     this->inventory = newInventory;
     return itemName;
@@ -105,6 +109,7 @@ std::string Player::use(int index) {
         return "You gain " + std::to_string(exp) + " XP!";
     }
     if(item.getName() == "Resistance Potion") {
+        /// TODO increase defense by 1
         return "You feel yourself getting stronger!";
     }
     if(item.getName() == "Teleportation Potion") {
@@ -123,9 +128,12 @@ std::string Player::use(int index) {
     }
     if(item.getName() == "Healing Potion") {
         this->changeHealth(15);
-        this->removeItem(index);
+
         return "You quaff the " + item.getName() + ", healing you for 15 health!";
     }
+
+    this->removeItem(index);
+
     return "You interact with the " + item.getName() + "!";
 //    if (typeid(item).name() != "Potion") {
 //        this->changeHealth(15);

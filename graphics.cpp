@@ -433,11 +433,8 @@ void kbdS(int key, int x, int y) {
 
                     Potion loot;
                     int pCount = loot.potionCount();
-                    int odds = rand() % pCount;
-//                    if(odds < 33) loot = Potion(HEALING);
-//                    else if(odds >= 33 && odds < 66) loot = Potion(FIRE);
-//                    else loot = Potion(RESISTANCE);
-                    //loot = Potion(potionType[odds]);
+
+                    loot = Potion(potionType(rand() % (pCount))); // -1 accounts for the END enum
 
                     consoleText = "You found a " + loot.getName() + "!";
                     player.addItem(loot);
