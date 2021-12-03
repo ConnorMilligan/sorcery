@@ -6,10 +6,16 @@ Potion::Potion() : Item() {
 
 Potion::Potion(potionType type) {
     switch (type) {
-    case HEALING:
-        this->setName("Healing Potion");
-        break;
-    
+        case FIRE:
+            this->setName("Fire Potion");
+            break;
+        case RESISTANCE:
+            this->setName("Resistance Potion");
+            break;
+        case HEALING:
+            this->setName("Healing Potion");
+            break;
+
     default:
         this->type = HEALING;
         this->setName("Healing Potion");
@@ -18,3 +24,4 @@ Potion::Potion(potionType type) {
 
     this->type = type;
 }
+

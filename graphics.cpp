@@ -137,6 +137,8 @@ void display() {
      */
     else if(currScreen == MAIN_SCREEN) {
 
+        currScreen = (player.getLocation().x == dungeon.getEnd().x) && (player.getLocation().y == dungeon.getEnd().y) ? ENDING_SCREEN :  MAIN_SCREEN;
+
         screen.draw();
         info.draw();
         console.draw();
@@ -157,7 +159,7 @@ void display() {
         //info.write( "Location: (" + to_string(player.getLocation().x) + ',' + to_string(player.getLocation().y) + ')' + "  \nFacing: " + player.getDirectionString());
         info.write(player.playerInfo());
 
-        currScreen = (player.getLocation().x == dungeon.getEnd().x) && (player.getLocation().y == dungeon.getEnd().y) ? ENDING_SCREEN :  MAIN_SCREEN;
+
 
         //Will display the level up text if the string has been created
         if (levelUpText != "") {
@@ -421,11 +423,21 @@ void kbdS(int key, int x, int y) {
                 break;
             case GLUT_KEY_UP:
                 player.advance() ? consoleText = "You advance!" : consoleText = "Ouch! You can't walk into a wall!";
-                if (ENCOUNTER_RATE > rand() % 100) {
+                if (!dungeon.isVisited(player.getLocation()) && ENCOUNTER_RATE > rand() % 100) {
                     currScreen = COMBAT_SCREEN;
                     monster = Monster(player.getLevel());
                     consoleText = "You encountered the " + monster.getName() + "!";
                     combat.toggleState();
+                }
+                if (!dungeon.isVisited(player.getLocation()) && LOOT_RATE > rand() % 100) {
+                    Potion loot;
+                    int odds = rand() % 100;
+                    if(odds < 33) loot = Potion(HEALING);
+                    else if(odds >= 33 && odds < 66) loot = Potion(FIRE);
+                    else loot = Potion(RESISTANCE);
+
+                    consoleText = "You found a " + loot.getName() + "!";
+                    player.addItem(loot);
                 }
                 break;
         }

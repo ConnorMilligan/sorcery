@@ -10,6 +10,9 @@
 //The encounter rate in the dungeon out of 100 (percentage per movement)
 #define ENCOUNTER_RATE 25
 
+// The rate of finding an item in game
+#define LOOT_RATE 10
+
 class Dungeon {
 private:
     std::vector<std::vector<bool>> layout;

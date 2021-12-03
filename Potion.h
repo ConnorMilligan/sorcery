@@ -6,7 +6,7 @@
 
 #include "Item.h"
 
-enum potionType { HEALING };
+enum potionType { HEALING, FIRE, RESISTANCE };
 
 class Potion : public Item {
 private:
@@ -14,6 +14,7 @@ private:
 public:
     Potion();
     Potion(potionType type);
+
 };
 
 #endif
