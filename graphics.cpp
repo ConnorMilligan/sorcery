@@ -350,7 +350,8 @@ void kbd(unsigned char key, int x, int y) {
         }
 
         //Open the submenu in the inventory
-        if ((key == 13) && floatingWindow == INVENTORY) {
+        if ((key == 13) && floatingWindow == INVENTORY && player.getInventoryString().size() > 0
+        ) {
             floatingWindow = INVENTORY_SELECT;
         } else if ((key == 27) && floatingWindow == INVENTORY_SELECT) {
             floatingWindow = INVENTORY;
