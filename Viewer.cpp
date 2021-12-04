@@ -146,26 +146,42 @@ void Viewer::drawWall(bool l, bool r, bool f) {
 
 
 
-        if(!((curr == 1) && !l)) { // Regular wall forward
+        if(!((curr == 0 || curr == 1) && !l)) { // Regular wall forward
             wallHelper(xLStart, xLEnd, yTStart, yTEnd, yBStart, yBEnd, diag);
         } else { // Break in wall
 
-            glVertex2i(xLEnd, yTEnd);
-            glVertex2i(xLStart, yTEnd);
+//            glVertex2i(xLEnd, yTEnd);
+//            glVertex2i(xLStart, yTEnd);
+//
+//            glVertex2i(xLEnd, yBEnd);
+//            glVertex2i(xLStart, yBEnd);
+            if(curr != 0) {
+                glVertex2i(xLEnd, yTEnd);
+                glVertex2i(Quad::getLeftX(), yTEnd);
 
-            glVertex2i(xLEnd, yBEnd);
-            glVertex2i(xLStart, yBEnd);
+                glVertex2i(xLEnd, yBEnd);
+                glVertex2i(Quad::getLeftX(), yBEnd);
 
+
+            }
 
         }
-        if(!((curr == 1) && !r)) { // Regular wall forward
+        if(!((curr == 0 || curr == 1) && !r)) { // Regular wall forward
             wallHelper(xRStart, xREnd, yTStart, yTEnd, yBStart, yBEnd, diag);
         } else { // Break in wall
-            glVertex2i(xREnd, yTEnd);
-            glVertex2i(xRStart, yTEnd);
+//            glVertex2i(xREnd, yTEnd);
+//            glVertex2i(xRStart, yTEnd);
+//
+//            glVertex2i(xREnd, yBEnd);
+//            glVertex2i(xRStart, yBEnd);
+            if(curr != 0) {
+                glVertex2i(xREnd, yTEnd);
+                glVertex2i(Quad::getRightX(), yTEnd);
 
-            glVertex2i(xREnd, yBEnd);
-            glVertex2i(xRStart, yBEnd);
+                glVertex2i(xREnd, yBEnd);
+                glVertex2i(Quad::getRightX(), yBEnd);
+            }
+
 
         }
 
@@ -196,7 +212,6 @@ void Viewer::drawWall(bool l, bool r, bool f) {
 
 
     }
-
 
 
 }
