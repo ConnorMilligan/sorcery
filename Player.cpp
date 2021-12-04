@@ -102,19 +102,19 @@ std::string Player::use(int index) {
 
     this->removeItem(index);
 
-    
 
-    if(item.getName() == "Fire Potion") {
-        return "You Hurl the Fire Potion! Ouch!";
-    }
     if(item.getName() == "XP Potion") {
         int exp = rand() % this->getLevel()*2;
         this->addXp(exp);
         return "You gain " + std::to_string(exp) + " XP!";
     }
     if(item.getName() == "Resistance Potion") {
-        /// TODO increase defense by 1
-        return "You feel yourself getting stronger!";
+        changeStat("defense", this->getStats().defense+1);
+        return "You feel yourself getting stronger!(Defense+1)";
+    }
+    if(item.getName() == "Strength Potion") {
+        changeStat("attack", this->getStats().attack+1);
+        return "Beef up those arms, cowboy!(Attack+1)";
     }
     if(item.getName() == "Teleportation Potion") {
         point dims = dungeon.getDims();
@@ -138,11 +138,7 @@ std::string Player::use(int index) {
 
 
     return "You interact with the " + item.getName() + "!";
-//    if (typeid(item).name() != "Potion") {
-//        this->changeHealth(15);
-//        this->removeItem(index);
-//        return "You quaff the " + item.getName() + ", healing you for 15 health!";
-//    }
+
 
 
 }

@@ -83,7 +83,7 @@ void initGL() {
  whenever the window needs to be re-painted. */
 void display() {
     // tell OpenGL to use the whole window for drawing
-    glViewport(0, 0, width, height);
+    glViewport(0, 0, (int)width, (int)height);
     
     // do an orthographic parallel projection with the coordinate
     // system set to first quadrant, limited by screen/window size
@@ -105,7 +105,7 @@ void display() {
     if(currScreen == STARTING_SCREEN) {
 
         string label = "Press \'Enter\' to begin.";
-        messageWriter(width/2 - (4 * label.length()), height/2 + 200, label);
+        messageWriter((int)width/2 - (4 * label.length()), height/2 + 200, label);
         sprites.getGameLogo().draw();
     }
 
@@ -121,11 +121,11 @@ void display() {
         string label = "What is your name?";
         string next = "Press \'Enter\' to begin.";
 
-        messageWriter(width/2 - (4 * label.length()), height/2, label);
+        messageWriter((int)width/2 - (4 * label.length()), (int)height/2, label);
 
-        messageWriter(width/2 - (4 * playerName.length()+1), height/2 + 50, playerName+"_");
+        messageWriter((int)width/2 - (4 * playerName.length()+1), (int)height/2 + 50, playerName+"_");
 
-        messageWriter(width/2 - (4 * next.length()), height/2 + 200, next);
+        messageWriter((int)width/2 - (4 * next.length()), (int)height/2 + 200, next);
     } 
     
     /***
@@ -145,7 +145,7 @@ void display() {
         screen.surroundingProcessor();
 
         //Will write to the console if there is something to write
-        if (consoleText != "") {
+        if (!consoleText.empty()) {
             console.addMessage("* " + consoleText);
             consoleText = "";
         }
@@ -162,7 +162,7 @@ void display() {
 
 
         //Will display the level up text if the string has been created
-        if (levelUpText != "") {
+        if (!levelUpText.empty()) {
             levelingWindow.draw();
             levelingWindow.write(levelUpText);
         }

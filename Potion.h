@@ -7,7 +7,7 @@
 #include <vector>
 #include "Item.h"
 
-enum potionType { HEALING, FIRE, RESISTANCE, TELEPORTATION, END };
+enum potionType { HEALING, XP, RESISTANCE, TELEPORTATION, STRENGTH, END };
 
 class Potion : public Item {
 private:

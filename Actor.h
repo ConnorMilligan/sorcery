@@ -46,6 +46,7 @@ public:
     int getLevel();
     Health getHealth();
     Stats getStats();
+    void changeStat(std::string stat, int newStat);
 };
 
 #endif
