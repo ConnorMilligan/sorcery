@@ -18,6 +18,18 @@
 #include "sprites/mBody_weightLifter.h"
 #include "sprites/mBody_octopus.h"
 #include "sprites/mBody_clown.h"
+#include "sprites/mBody_barrel.h"
+#include "sprites/mBody_chicken.h"
+#include "sprites/mBody_ferret.h"
+#include "sprites/mBody_fridge.h"
+#include "sprites/mBody_ghost.h"
+#include "sprites/mBody_head.h"
+#include "sprites/mBody_jet.h"
+#include "sprites/mBody_lamp.h"
+#include "sprites/mBody_log.h"
+#include "sprites/mBody_mer.h"
+#include "sprites/mBody_pillar.h"
+#include "sprites/mBody_stocking.h"
 
 SpriteSheet::SpriteSheet() {
 	this->gameLogo = Sprite({
@@ -118,6 +130,90 @@ SpriteSheet::SpriteSheet() {
 		mBody_clownWidth,
 		mBody_clownHeight,
 		mBody_clownSprite
+	});
+
+	this->monsterBodies.push_back({
+		mBody_barrelName,
+		mBody_barrelWidth,
+		mBody_barrelHeight,
+		mBody_barrelSprite
+	});
+
+	this->monsterBodies.push_back({
+		mBody_chickenName,
+		mBody_chickenWidth,
+		mBody_chickenHeight,
+		mBody_chickenSprite
+	});
+
+	this->monsterBodies.push_back({
+		mBody_ferretName,
+		mBody_ferretWidth,
+		mBody_ferretHeight,
+		mBody_ferretSprite
+	});
+
+	this->monsterBodies.push_back({
+		mBody_fridgeName,
+		mBody_fridgeWidth,
+		mBody_fridgeHeight,
+		mBody_fridgeSprite
+	});
+
+	this->monsterBodies.push_back({
+		mBody_ghostName,
+		mBody_ghostWidth,
+		mBody_ghostHeight,
+		mBody_ghostSprite
+	});
+
+	this->monsterBodies.push_back({
+		mBody_headName,
+		mBody_headWidth,
+		mBody_headHeight,
+		mBody_headSprite
+	});
+
+	this->monsterBodies.push_back({
+		mBody_jetName,
+		mBody_jetWidth,
+		mBody_jetHeight,
+		mBody_jetSprite
+	});
+
+	this->monsterBodies.push_back({
+		mBody_lampName,
+		mBody_lampWidth,
+		mBody_lampHeight,
+		mBody_lampSprite
+	});
+
+	this->monsterBodies.push_back({
+		mBody_logName,
+		mBody_logWidth,
+		mBody_logHeight,
+		mBody_logSprite
+	});
+
+	this->monsterBodies.push_back({
+		mBody_merName,
+		mBody_merWidth,
+		mBody_merHeight,
+		mBody_merSprite
+	});
+
+	this->monsterBodies.push_back({
+		mBody_pillarName,
+		mBody_pillarWidth,
+		mBody_pillarHeight,
+		mBody_pillarSprite
+	});
+
+	this->monsterBodies.push_back({
+		mBody_stockingName,
+		mBody_stockingWidth,
+		mBody_stockingHeight,
+		mBody_stockingSprite
 	});
 }
 

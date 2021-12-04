@@ -153,7 +153,7 @@ void display() {
         //If the player levels up
         if (player.getXp() >= player.nextLvlXp()) {
             levelUpText = player.levelUp();
-            consoleText = "You level up!";
+            consoleText += "You level up!";
         }
 
         //info.write( "Location: (" + to_string(player.getLocation().x) + ',' + to_string(player.getLocation().y) + ')' + "  \nFacing: " + player.getDirectionString());
@@ -217,7 +217,7 @@ void display() {
 
         if(!combat.isActive()) {
             if(monster.getHealth().current <= 0) {
-                consoleText = "You felled the " + monster.getName() + "!\n" + player.addXp(monster.getLevel()*1.5);
+                consoleText += "You felled the " + monster.getName() + "!\n" + player.addXp(monster.getLevel()*1.5);
                 player.changeScore(2);
             }
             currScreen = player.getHealth().current > 0 ? MAIN_SCREEN : ENDING_SCREEN;
@@ -278,12 +278,12 @@ void kbd(unsigned char key, int x, int y) {
     */
     //k key levels up player (testing)
     if (key == 'k') {
-        consoleText = player.addXp(1);;
+        consoleText += player.addXp(1);;
     }
 
     //j key initiates combat (testing)
     if (key == 'j') {
-        consoleText = "You encountered the " + monster.getName() + "!";
+        consoleText += "You encountered the " + monster.getName() + "!";
         currScreen = COMBAT_SCREEN;
 
         combat.toggleState();
@@ -291,7 +291,7 @@ void kbd(unsigned char key, int x, int y) {
 
     //a adds a potion to the player (testing)
     if (key == 'a') {
-        consoleText = player.addItem(testPotion);
+        consoleText += player.addItem(testPotion);
     }
 
     /*
@@ -359,10 +359,10 @@ void kbd(unsigned char key, int x, int y) {
         } else if ((key == 13) && floatingWindow == INVENTORY_SELECT) { //Handles the choice of the player
 
             if (inventorySelector.getChoice() == "Use") {
-                consoleText = player.use(inventoryMenu.getSelection());
+                consoleText += player.use(inventoryMenu.getSelection());
             }
             else if (inventorySelector.getChoice() == "Drop") {
-                consoleText = player.removeItem(inventoryMenu.getSelection()) + " has been discarded!";
+                consoleText += player.removeItem(inventoryMenu.getSelection()) + " has been discarded!";
             }
             floatingWindow = INVENTORY;
         }
@@ -373,7 +373,7 @@ void kbd(unsigned char key, int x, int y) {
     */
     //initiates player turn based on selected option
     if ((key == 13) && currScreen == COMBAT_SCREEN) {
-        consoleText = combat.playerTurn(combatMenu.getChoice());
+        consoleText += combat.playerTurn(combatMenu.getChoice());
     }
 
     /*
@@ -412,22 +412,22 @@ void kbdS(int key, int x, int y) {
         switch (key) {
             case GLUT_KEY_DOWN:
                 player.retreat();
-                consoleText = "You retreat!";
+                consoleText += "You retreat!";
                 break;
             case GLUT_KEY_LEFT:
                 player.turnLeft();
-                consoleText = "You turn to the left!";
+                consoleText += "You turn to the left!";
                 break;
             case GLUT_KEY_RIGHT:
                 player.turnRight();
-                consoleText = "You turn to the right!";
+                consoleText += "You turn to the right!";
                 break;
             case GLUT_KEY_UP:
-                player.advance() ? consoleText = "You advance!" : consoleText = "Ouch! You can't walk into a wall!";
+                player.advance() ? consoleText += "You advance!" : consoleText += "Ouch! You can't walk into a wall!";
                 if (!dungeon.isVisited(player.getLocation()) && ENCOUNTER_RATE > rand() % 100) {
                     currScreen = COMBAT_SCREEN;
                     monster = Monster(player.getLevel());
-                    consoleText = "You encountered the " + monster.getName() + "!";
+                    consoleText += "You encountered the " + monster.getName() + "!";
                     combat.toggleState();
                 }
                 if (!dungeon.isVisited(player.getLocation()) && LOOT_RATE > rand() % 100) {
@@ -437,7 +437,7 @@ void kbdS(int key, int x, int y) {
 
                     loot = Potion(potionType(rand() % (pCount))); // -1 accounts for the END enum
 
-                    consoleText = "You found a " + loot.getName() + "!";
+                    consoleText += "You found a " + loot.getName() + "!";
                     player.addItem(loot);
                 }
                 break;
