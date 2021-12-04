@@ -104,7 +104,7 @@ std::string Player::use(int index) {
 
 
     if(item.getName() == "XP Potion") {
-        int exp = rand() % this->getLevel()*2;
+        int exp = (rand() % this->getLevel()*2)+1;
         this->addXp(exp);
         return "You gain " + std::to_string(exp) + " XP!";
     }
