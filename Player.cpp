@@ -42,6 +42,12 @@ point Player::getLocation() {
 point Player::getStartLocation() {
     return startLocation;
 }
+void Player::setLocation(point p) {
+    this->location = p;
+}
+void Player::setStartLocation(point p) {
+    this->startLocation = p;
+}
 Dungeon Player::getDungeon() {
     return this->dungeon;
 }

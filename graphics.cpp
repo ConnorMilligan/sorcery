@@ -22,8 +22,8 @@ int wd;
 // Default player name before change
 string playerName = "Actor";
 
-Dungeon dungeon(fungeon2, {8,6});
-Player player({1, 8} , dungeon, playerName);
+Dungeon dungeon(dungeons[3], startPoints[3][1]);
+Player player(startPoints[3][0] , dungeon, playerName);
 Monster monster(1);
 
 /***
@@ -44,6 +44,8 @@ Menu combatMenu({BLACK}, {460, 300}, 170, 170, {"Attack", "Defend", "Run"});
 Menu inventoryMenu({BLACK}, {int(width)/2-150, 0}, 300, int(height));
 Menu inventorySelector({BLACK}, {int(width)/2+160, 0}, 100, 100, {"Use", "Drop"});
 Menu quitSelector({BLACK}, {int(width)/2 - 50, int(height)/2 - 50}, 100, 100, {"Yes", "No"});
+Menu levelSelector({BLACK}, {int(width)/2 - 100, (3*int(height))/5}, 200, 100, {"Next Level", "Quit"});
+
 
 //Some misc windows present in the game
 Window levelingWindow({BLACK}, {int(width)/2-150, int(height)/2-115}, 300, 230);
@@ -247,9 +249,22 @@ void display() {
      */
     else if(currScreen == ENDING_SCREEN) {
 
+//        if ((key == 13) && currScreen == QUIT_SCREEN) {
+//            if (quitSelector.getChoice() == "Yes") {
+//                glutDestroyWindow(wd);
+//                exit(0);
+//            } else if (quitSelector.getChoice() == "No") {
+//                currScreen = previousScreen;
+//            }
+//        }
+//        if((key == ))
+
+
+
         string label = player.getHealth().current > 0 ? "You Win!" : "Game Over :(";
         label += " Score: " + to_string(player.getScore());
         messageWriter(width/2 - (4 * label.length()), height/2, label);
+        levelSelector.draw();
 
     }
 
@@ -396,6 +411,32 @@ void kbd(unsigned char key, int x, int y) {
             currScreen = previousScreen;
         }
     }
+    /*
+     * ~Ending Screen~
+     */
+    if ((key == 13) && currScreen == ENDING_SCREEN) {
+        if (levelSelector.getChoice() == "Yes") {
+            glutDestroyWindow(wd);
+            exit(0);
+        } else if (levelSelector.getChoice() == "Next Level") {
+
+
+
+            int dIndex = rand() % dungeons.size();
+
+            dungeon = Dungeon(dungeons[dIndex], startPoints[dIndex][1]);
+
+            point start = startPoints[dIndex][0];
+
+            player.setLocation(start);
+            player.setStartLocation(start);
+            currScreen = MAIN_SCREEN;
+
+            cout << dIndex << endl;
+
+        }
+    }
+
 
 
     glutPostRedisplay();
@@ -501,6 +542,20 @@ void kbdS(int key, int x, int y) {
                 break;
             case GLUT_KEY_UP:
                 quitSelector.choiceUp();
+                break;
+        }
+    }
+
+    /*
+    * ~Next Level Selector~
+    */
+    else if(currScreen == ENDING_SCREEN) {
+        switch (key) {
+            case GLUT_KEY_DOWN:
+                levelSelector.choiceDown();
+                break;
+            case GLUT_KEY_UP:
+                levelSelector.choiceUp();
                 break;
         }
     }

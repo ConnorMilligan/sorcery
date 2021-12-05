@@ -35,6 +35,8 @@ public:
     //Gets the current location of the player.
     point getLocation();
     point getStartLocation();
+    void setLocation(point p);
+    void setStartLocation(point p);
     Dungeon getDungeon();
     Direction getDirection();
     std::string getDirectionString();
