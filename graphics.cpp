@@ -424,21 +424,14 @@ void kbd(unsigned char key, int x, int y) {
             exit(0);
         } else if (levelSelector.getChoice() == "Next Level") {
 
-            if(dungeons.size() == 0) {
-                levelSelector.setChoices({"Quit"});
-            }
-
+            // Erase current dungeon from directory
             dungeons.erase(dungeons.begin()+dIndex, dungeons.begin()+dIndex+1);
             startPoints.erase(startPoints.begin()+dIndex, startPoints.begin()+dIndex+1);
 
-
-//            if(dungeons.size() == 0) {
-//                levelSelector.setChoices({"Quit"});
-//            }
-//            else {
-//                dungeons.erase(dungeons.begin()+dIndex, dungeons.begin()+dIndex+1);
-//                startPoints.erase(startPoints.begin()+dIndex, startPoints.begin()+dIndex+1);
-//            }
+            // Players may only quit if there are no more levels
+            if(dungeons.size() == 1) {
+                levelSelector.setChoices({"Quit"});
+            }
 
             dIndex = rand() % dungeons.size();
 
