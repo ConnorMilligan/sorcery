@@ -51,7 +51,9 @@ void Player::setStartLocation(point p) {
 Dungeon Player::getDungeon() {
     return this->dungeon;
 }
-
+void Player::setDungeon(Dungeon d) {
+    this->dungeon = d;
+}
 Direction Player::getDirection() {
     return this->direction;
 }

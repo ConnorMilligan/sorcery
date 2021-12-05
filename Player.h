@@ -38,6 +38,7 @@ public:
     void setLocation(point p);
     void setStartLocation(point p);
     Dungeon getDungeon();
+    void setDungeon(Dungeon d);
     Direction getDirection();
     std::string getDirectionString();
 

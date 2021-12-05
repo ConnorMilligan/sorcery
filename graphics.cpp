@@ -21,9 +21,10 @@ int wd;
 
 // Default player name before change
 string playerName = "Actor";
+int dIndex = rand() % dungeons.size();
 
-Dungeon dungeon(dungeons[3], startPoints[3][1]);
-Player player(startPoints[3][0] , dungeon, playerName);
+Dungeon dungeon(dungeons[dIndex], startPoints[dIndex][1]);
+Player player(startPoints[dIndex][0] , dungeon, playerName);
 Monster monster(1);
 
 /***
@@ -249,22 +250,16 @@ void display() {
      */
     else if(currScreen == ENDING_SCREEN) {
 
-//        if ((key == 13) && currScreen == QUIT_SCREEN) {
-//            if (quitSelector.getChoice() == "Yes") {
-//                glutDestroyWindow(wd);
-//                exit(0);
-//            } else if (quitSelector.getChoice() == "No") {
-//                currScreen = previousScreen;
-//            }
-//        }
-//        if((key == ))
 
-
-
-        string label = player.getHealth().current > 0 ? "You Win!" : "Game Over :(";
+        string label = player.getHealth().current > 0 ? "Level Cleared" : "Game Over :(";
         label += " Score: " + to_string(player.getScore());
         messageWriter(width/2 - (4 * label.length()), height/2, label);
+
+
+
         levelSelector.draw();
+
+
 
     }
 
@@ -415,14 +410,37 @@ void kbd(unsigned char key, int x, int y) {
      * ~Ending Screen~
      */
     if ((key == 13) && currScreen == ENDING_SCREEN) {
-        if (levelSelector.getChoice() == "Yes") {
+
+//        if(dungeons.size() > 0) {
+//            dungeons.erase(dungeons.begin()+dIndex, dungeons.begin()+dIndex+1);
+//            startPoints.erase(startPoints.begin()+dIndex, startPoints.begin()+dIndex+1);
+//        } else {
+//            levelSelector.setChoices({"Quit"});
+//        }
+
+
+        if (levelSelector.getChoice() == "Quit") {
             glutDestroyWindow(wd);
             exit(0);
         } else if (levelSelector.getChoice() == "Next Level") {
 
+            if(dungeons.size() == 0) {
+                levelSelector.setChoices({"Quit"});
+            }
+
+            dungeons.erase(dungeons.begin()+dIndex, dungeons.begin()+dIndex+1);
+            startPoints.erase(startPoints.begin()+dIndex, startPoints.begin()+dIndex+1);
 
 
-            int dIndex = rand() % dungeons.size();
+//            if(dungeons.size() == 0) {
+//                levelSelector.setChoices({"Quit"});
+//            }
+//            else {
+//                dungeons.erase(dungeons.begin()+dIndex, dungeons.begin()+dIndex+1);
+//                startPoints.erase(startPoints.begin()+dIndex, startPoints.begin()+dIndex+1);
+//            }
+
+            dIndex = rand() % dungeons.size();
 
             dungeon = Dungeon(dungeons[dIndex], startPoints[dIndex][1]);
 
@@ -430,9 +448,9 @@ void kbd(unsigned char key, int x, int y) {
 
             player.setLocation(start);
             player.setStartLocation(start);
+            player.setDungeon(dungeon);
             currScreen = MAIN_SCREEN;
 
-            cout << dIndex << endl;
 
         }
     }
