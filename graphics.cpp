@@ -473,6 +473,7 @@ void kbdS(int key, int x, int y) {
                 if (!dungeon.isVisited(player.getLocation()) && ENCOUNTER_RATE > rand() % 100) {
                     currScreen = COMBAT_SCREEN;
                     monster = Monster(player.getLevel());
+                    monster.changeHealth(-monster.getHealth().current/2); // Set monster health to half of its level
                     consoleText += "You encountered the " + monster.getName() + "!";
                     combat.toggleState();
                 }
