@@ -409,13 +409,6 @@ void kbd(unsigned char key, int x, int y) {
      */
     if ((key == 13) && currScreen == ENDING_SCREEN) {
 
-//        if(dungeons.size() > 0) {
-//            dungeons.erase(dungeons.begin()+dIndex, dungeons.begin()+dIndex+1);
-//            startPoints.erase(startPoints.begin()+dIndex, startPoints.begin()+dIndex+1);
-//        } else {
-//            levelSelector.setChoices({"Quit"});
-//        }
-
 
         if (levelSelector.getChoice() == "Quit") {
             glutDestroyWindow(wd);
@@ -440,6 +433,9 @@ void kbd(unsigned char key, int x, int y) {
             player.setLocation(start);
             player.setStartLocation(start);
             player.setDungeon(dungeon);
+
+            consoleText = "\n\n\n\n\n\n\n"; // Totally valid way to clear the console
+            console.addMessage(consoleText);
             currScreen = MAIN_SCREEN;
 
 
