@@ -468,22 +468,26 @@ void kbdS(int key, int x, int y) {
             case GLUT_KEY_DOWN:
                 player.retreat();
                 consoleText += "You retreat!";
+                floatingWindow = MAIN_SCREEN;
                 break;
             case GLUT_KEY_LEFT:
                 player.turnLeft();
                 consoleText += "You turn to the left!";
+                floatingWindow = MAIN_SCREEN;
                 break;
             case GLUT_KEY_RIGHT:
                 player.turnRight();
                 consoleText += "You turn to the right!";
+                floatingWindow = MAIN_SCREEN;
                 break;
             case GLUT_KEY_UP:
-                player.advance() ? consoleText += "1You advance!\n" : consoleText += "Ouch! You can't walk into a wall!";
+                player.advance() ? consoleText += "You advance!" : consoleText += "Ouch! You can't walk into a wall!";
+                floatingWindow = MAIN_SCREEN;
                 if (!dungeon.isVisited(player.getLocation()) && ENCOUNTER_RATE > rand() % 100) {
                     currScreen = COMBAT_SCREEN;
                     monster = Monster(player.getLevel());
                     monster.changeHealth(-monster.getHealth().current/2); // Set monster health to half of its level
-                    consoleText += "You encountered the " + monster.getName() + "!\n";
+                    consoleText += "You encountered the " + monster.getName() + "!";
                     combat.toggleState();
                 }
                 if (!dungeon.isVisited(player.getLocation()) && LOOT_RATE > rand() % 100) {
