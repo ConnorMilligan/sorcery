@@ -299,7 +299,13 @@ void kbd(unsigned char key, int x, int y) {
 
     //a adds a potion to the player (testing)
     if (key == 'a') {
-        consoleText += player.addItem(testPotion);
+        Potion loot;
+        int pCount = loot.potionCount();
+
+        loot = Potion(potionType(rand() % (pCount))); // -1 accounts for the END enum
+
+        consoleText += "You found a " + loot.getName() + "!";
+        player.addItem(loot);
     }
 
     /*
@@ -346,14 +352,16 @@ void kbd(unsigned char key, int x, int y) {
 
         //i key brings up an inventory
         if (key == 'i') {
-            floatingWindow = INVENTORY;
+            //floatingWindow = INVENTORY;
+            floatingWindow = floatingWindow == INVENTORY ? MAIN_SCREEN : INVENTORY;
         } else if (key == 27 && floatingWindow == INVENTORY) { //removes with ESC
             floatingWindow = MAIN_SCREEN;
         }
 
         //p key brings up a detailed stats window
         if (key == 'p') {
-            floatingWindow = STATS;
+            //floatingWindow = STATS;
+            floatingWindow = floatingWindow == STATS ? MAIN_SCREEN : STATS;
         } else if (key == 27 && floatingWindow == STATS) { //removes with ESC
             floatingWindow = MAIN_SCREEN;
         }
