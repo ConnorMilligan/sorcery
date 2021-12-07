@@ -311,6 +311,7 @@ void kbd(unsigned char key, int x, int y) {
         if((key == 13) && currScreen == SETUP_SCREEN) {
             player.setName(playerName);
             currScreen = MAIN_SCREEN;
+            console.addMessage(consoleText);
         }
 
         //Checks for entered keys for entering the player name
